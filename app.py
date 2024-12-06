@@ -3,7 +3,7 @@ import pandas as pd
 
 from pages import analytics
 from pages import engineering
-from pages import enablment
+from pages import enablement
 from pages import apps
 from pages import architecture
 from pages import managed_services
@@ -14,11 +14,11 @@ from pages import em
 
 def main():
     st.sidebar.title("Navigation")
-    
+
     PAGES = {
         "Analytics": analytics,
         "Engineering": engineering,
-        "Enablement": enablment,
+        "Enablement": enablement,
         "Apps": apps,
         "Architecture": architecture,
         "Managed Services": managed_services,
