@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 
+from pages import intro
 from pages import analytics
 from pages import engineering
 from pages import enablement
@@ -11,11 +12,8 @@ from pages import tech_ops
 from pages import ai_ml
 from pages import em
 
-
-def main():
-    st.sidebar.title("Navigation")
-
-    PAGES = {
+PAGES = {
+        "Intro": intro,
         "Analytics": analytics,
         "Engineering": engineering,
         "Enablement": enablement,
@@ -26,6 +24,12 @@ def main():
         "AI/ML": ai_ml,
         "EM": em,
     }
+
+def main():
+    
+    st.sidebar.title("Navigation")
+
+    
     choice = st.sidebar.radio("Select a page:", list(PAGES.keys()))
     if choice in PAGES:
         PAGES[choice].main()
