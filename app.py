@@ -1,3 +1,34 @@
 import streamlit as st
 import pandas as pd
-st.title('Uber Pickups in NYC')
+
+from pages import analytics
+from pages import engineering
+from pages import enablment
+from pages import apps
+from pages import architecture
+from pages import managed_services
+from pages import tech_ops
+from pages import ai_ml
+from pages import em
+
+
+def main():
+    st.sidebar.title("Navigation")
+    choice = st.sidebar.radio("Select a page:", list(PAGES.keys()))
+    if choice in PAGES:
+        PAGES[choice].main()
+
+PAGES = {
+    "Analytics": analytics,
+    "Engineering": engineering,
+    "Enablement": enablment,
+    "Apps": apps,
+    "Architecture": architecture,
+    "Managed Services": managed_services,
+    "TechOps": tech_ops,
+    "AI/ML": ai_ml,
+    "EM": em,
+}
+
+if __name__ == "__main__":
+    main()
