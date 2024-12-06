@@ -14,21 +14,20 @@ from pages import em
 
 def main():
     st.sidebar.title("Navigation")
+    
+    PAGES = {
+        "Analytics": analytics,
+        "Engineering": engineering,
+        "Enablement": enablment,
+        "Apps": apps,
+        "Architecture": architecture,
+        "Managed Services": managed_services,
+        "TechOps": tech_ops,
+        "AI/ML": ai_ml,
+        "EM": em,
+    }
     choice = st.sidebar.radio("Select a page:", list(PAGES.keys()))
     if choice in PAGES:
         PAGES[choice].main()
-
-PAGES = {
-    "Analytics": analytics,
-    "Engineering": engineering,
-    "Enablement": enablment,
-    "Apps": apps,
-    "Architecture": architecture,
-    "Managed Services": managed_services,
-    "TechOps": tech_ops,
-    "AI/ML": ai_ml,
-    "EM": em,
-}
-
 if __name__ == "__main__":
     main()
