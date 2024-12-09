@@ -58,7 +58,7 @@ def main():
     with col1:
         snowflake_account = st.text_input("Enter Snowflake Account:", value="jsa18243")
         snowflake_user = st.text_input("Enter Snowflake User:", value="xx") 
-        snowflake_password = st.text_input("Enter Snowflake Password:", type= "xx")
+        snowflake_password = st.text_input("Enter Snowflake Password:", type= "password")
         snowflake_role = st.text_input("Enter Snowflake Role:", value="xx")
     with col2:
         snowflake_wh = st.text_input("Enter Snowflake Warehouse:", value="xx")
@@ -79,7 +79,7 @@ def main():
             st.success ("Succsessfully connected to Snowflake!")
         else:
             st.error ("Error connecting, please check credentials")
-    workbook_types()
+        workbook_types()
 
 if __name__ == "__main__":
     main()
