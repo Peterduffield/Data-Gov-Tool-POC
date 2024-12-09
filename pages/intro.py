@@ -77,8 +77,10 @@ def main():
         st.session_state["session"] = session
         if session:
             st.success ("Succsessfully connected to Snowflake!")
+            test_query = "SELECT TOP 10 * FROM CUSTOMER"
         else:
             st.error ("Error connecting, please check credentials")
+        
         workbook_types()
 
 if __name__ == "__main__":
