@@ -1,0 +1,9 @@
+{
+    "snowpark_connection": {
+      "account": "jsa18243",
+      "user": "lkr_python_runner",
+      "password": "pythonpassword",
+      "role": "DATA_ENGINEER",
+      "warehouse": "DEMO_WH"
+    }
+  }
