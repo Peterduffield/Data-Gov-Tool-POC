@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from snowflake.snowpark import Session
+
 
 from pages import intro
 from pages import analytics
