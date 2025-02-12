@@ -15,15 +15,8 @@ def main():
         "INTRO": intro,
     }
 
-   # Check if data has been uploaded (replace 'data_uploaded' with the actual key)
-    if st.session_state.get('session', False):  # Check with a default value of False
-        # If data has been uploaded, allow access to all pages
+    if st.session_state.get('session', False): 
         choice = st.sidebar.radio("Select a page:", list(PAGES.keys()))
-        if choice in PAGES:
-            PAGES[choice].main()
-    else:
-        # If data has not been uploaded, only display the first three pages
-        choice = st.sidebar.radio("Select a page:", ["Looker Assessment Info", "User Credentials", "Data Upload"])
         if choice in PAGES:
             PAGES[choice].main()
 
