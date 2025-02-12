@@ -53,35 +53,7 @@ def workbook_types():
 def main():
     st.title("Intro")
     st.subheader("User Credentials")
-    st.write("Please enter same snowflake credentials as Looker instance")
-    col1, col2 = st.columns(2)
-    with col1:
-        snowflake_account = st.text_input("Enter Snowflake Account:", value="jsa18243")
-        snowflake_user = st.text_input("Enter Snowflake User:", value="xx") 
-        snowflake_password = st.text_input("Enter Snowflake Password:", type= "password")
-        snowflake_role = st.text_input("Enter Snowflake Role:", value="xx")
-    with col2:
-        snowflake_wh = st.text_input("Enter Snowflake Warehouse:", value="xx")
-        snowflake_db = st.text_input("Enter Snowflake Database Name:", value="xx")
-        snowflake_schema = st.text_input("Enter Snowflake Schema Name:", value="xx")
-    if st.button("CONNECT SNOWFLAKE"):
-        st.session_state["snowflake_account"] = snowflake_account
-        st.session_state["snowflake_user"] = snowflake_user
-        st.session_state["snowflake_password"] = snowflake_password
-        st.session_state["snowflake_role"] = snowflake_role
-        st.session_state["snowflake_wh"] = snowflake_wh
-        st.session_state["snowflake_db"] = snowflake_db
-        st.session_state["snowflake_schema"] = snowflake_schema
 
-        session = get_snowflake_session()
-        st.session_state["session"] = session
-        if session:
-            st.success ("Succsessfully connected to Snowflake!")
-            test_query = "SELECT TOP 10 * FROM CUSTOMER"
-        else:
-            st.error ("Error connecting, please check credentials")
-        
-        workbook_types()
 
 if __name__ == "__main__":
     main()
