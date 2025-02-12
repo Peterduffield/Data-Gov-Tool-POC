@@ -31,17 +31,17 @@ def create_snowflake_session(snowflake_account, snowflake_user, snowflake_passwo
   snowflake_session = Session.builder.configs(options).create()
   return snowflake_session
 
-def workbook_types():
+def overview():
     faq_markdown = """  
-        ## 1. Overview
+        ## Breif Overview
+        ***details***
     """
 
     st.markdown(faq_markdown)
 
 def main():
     st.title("Intro")
-    st.subheader("User Credentials")
-
+    overview()
 
 if __name__ == "__main__":
     main()
