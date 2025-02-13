@@ -18,6 +18,8 @@ def main():
             # Execute SQL queries
             test_query = "SELECT * from USE_CASE_INVENTORY"
             test_df = session.sql(test_query).to_pandas()
+            test_query_2 = "SELECT * FROM USE_CASE_INVENTORY WHERE asset_id = 1"
+            test_df_2 = session.sql(test_query_2).to_pandas()
 
             # Display data            
             st.title("Use Case and Domain Inventory") 
@@ -40,7 +42,7 @@ def main():
                     if selected_domain == "Asset management":
                         df = st.dataframe(test_df,hide_index=True)
                     else:
-                        df = st.dataframe(test_df,hide_index=True)
+                        df = st.dataframe(test_df_2,hide_index=True)
                 if select_filter == "Use Case":
                     selected_use_case = st.radio("Select One", ["Asset Lifecycle Optimization", "Depreciation Forecasting Accuracy", "Vendor Performance Management", "Regulatory Compliance Automation", "Predictive Maintenance for Assets"],
                              captions=[
@@ -53,7 +55,7 @@ def main():
                     if selected_use_case == "Asset Lifecycle Optimization":
                         df = st.dataframe(test_df,hide_index=True)
                     else:
-                        df = st.dataframe(test_df,hide_index=True)
+                        df = st.dataframe(test_df_2,hide_index=True)
             
             df
 
