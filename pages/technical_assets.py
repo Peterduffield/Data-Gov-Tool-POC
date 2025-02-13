@@ -16,10 +16,8 @@ def main():
     if session:    
         try:
             # Execute SQL queries
-            test_query = "SELECT * from USE_CASE_INVENTORY"
-            test_df = session.sql(test_query).to_pandas()
-            test_query_2 = "SELECT * FROM USE_CASE_INVENTORY WHERE asset_id = 1"
-            test_df_2 = session.sql(test_query_2).to_pandas()
+            
+            
 
             # Display data            
             st.title("Use Case and Domain Inventory") 
@@ -40,9 +38,10 @@ def main():
                                  "Related Domain(s): Asset management, Finance",
                              ],)
                     if selected_domain == "Asset management":
-                        df = st.dataframe(test_df,hide_index=True)
+                        test_query = "SELECT * from USE_CASE_INVENTORY"
+                    
                     else:
-                        df = st.dataframe(test_df_2,hide_index=True)
+                        test_query = "SELECT * FROM USE_CASE_INVENTORY WHERE asset_id = 1"
                 if select_filter == "Use Case":
                     selected_use_case = st.radio("Select One", ["Asset Lifecycle Optimization", "Depreciation Forecasting Accuracy", "Vendor Performance Management", "Regulatory Compliance Automation", "Predictive Maintenance for Assets"],
                              captions=[
@@ -53,12 +52,14 @@ def main():
                                  "Business Use Case: Implement IoT-based sensors and machine learning models for failure prediction.",
                              ],)
                     if selected_use_case == "Asset Lifecycle Optimization":
-                        df = st.dataframe(test_df,hide_index=True)
+                        test_query = "SELECT * from USE_CASE_INVENTORY"
+                    
                     else:
-                        df = st.dataframe(test_df_2,hide_index=True)
+                        test_query = "SELECT * FROM USE_CASE_INVENTORY WHERE asset_id = 1"
             
-            df
-
+            test_df = session.sql(test_query).to_pandas()
+            st.dataframe(test_df,hide_index=True)
+ 
                 
         except Exception as e:
             st.error(f"Error fetching data from Snowflake: {str(e)}")
