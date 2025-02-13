@@ -11,7 +11,6 @@ def description():
     """
     st.markdown(faq_markdown)   
  
-@st.cache_data
 def main():
     session  = get_snowflake_session()
     if session:    
