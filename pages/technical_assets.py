@@ -24,12 +24,12 @@ def main():
             st.dataframe(test_df, hide_index=True)    
             st.write("")
             description()
-            col1, col2 = st.columns([1, 2])
+            col1, col2 = st.columns([1, 3])
             with col1:
                 select_filter = st.radio("Select One", ["Primary Domain", "Use Case"])
             with col2:
                 if select_filter == "Primary Domain":
-                    selected_domain = st.radio("Select One", ["Asset Managment", "Finace", "Procurment", "Compliance", "Operations"],
+                    selected_domain = st.radio("Select One", ["Asset Managment", "Finance", "Procurment", "Compliance", "Operations"],
                              captions=[
                                  "Related Domain(s): Operations",
                                  "Related Domain(s): Asset Managment",
@@ -37,6 +37,10 @@ def main():
                                  "Related Domain(s): Asset Management, Operations",
                                  "Related Domain(s): Asset Management, Finance",
                              ],)
+                    if selected_domain == "Asset Management":
+                        df = st.dataframe(test_df,hide_index=True)
+                    if selected_domain == "Finance":
+                        df = st.write("TEST")
                 if select_filter == "Use Case":
                     selected_use_case = st.radio("Select One", ["Asset Lifecycle Optimization", "Depreciation Forecasting Accuracy", "Vendor Performance Management", "Regulatory Compliance Automation", "Predictive Maintenance for Assets"],
                              captions=[
@@ -46,15 +50,14 @@ def main():
                                  "Business Use Case: Build a compliance dashboard that monitors asset-related regulations in real time.",
                                  "Business Use Case: Implement IoT-based sensors and machine learning models for failure prediction.",
                              ],)
-                else:
-                    st.write("Please Select One")
-         
-                    if selected_domain == "Asset Management":
-                        st.dataframe(test_df, hide_index=True)
                     if selected_use_case == "Asset Lifecycle Optimization":
-                        st.dataframe(test_df,hide_index=True)
+                        df = st.dataframe(test_df,hide_index=True)
+                    else:
+                        df = st.write("TEST")
+         
+            st.write(df)
 
-
+                
         except Exception as e:
             st.error(f"Error fetching data from Snowflake: {str(e)}")
 if __name__ == "__main__":
