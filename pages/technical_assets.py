@@ -54,9 +54,8 @@ def main():
                         df = st.dataframe(test_df,hide_index=True)
                     else:
                         df = st.write("TEST")
-            col3 = st.columns(1)
-            with col3:
-                st.write(df)
+            
+            st.write(df)
 
                 
         except Exception as e:
