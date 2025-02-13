@@ -36,9 +36,12 @@ def main():
                              ],)
                 if selected_domain == "Asset management":
                     test_query = "SELECT * from USE_CASE_INVENTORY"
-                    
+                    test_df = session.sql(test_query).to_pandas()
+                    st.dataframe(test_df,hide_index=True)
                 else:
                     test_query = "SELECT * FROM USE_CASE_INVENTORY WHERE asset_id = 1"
+                    test_df = session.sql(test_query).to_pandas()
+                    st.dataframe(test_df,hide_index=True)
             if select_filter == "Use Case":
                 selected_use_case = st.radio("Select One", ["Asset Lifecycle Optimization", "Depreciation Forecasting Accuracy", "Vendor Performance Management", "Regulatory Compliance Automation", "Predictive Maintenance for Assets"],
                              captions=[
@@ -50,12 +53,12 @@ def main():
                              ],)
                 if selected_use_case == "Asset Lifecycle Optimization":
                     test_query = "SELECT * from USE_CASE_INVENTORY"
-                    
+                    test_df = session.sql(test_query).to_pandas()
+                    st.dataframe(test_df,hide_index=True)
                 else:
                     test_query = "SELECT * FROM USE_CASE_INVENTORY WHERE asset_id = 1"
-            
-            test_df = session.sql(test_query).to_pandas()
-            st.dataframe(test_df,hide_index=True)
+                    test_df = session.sql(test_query).to_pandas()
+                    st.dataframe(test_df,hide_index=True)
  
                 
         except Exception as e:
