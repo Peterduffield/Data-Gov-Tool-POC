@@ -55,7 +55,7 @@ def main():
                     else:
                         df = st.write("TEST")
             
-            st.write(df)
+            st.dataframe(df)
 
                 
         except Exception as e:
