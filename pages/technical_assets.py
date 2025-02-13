@@ -49,10 +49,10 @@ def main():
                 else:
                     st.write("Please Select One")
          
-            if selected_domain == "Asset Management":
-                st.dataframe(test_df, hide_index=True)
-            if selected_use_case == "Asset Lifecycle Optimization":
-                st.dataframe(test_df,hide_index=True)
+                    if selected_domain == "Asset Management":
+                        st.dataframe(test_df, hide_index=True)
+                    if selected_use_case == "Asset Lifecycle Optimization":
+                        st.dataframe(test_df,hide_index=True)
 
 
         except Exception as e:
