@@ -29,15 +29,15 @@ def main():
                 select_filter = st.radio("Select One", ["Primary Domain", "Use Case"])
             with col2:
                 if select_filter == "Primary Domain":
-                    selected_domain = st.radio("Select One", ["Asset Managment", "Finance", "Procurment", "Compliance", "Operations"],
+                    selected_domain = st.radio("Select One", ["Asset management", "Finance", "Procurment", "Compliance", "Operations"],
                              captions=[
                                  "Related Domain(s): Operations",
-                                 "Related Domain(s): Asset Managment",
+                                 "Related Domain(s): Asset management",
                                  "Related Domain(s): Operations, Finance",
-                                 "Related Domain(s): Asset Management, Operations",
-                                 "Related Domain(s): Asset Management, Finance",
+                                 "Related Domain(s): Asset management, Operations",
+                                 "Related Domain(s): Asset management, Finance",
                              ],)
-                    if selected_domain == "Asset Management":
+                    if selected_domain == "Asset management":
                         df = st.dataframe(test_df,hide_index=True)
                     else:
                         df = st.write("TEST")
