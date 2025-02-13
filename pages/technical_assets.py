@@ -17,15 +17,45 @@ def main():
     if session:    
         try:
             # Execute SQL queries
-            test_query = "SELECT * from BUSINESS_GLOSSARY"
+            test_query = "SELECT * from USE_CASE_INVENTORY"
             test_df = session.sql(test_query).to_pandas()
 
             # Display data            
-            st.title("Technical Assets") 
-
+            st.title("Use Case and Domain Inventory") 
             st.dataframe(test_df, hide_index=True)    
-        
+            st.write("")
             description()
+            col1, col2 = st.columns([1, 2])
+            with col1:
+                select_filter = st.radio("Select One", ["Primary Domain", "Use Case"])
+            with col2:
+                if select_filter == "Primary Domain":
+                    selected_domain = st.radio("Select One", ["Asset Managment", "Finace", "Procurment", "Compliance", "Operations"],
+                             captions=[
+                                 "Related Domain(s): Operations",
+                                 "Related Domain(s): Asset Managment",
+                                 "Related Domain(s): Operations, Finance",
+                                 "Related Domain(s): Asset Management, Operations",
+                                 "Related Domain(s): Asset Management, Finance",
+                             ],)
+                if select_filter == "Use Case":
+                    selected_use_case = st.radio("Select One", ["Asset Lifecycle Optimization", "Depreciation Forecasting Accuracy", "Vendor Performance Management", "Regulatory Compliance Automation", "Predictive Maintenance for Assets"],
+                             captions=[
+                                 "Business Use Case: Implement predictive maintenance and usage-based lifecycle tracking.",
+                                 "Business Use Case: Enhance depreciation models using real-time asset usage and condition data.",
+                                 "Business Use Case: Develop a vendor scorecard tracking repair quality, cost, and response time.",
+                                 "Business Use Case: Build a compliance dashboard that monitors asset-related regulations in real time.",
+                                 "Business Use Case: Implement IoT-based sensors and machine learning models for failure prediction.",
+                             ],)
+                else:
+                    st.write("Please Select One")
+         
+            if selected_domain == "Asset Management":
+                st.dataframe(test_df, hide_index=True)
+            if selected_use_case == "Asset Lifecycle Optimization":
+                st.dataframe(test_df,hide_index=True)
+
+
         except Exception as e:
             st.error(f"Error fetching data from Snowflake: {str(e)}")
 if __name__ == "__main__":
