@@ -23,7 +23,7 @@ def main():
             # Display data            
             st.title("Technical Assets") 
 
-            st.markdown(f"<h1> {test_df.shape[0]} </h1>", unsafe_allow_html=True)    
+            st.dataframe(test_df, hide_index=True)    
         
             description()
         except Exception as e:
