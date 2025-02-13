@@ -16,7 +16,10 @@ def main():
     if session:    
         try:
             # Execute SQL queries
-            
+            test_query = "SELECT * FROM USE_CASE_INVENTORY"
+            test_df = session.sql(test_df).to_pandas()
+            test_query_2 = "SELECT * FROM USE_CASE_INVENTORY WHERE asset_id = 1"
+            test_df_2 = session.sql(test_query_2).to_pandas()
             
 
             # Display data            
@@ -35,13 +38,9 @@ def main():
                                  "Related Domain(s): Asset management, Finance",
                              ],)
                 if selected_domain == "Asset management":
-                    test_query = "SELECT * from USE_CASE_INVENTORY"
-                    test_df = session.sql(test_query).to_pandas()
                     st.dataframe(test_df,hide_index=True)
                 else:
-                    test_query = "SELECT * FROM USE_CASE_INVENTORY WHERE asset_id = 1"
-                    test_df = session.sql(test_query).to_pandas()
-                    st.dataframe(test_df,hide_index=True)
+                    st.dataframe(test_df_2,hide_index=True)
             if select_filter == "Use Case":
                 selected_use_case = st.radio("Select One", ["Asset Lifecycle Optimization", "Depreciation Forecasting Accuracy", "Vendor Performance Management", "Regulatory Compliance Automation", "Predictive Maintenance for Assets"],
                              captions=[
@@ -52,13 +51,9 @@ def main():
                                  "Business Use Case: Implement IoT-based sensors and machine learning models for failure prediction.",
                              ],)
                 if selected_use_case == "Asset Lifecycle Optimization":
-                    test_query = "SELECT * from USE_CASE_INVENTORY"
-                    test_df = session.sql(test_query).to_pandas()
                     st.dataframe(test_df,hide_index=True)
                 else:
-                    test_query = "SELECT * FROM USE_CASE_INVENTORY WHERE asset_id = 1"
-                    test_df = session.sql(test_query).to_pandas()
-                    st.dataframe(test_df,hide_index=True)
+                    st.dataframe(test_df_2,hide_index=True)
  
                 
         except Exception as e:
