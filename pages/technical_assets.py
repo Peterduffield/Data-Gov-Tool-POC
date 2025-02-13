@@ -55,7 +55,7 @@ def main():
                     else:
                         df = st.dataframe(test_df,hide_index=True)
             
-            st.dataframe(df)
+            df
 
                 
         except Exception as e:
