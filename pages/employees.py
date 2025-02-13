@@ -16,18 +16,11 @@ def main():
     if session:    
         try:
             # Execute SQL queries
-            asset_man_query = "SELECT * FROM BUSINESS_GLOSSARY WHERE DOMAIN = 'Operations'"
-            finance_query = "SELECT * FROM BUSINESS_GLOSSARY WHERE DOMAIN = 'Asset Management'"
-            procurment_query = "SELECT * FROM BUSINESS_GLOSSARY WHERE DOMAIN in ('Operations', 'Finance')"
-            compliance_query = "SELECT * FROM BUSINESS_GLOSSARY WHERE DOMAIN in ('Asset Management', 'Operations')"
-            operations_query = "SELECT * FROM BUSINESS_GLOSSARY WHERE DOMAIN in ('Asset Management', 'Finance')"
-
-            asset_man_df = session.sql(asset_man_query).to_pandas()
-            finance_df = session.sql(finance_query).to_pandas()
-            procurment_df = session.sql(procurment_query).to_pandas()
-            compliance_df = session.sql(compliance_query).to_pandas()
-            operations_df = session.sql(operations_query).to_pandas()
-
+            test_query = "SELECT * FROM USE_CASE_INVENTORY"
+            test_df = session.sql(test_query).to_pandas()
+            test_query_2 = "SELECT * FROM USE_CASE_INVENTORY WHERE asset_id = 1"
+            test_df_2 = session.sql(test_query_2).to_pandas()
+            
 
             # Display data            
             st.title("Use Case and Domain Inventory") 
@@ -44,16 +37,9 @@ def main():
                                  "Related Domain(s): Asset management, Finance",
                              ],)
                 if selected_domain == "Asset management":
-                    st.dataframe(asset_man_df,hide_index=True)
-                if selected_domain == "Finance":
-                    st.dataframe(finance_df,hide_index=True)
-                if selected_domain == "Procurment":
-                    st.dataframe(procurment_df,hide_index=True)
-                if selected_domain == "Compliance":
-                    st.dataframe(compliance_df,hide_index=True)
-                if selected_domain == "Operations":
-                    st.dataframe(operations_df,hide_index=True)
-
+                    st.dataframe(test_df,hide_index=True)
+                else:
+                    st.dataframe(test_df_2,hide_index=True)
             if select_filter == "Use Case":
                 selected_use_case = st.radio("Select One", ["Asset Lifecycle Optimization", "Depreciation Forecasting Accuracy", "Vendor Performance Management", "Regulatory Compliance Automation", "Predictive Maintenance for Assets"],
                              captions=[
@@ -63,18 +49,12 @@ def main():
                                  "Business Use Case: Build a compliance dashboard that monitors asset-related regulations in real time.",
                                  "Business Use Case: Implement IoT-based sensors and machine learning models for failure prediction.",
                              ],)
-                if selected_domain == "Asset Lifecycle Optimization":
-                    st.dataframe(asset_man_df,hide_index=True)
-                if selected_domain == "Depreciation Forecasting Accuracy":
-                    st.dataframe(finance_df,hide_index=True)
-                if selected_domain == "Vendor Performance Managemen":
-                    st.dataframe(procurment_df,hide_index=True)
-                if selected_domain == "Regulatory Compliance Automation":
-                    st.dataframe(compliance_df,hide_index=True)
-                if selected_domain == "Predictive Maintenance for Assets":
-                    st.dataframe(operations_df,hide_index=True)
+                if selected_use_case == "Asset Lifecycle Optimization":
+                    st.dataframe(test_df,hide_index=True)
+                else:
+                    st.dataframe(test_df_2,hide_index=True)
  
-           
+                
         except Exception as e:
             st.error(f"Error fetching data from Snowflake: {str(e)}")
 if __name__ == "__main__":
