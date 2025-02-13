@@ -40,7 +40,7 @@ def main():
                     if selected_domain == "Asset management":
                         df = st.dataframe(test_df,hide_index=True)
                     else:
-                        df = st.write("TEST")
+                        df = st.dataframe(test_df,hide_index=True)
                 if select_filter == "Use Case":
                     selected_use_case = st.radio("Select One", ["Asset Lifecycle Optimization", "Depreciation Forecasting Accuracy", "Vendor Performance Management", "Regulatory Compliance Automation", "Predictive Maintenance for Assets"],
                              captions=[
@@ -53,7 +53,7 @@ def main():
                     if selected_use_case == "Asset Lifecycle Optimization":
                         df = st.dataframe(test_df,hide_index=True)
                     else:
-                        df = st.write("TEST")
+                        df = st.dataframe(test_df,hide_index=True)
             
             st.dataframe(df)
 
