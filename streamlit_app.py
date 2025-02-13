@@ -2,6 +2,7 @@ from mmap import PAGESIZE
 from snowflake.snowpark import Session
 import streamlit as st
 from pages import intro
+from pages import technical_assets
 
 
 
@@ -13,6 +14,7 @@ def main():
     # Define PAGES before using it
     PAGES = {
         "INTRO": intro,
+        "Technical Assets": technical_assets,
     }
 
     if st.session_state.get('session', False): 
