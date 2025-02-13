@@ -22,6 +22,7 @@ def main():
             procurment_query = "SELECT * FROM BUSINESS_GLOSSARY WHERE DOMAIN in ('Operations', 'Finance')"
             compliance_query = "SELECT * FROM BUSINESS_GLOSSARY WHERE DOMAIN in ('Asset Management', 'Operations')"
             operations_query = "SELECT * FROM BUSINESS_GLOSSARY WHERE DOMAIN in ('Asset Management', 'Finance')"
+            data_catalog_query = "SELECT * FROM DATA_CATALOG"
 
             select_all_df = session.sql(select_all_query).to_pandas()
             business_key_term_list = select_all_df['KEY_BUSINESS_TERM_NAME'].tolist()
@@ -32,6 +33,7 @@ def main():
             procurment_df = session.sql(procurment_query).to_pandas()
             compliance_df = session.sql(compliance_query).to_pandas()
             operations_df = session.sql(operations_query).to_pandas()
+            catalog_df = session.sql(data_catalog_query).to_pandas()
 
 
             # Display data            
@@ -80,7 +82,8 @@ def main():
                     st.dataframe(operations_df,hide_index=True)
 
             asset_id_selected = st.selectbox("Select One:", ["Search..."] + business_asset_list)
-           
+            filtered_df = catalog_df[catalog_df["ATTRIBUTE_NAME"] == asset_id_selected]
+            st.dataframe(filtered_df, hide_index=True)
         except Exception as e:
             st.error(f"Error fetching data from Snowflake: {str(e)}")
 if __name__ == "__main__":
