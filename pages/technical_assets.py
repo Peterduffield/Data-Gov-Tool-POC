@@ -17,7 +17,7 @@ def main():
         try:
             # Execute SQL queries
             test_query = "SELECT * FROM USE_CASE_INVENTORY"
-            test_df = session.sql(test_df).to_pandas()
+            test_df = session.sql(test_query).to_pandas()
             test_query_2 = "SELECT * FROM USE_CASE_INVENTORY WHERE asset_id = 1"
             test_df_2 = session.sql(test_query_2).to_pandas()
             
