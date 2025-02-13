@@ -25,7 +25,7 @@ def main():
 
             select_all_df = session.sql(select_all_query).to_pandas()
             business_key_term_list = select_all_df['KEY_BUSINESS_TERM_NAME'].tolist()
-            business_asset_list = [value.replace(" ", "_") for value in business_key_term_list]
+            business_asset_list = [value.replace(" ", "_") if value is not None else "Unknown" for value in business_key_term_list]
 
             asset_man_df = session.sql(asset_man_query).to_pandas()
             finance_df = session.sql(finance_query).to_pandas()
@@ -78,6 +78,7 @@ def main():
                     st.dataframe(compliance_df,hide_index=True)
                 if selected_domain == "Predictive Maintenance for Assets":
                     st.dataframe(operations_df,hide_index=True)
+
             asset_id_selected = st.selectbox("Select One:", ["Search..."] + business_asset_list)
            
         except Exception as e:
