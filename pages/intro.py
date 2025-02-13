@@ -49,7 +49,7 @@ def overview():
         ***details***
     """
     st.markdown(faq_markdown)   
- 
+
 def main():
     st.title("User Credentials")
     col1, col2 = st.columns(2)
@@ -60,8 +60,8 @@ def main():
         snowflake_role = st.text_input("Enter Snowflake Role:", value="DATA_ENGINEER")
     with col2:
         snowflake_wh = st.text_input("Enter Snowflake Warehouse:", value="DEMO_WH")
-        snowflake_db = st.text_input("Enter Snowflake Database Name:", value="LOOKER")
-        snowflake_schema = st.text_input("Enter Snowflake Schema Name:", value="LOOKER_SOURCE")
+        snowflake_db = st.text_input("Enter Snowflake Database Name:", value="DATA_GOV_POC")
+        snowflake_schema = st.text_input("Enter Snowflake Schema Name:", value="POC_TABLES")
     if st.button("CONNECT SNOWFLAKE"):
         st.session_state["snowflake_account"] = snowflake_account
         st.session_state["snowflake_user"] = snowflake_user
