@@ -37,10 +37,11 @@ def main():
             with col2:
                 if selected_employee != "Select One":
                     employee_business_role = select_all_employee_df[select_all_employee_df["EMPLOYEE_NAME"] == selected_employee]
-                    st.write("Governance Role")
+                    st.write("Governance Role:")
                     st.markdown(f"<h1> {employee_business_role.iloc[0,3]} </h1>", unsafe_allow_html=True)      
+            
             st.write("Custodian of:")  
-            employee_custodian_df = select_all_data_catalog_query[select_all_data_catalog_query["DATA_CATALOG"] == selected_employee]
+            employee_custodian_df = select_all_data_catalog_query[select_all_data_catalog_query["DATA_CUSTODIAN"] == selected_employee]
             st.dataframe(employee_custodian_df,hide_index=True)
             st.write("Data Steward of:")   
             employee_steward_df = select_all_data_catalog_df[select_all_data_catalog_df["TECHNICAL_DATA_STEWARD"] == selected_employee]
