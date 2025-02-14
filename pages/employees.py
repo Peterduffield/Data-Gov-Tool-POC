@@ -46,10 +46,13 @@ def main():
                 st.write("Not Available")
             else:
                 st.dataframe(employee_custodian_df, hide_index=True)
+
             st.write("Data Steward of:")   
             employee_steward_df = select_all_data_catalog_df[select_all_data_catalog_df["TECHNICAL_DATA_STEWARD"] == selected_employee]
-            st.dataframe(employee_steward_df,hide_index=True)
-
+            if employee_steward_df.empty:
+                st.write("Not Available")
+            else:
+                st.dataframe(employee_steward_df, hide_index=True)
         except Exception as e:
             st.error(f"Error fetching data from Snowflake: {str(e)}")
 if __name__ == "__main__":
