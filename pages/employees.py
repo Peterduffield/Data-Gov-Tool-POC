@@ -42,7 +42,10 @@ def main():
             
             st.write("Custodian of:")  
             employee_custodian_df = select_all_data_catalog_df[select_all_data_catalog_df["DATA_CUSTODIAN"] == selected_employee]
-            st.dataframe(employee_custodian_df,hide_index=True)
+            if employee_custodian_df.empty:
+                st.write("Not Available")
+            else:
+                st.dataframe(employee_custodian_df, hide_index=True)
             st.write("Data Steward of:")   
             employee_steward_df = select_all_data_catalog_df[select_all_data_catalog_df["TECHNICAL_DATA_STEWARD"] == selected_employee]
             st.dataframe(employee_steward_df,hide_index=True)
