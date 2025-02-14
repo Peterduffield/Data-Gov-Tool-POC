@@ -31,11 +31,11 @@ def main():
             with col1:
                 if selected_employee != "Select One":
                     employee_business_role = select_all_employee_df[select_all_employee_df["EMPLOYEE_NAME"] == selected_employee]
-                    st.markdown(f"<h1> {employee_business_role.iloc[0,3]} </h1>", unsafe_allow_html=True) 
+                    st.markdown(f"<h1> {employee_business_role.iloc[0,2]} </h1>", unsafe_allow_html=True) 
             with col2:
                 if selected_employee != "Select One":
                     employee_business_role = select_all_employee_df[select_all_employee_df["EMPLOYEE_NAME"] == selected_employee]
-                    st.markdown(f"<h1> {employee_business_role.iloc[0,4]} </h1>", unsafe_allow_html=True)                 
+                    st.markdown(f"<h1> {employee_business_role.iloc[0,3]} </h1>", unsafe_allow_html=True)                 
         except Exception as e:
             st.error(f"Error fetching data from Snowflake: {str(e)}")
 if __name__ == "__main__":
