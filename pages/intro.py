@@ -32,7 +32,7 @@ def create_snowflake_session(snowflake_account, snowflake_user, snowflake_passwo
   snowflake_session = Session.builder.configs(options).create()
   return snowflake_session
 
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def get_snowflake_session():
     snowflake_account = st.session_state.get("snowflake_account")
     snowflake_user = st.session_state.get("snowflake_user")
