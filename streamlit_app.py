@@ -22,6 +22,7 @@ business_glossary_tbl = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas
 key_term_list = business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list()
 
 def main():
+
     st.markdown(
         """
         <style>
@@ -45,8 +46,9 @@ def main():
             <h2>Key Business Term Glossary</h2>
         </div>
         """,
-        nsafe_allow_html=True
+        unsafe_allow_html=True  # ✅ Fixed the typo
     )
+
    
     selected_business_term = st.selectbox("Select a Business Term", key_term_list,index=None)
     st.write(selected_business_term)
