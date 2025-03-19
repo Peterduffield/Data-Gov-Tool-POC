@@ -91,7 +91,6 @@ def main():
     related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].isin(selected_glossary_ids_int)]
         # Display the filtered DataFrame
     st.dataframe(related_catalog_id_df)
-    st.markdown(f"{selected_glossary_ids}")
 
     st.markdown(
     """
