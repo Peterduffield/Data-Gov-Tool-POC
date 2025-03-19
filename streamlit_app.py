@@ -33,7 +33,7 @@ def main():
             text-align: center;
         }
         .title-container h1 {
-            font-size: 2em; /* Adjust size as needed */
+            font-size: 2.5em; /* Adjust size as needed */
             margin-bottom: 5px; /* Spacing between title and subtitle */
         }
         .title-container h2 {
@@ -46,13 +46,16 @@ def main():
             <h2>Key Business Term Glossary</h2>
         </div>
         """,
-        unsafe_allow_html=True  # ✅ Fixed the typo
+        unsafe_allow_html=True
     )
 
-   
-    selected_business_term = st.selectbox("Select a Business Term", key_term_list,index=None)
-    st.write(selected_business_term)
-    
+    col1, col2 = st.columns(2)
+    with col1:
+        selected_business_term = st.selectbox("Select a Business Term", key_term_list,index=None)
+        st.write(selected_business_term)
+    with col2:
+        selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].to_list(), index=None)
+        st.write(selected_business_domain)
     # Display results in Streamlit
     st.dataframe(business_glossary_tbl)
 
