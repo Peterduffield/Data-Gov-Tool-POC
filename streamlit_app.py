@@ -84,11 +84,11 @@ def main():
         sql_query = f"""
             SELECT * 
             FROM DATA_CATALOG 
-            WHERE catalog_id IN (
+            WHERE CATALOG_ID IN (
                 SELECT VALUE::INT 
                 FROM BUSINESS_GLOSSARY 
-                LATERAL FLATTEN(input => SPLIT(RELATED_TO_CATALOG_ID_S, ',')) 
-                WHERE key_business_term_name = {selected_business_term}
+                LATERAL FLATTEN(input => SPLIT(RELATED_TO_CATALOG_ID_S_, ',')) 
+                WHERE KEY_BUSINESS_TERM_NAME = {selected_business_term}
             )
         """
         related_data_catalog_id_df = session.sql(sql_query).to_pandas()
