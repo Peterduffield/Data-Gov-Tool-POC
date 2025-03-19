@@ -30,7 +30,7 @@ def main():
 
     st.title("Data Governance Tool")
 
-    col3, col4, col5 = st.columns
+    col3, col4, col5 = st.columns(3)
     with col3:
         st.write(" ")    
     with col4:
