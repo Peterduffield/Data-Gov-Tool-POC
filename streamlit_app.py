@@ -17,11 +17,15 @@ def create_snowflake_session():
 
 
 def main():
-    col1, col2 = st.columns([1,4], vertical_alingment="top")
+    col1, col2 = st.columns([1,4])
     with col1:
         st.image("https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png")
     with col2:
+       st.write(" ") 
+    col3 = st.columns(1)
+    with col3:
         st.title("Data Governance Tool")
+
     session = create_snowflake_session()
     
     # Run SQL query
