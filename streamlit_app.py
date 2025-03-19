@@ -18,6 +18,7 @@ session = create_snowflake_session()
 # Run SQL query
 business_glossary_tbl = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas()
 data_catalog_tbl = session.sql("SELECT * FROM DATA_CATALOG").to_pandas()
+data_catalog_tbl['CATALOG_ID'] = data_catalog_tbl['CATALOG_ID'].astype('object')
 
 
 
@@ -56,7 +57,6 @@ def main():
         selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].to_list(), index=None)
     # Apply filters only if selections are made
     filtered_df = business_glossary_tbl  # Default to all rows
-    filtered_df['RELATED_TO_CATALOG_ID_S_'] = filtered_df['RELATED_TO_CATALOG_ID_S_'].astype('object')
     if selected_business_term:
         filtered_df = filtered_df[filtered_df["KEY_BUSINESS_TERM_NAME"] == selected_business_term]
     if selected_business_domain:
