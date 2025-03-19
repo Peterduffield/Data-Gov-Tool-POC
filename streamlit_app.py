@@ -26,11 +26,9 @@ def main():
     with col1:
         st.image("https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png")
     with col2:
-        st.write(" ")
+        st.title("Data Governance Tool")
 
-    st.title("Data Governance Tool")
-
-    col3, col4, col5 = st.columns(3)
+    col3, col4, col5 = st.columns([1,3,1])
     with col3:
         st.write(" ")    
     with col4:
