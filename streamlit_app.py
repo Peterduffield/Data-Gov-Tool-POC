@@ -18,8 +18,7 @@ session = create_snowflake_session()
 # Run SQL query
 business_glossary_tbl = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas()
 
-# List of KeY Business Terms
-key_term_list = business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list()
+
 
 def main():
 
@@ -51,7 +50,7 @@ def main():
 
     col1, col2 = st.columns(2)
     with col1:
-        selected_business_term = st.selectbox("Select a Business Term", key_term_list,index=None)
+        selected_business_term = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(),index=None)
         st.write(selected_business_term)
     with col2:
         selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].to_list(), index=None)
