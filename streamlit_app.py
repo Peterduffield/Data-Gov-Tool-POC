@@ -83,8 +83,8 @@ def main():
     
     with col5:
         st.write('Related Critical Data Elements & Authoritative Sources')
-        selected_glossary_ids = filtered_df['GLOSSARY_ID'].to_list()
-        related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['MAPS_TO_GLOSSARY_ID_S_'].isin(selected_glossary_ids)]
+        selected_glossary_ids = filtered_df['RELATED_TO_CATALOG_ID_S_'].to_list()
+        related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].isin(selected_glossary_ids)]
         # Display the filtered DataFrame
         st.dataframe(related_catalog_id_df)
 
