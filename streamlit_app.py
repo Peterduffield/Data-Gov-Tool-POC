@@ -17,7 +17,7 @@ def create_snowflake_session():
 
 
 def main():
-    col1, col2 = st.columns([1,4], *, vertical_alingment="top")
+    col1, col2 = st.columns([1,4], vertical_alingment="top")
     with col1:
         st.image("https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png")
     with col2:
