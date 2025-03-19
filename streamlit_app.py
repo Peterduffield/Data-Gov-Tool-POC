@@ -83,14 +83,14 @@ def main():
     
     with col5:
         st.write('Related Critical Data Elements & Authoritative Sources')
+
+
+    # Display DataFrame
+    st.dataframe(filtered_df, hide_index=True)
     selected_glossary_ids = filtered_df['RELATED_TO_CATALOG_ID_S_'].to_list()
     related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].isin(selected_glossary_ids)]
         # Display the filtered DataFrame
     st.dataframe(related_catalog_id_df)
-
-    # Display DataFrame
-    st.dataframe(filtered_df, hide_index=True)
-
     st.markdown(f"{selected_glossary_ids}")
 
     st.markdown(
