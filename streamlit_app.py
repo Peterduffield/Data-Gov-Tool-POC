@@ -56,8 +56,12 @@ def main():
         selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].to_list(), index=None)
         st.write(selected_business_domain)
     # Display results in Streamlit
-    st.dataframe(business_glossary_tbl)
-
+    st.dataframe(
+        business_glossary_tbl[
+            (business_glossary_tbl["KEY_BUSINESS_TERM_NAME"] == selected_business_term) &
+            (business_glossary_tbl["DOMAIN"] == selected_business_domain)
+        ]
+    )
     st.markdown(
     """
     <style>
