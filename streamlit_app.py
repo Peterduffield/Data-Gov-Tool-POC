@@ -45,7 +45,7 @@ def main():
             <h2>Key Business Term Glossary</h2>
         </div>
         """,
-        nsafe_allow_html=True,
+        nsafe_allow_html=True
     )
    
     selected_business_term = st.selectbox("Select a Business Term", key_term_list,index=None)
