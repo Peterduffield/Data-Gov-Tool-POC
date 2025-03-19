@@ -56,6 +56,7 @@ def main():
         selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].to_list(), index=None)
     # Apply filters only if selections are made
     filtered_df = business_glossary_tbl  # Default to all rows
+    filtered_df['GLOSSARY_ID'] = filtered_df['GLOSSARY_ID'].astype('object')
     if selected_business_term:
         filtered_df = filtered_df[filtered_df["KEY_BUSINESS_TERM_NAME"] == selected_business_term]
     if selected_business_domain:
