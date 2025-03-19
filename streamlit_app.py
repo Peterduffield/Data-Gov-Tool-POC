@@ -60,7 +60,7 @@ def main():
     if selected_business_domain:
         filtered_df = filtered_df[filtered_df["DOMAIN"] == selected_business_domain]
 
-    col3,col4 =st.columns([2,2])
+    col3,col4,col5 =st.columns([2,2,4])
     with col3:
         st.write('Data Owner')
         selected_data_owner = filtered_df['DATA_OWNER_EMPLOYEE_NAME'].iloc[0]
@@ -78,6 +78,9 @@ def main():
         st.write('Authoritative Sources(s)')
         selected_authoratative_source = filtered_df['AUTHORITATIVE_SOURCE'].iloc[0]
         st.markdown(f"## {selected_authoratative_source}",unsafe_allow_html=True)
+    
+    with col5:
+        st.header('Related Auth Sorces')
 
     # Display DataFrame
     st.dataframe(filtered_df, hide_index=True)
