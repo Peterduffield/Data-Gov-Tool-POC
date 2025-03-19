@@ -80,7 +80,18 @@ def main():
         st.markdown(f"## {selected_authoratative_source}",unsafe_allow_html=True)
     
     with col5:
-        related_data_catalog_id_df = session.sql("SELECT  * FROM DATA_CATALOG WHERE catalog_id IN ( SELECT VALUE::INT FROM BUSINESS_GLOSSARY LATERAL FLATTEN(input => SPLIT(RELATED_TO_CATALOG_ID_S, "," )) WHERE key_business_term_name = {selected_business_term})").to_pandas()
+        # Use f-string to insert selected_business_term into the SQL query
+        sql_query = f"""
+            SELECT * 
+            FROM DATA_CATALOG 
+            WHERE catalog_id IN (
+                SELECT VALUE::INT 
+                FROM BUSINESS_GLOSSARY 
+                LATERAL FLATTEN(input => SPLIT(RELATED_TO_CATALOG_ID_S, ',')) 
+                WHERE key_business_term_name = '{selected_business_term}'
+            )
+        """
+        related_data_catalog_id_df = session.sql(sql_query).to_pandas()
         st.dataframe(related_data_catalog_id_df)
         st.write('Related Critical Data Elements & Authoritative Sources')
 
