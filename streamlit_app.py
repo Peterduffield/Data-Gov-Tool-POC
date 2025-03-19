@@ -22,21 +22,31 @@ business_glossary_tbl = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas
 key_term_list = business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list()
 
 def main():
-    col1, col2, col3 = st.columns(3, gap="large")
-    with col1:
-        st.write(" ")
-    with col2:
-        st.title("Data Governance Tool")
-    with col3:
-        st.write(" ")
-
-    col4, col5, col6 = st.columns(3, gap="large")
-    with col4:
-        st.write(" ")    
-    with col5:
-        st.subheader("Key Business Term Glossary")
-    with col6:
-        st.write(" ") 
+    st.markdown(
+        """
+        <style>
+        .title-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .title-container h1 {
+            font-size: 2em; /* Adjust size as needed */
+            margin-bottom: 5px; /* Spacing between title and subtitle */
+        }
+        .title-container h2 {
+            font-size: 1.5em; /* Adjust size as needed */
+            color: #888; /* Example subtitle color */
+        }
+        </style>
+        <div class="title-container">
+            <h1>Data Governance Tool</h1>
+            <h2>Key Business Term Glossary</h2>
+        </div>
+        """,
+        nsafe_allow_html=True,
+    )
    
     selected_business_term = st.selectbox("Select a Business Term", key_term_list,index=None)
     st.write(selected_business_term)
