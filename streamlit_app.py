@@ -82,7 +82,8 @@ def main():
     
     with col5:
         st.write('Related Critical Data Elements & Authoritative Sources')
-        st.dataframe(data_catalog_tbl)
+        related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['MAPS_TO_GLOSSARY_ID_S_'].isin(filtered_df['GLOSSARY_ID'])]
+        st.dataframe(related_catalog_id_df)
     # Display DataFrame
     st.dataframe(filtered_df, hide_index=True)
 
