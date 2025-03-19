@@ -75,12 +75,12 @@ def main():
         selected_definition = filtered_df['DEFINITION'].iloc[0]
         st.markdown(f"## {selected_definition}", unsafe_allow_html=True)
 
-        st.write('Authoritative Sources(s)')
+        st.write('Authoritative Source(s)')
         selected_authoratative_source = filtered_df['AUTHORITATIVE_SOURCE'].iloc[0]
         st.markdown(f"## {selected_authoratative_source}",unsafe_allow_html=True)
     
     with col5:
-        st.header('Related Auth Sorces')
+        st.write('Related Critical Data Elements & Authoritative Sources')
 
     # Display DataFrame
     st.dataframe(filtered_df, hide_index=True)
