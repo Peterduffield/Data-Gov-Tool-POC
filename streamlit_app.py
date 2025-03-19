@@ -63,7 +63,7 @@ def main():
     col3,col4,col5 =st.columns([2,2,4])
     with col3:
         st.write('Data Owner')
-        selected_data_owner = filtered_df['DATA_OWNER'].iloc[0]
+        selected_data_owner = filtered_df['DATA_OWNER_EMPLOYEE_NAME'].iloc[0]
         st.markdown(f"<h1 style='color: black;'>{selected_data_owner}%</h1>", unsafe_allow_html=True)
 
     # Display DataFrame
