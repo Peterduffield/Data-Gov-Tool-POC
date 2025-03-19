@@ -17,8 +17,11 @@ def create_snowflake_session():
 
 
 def main():
-    st.title("Snowflake Data Viewer")
-
+    col1, col2 = st.columns([3,1])
+    with col1:
+        st.title("Data Governance Tool")
+    with col2:
+        st.image("https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png")
     session = create_snowflake_session()
     
     # Run SQL query
