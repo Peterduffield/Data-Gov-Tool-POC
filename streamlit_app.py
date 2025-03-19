@@ -25,11 +25,19 @@ def main():
     col1, col2 = st.columns([1,4])
     with col1:
         st.image("https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png")
+    with col2:
+        st.write(" ")
+
     st.title("Data Governance Tool")
+
     col3, col4, col5 = st.columns
+    with col3:
+        st.write(" ")    
     with col4:
         st.subheader("Key Business Term Glossary")
-    
+    with col5:
+        st.write(" ") 
+   
     selected_business_term = st.selectbox("Select a Business Term", key_term_list,index=None)
     st.write(selected_business_term)
     
