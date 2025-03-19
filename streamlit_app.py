@@ -2,17 +2,19 @@ from snowflake.snowpark import Session
 import streamlit as st
 
 # Create a function to connect using Snowpark
+SF_CREDENTIALS = {
+    "account" = "jsa18243",
+    "user" = "lkr_python_runner",
+    "password": "pythonpassword",
+    "role" = "DATA_ENGINEER",
+    "warehouse" = "DEMO_WH",
+    "database" = "DATA_GOV_POC",
+    "schema" = "POC_TABLES"
+}
+
 def create_snowflake_session():
-    connection_parameters = {
-        "account": st.secrets["connections"]["snowflake"]["account"],
-        "user": st.secrets["connections"]["snowflake"]["user"],
-        "password": st.secrets["connections"]["snowflake"]["password"],
-        "role": st.secrets["connections"]["snowflake"]["role"],
-        "warehouse": st.secrets["connections"]["snowflake"]["warehouse"],
-        "database": st.secrets["connections"]["snowflake"]["database"],
-        "schema": st.secrets["connections"]["snowflake"]["schema"]
-    }
-    return Session.builder.configs(connection_parameters).create()
+    return Session.builder.configs(SF_CREDENTIALS).create()
+
 
 def main():
     st.title("Snowflake Data Viewer")
