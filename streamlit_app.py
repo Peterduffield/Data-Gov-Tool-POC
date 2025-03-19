@@ -90,8 +90,8 @@ def main():
     maps_to_glossary_type = data_catalog_tbl['MAPS_TO_GLOSSARY_ID_S_'].dtype
     glossary_id_type = filtered_df['GLOSSARY_ID'].dtype
 
-    print(f"data_catalog_tbl['MAPS_TO_GLOSSARY_ID_S_'] type: {maps_to_glossary_type}")
-    print(f"filtered_df['GLOSSARY_ID'] type: {glossary_id_type}")
+    st.markdown(f"data_catalog_tbl['MAPS_TO_GLOSSARY_ID_S_'] type: {maps_to_glossary_type}")
+    st.markdown(f"filtered_df['GLOSSARY_ID'] type: {glossary_id_type}")
 
 
     st.markdown(
