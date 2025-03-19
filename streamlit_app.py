@@ -86,7 +86,7 @@ def main():
             FROM DATA_CATALOG 
             WHERE CATALOG_ID IN (
                 SELECT VALUE::INT 
-                FROM BUSINESS_GLOSSARY 
+                FROM BUSINESS_GLOSSARY, 
                 LATERAL FLATTEN(input => SPLIT(RELATED_TO_CATALOG_ID_S_, ',')) 
                 WHERE KEY_BUSINESS_TERM_NAME = {selected_business_term}
             )
