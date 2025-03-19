@@ -17,6 +17,7 @@ def create_snowflake_session():
 session = create_snowflake_session()
 # Run SQL query
 business_glossary_tbl = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas()
+data_catalog_tbl = session.sql("SELECT * FROM DATA_CATALOG").to_pandas()
 
 
 
@@ -80,21 +81,8 @@ def main():
         st.markdown(f"## {selected_authoratative_source}",unsafe_allow_html=True)
     
     with col5:
-        # Use f-string to insert selected_business_term into the SQL query
-        sql_query = f"""
-            SELECT * 
-            FROM DATA_CATALOG 
-            WHERE CATALOG_ID IN (
-                SELECT VALUE::INT 
-                FROM BUSINESS_GLOSSARY, 
-                LATERAL FLATTEN(input => SPLIT(RELATED_TO_CATALOG_ID_S_, ',')) 
-                WHERE KEY_BUSINESS_TERM_NAME = {selected_business_term}
-            )
-        """
-        related_data_catalog_id_df = session.sql(sql_query).to_pandas()
-        st.dataframe(related_data_catalog_id_df)
         st.write('Related Critical Data Elements & Authoritative Sources')
-
+        st.dataframe(data_catalog_tbl)
     # Display DataFrame
     st.dataframe(filtered_df, hide_index=True)
 
