@@ -86,7 +86,7 @@ def main():
     # Display DataFrame
     st.dataframe(filtered_df, hide_index=True)
     selected_glossary_ids_str = filtered_df['RELATED_TO_CATALOG_ID_S_'].to_list()
-    selected_glossary_ids_int = [int(x) for x in selected_glossary_ids_str.split(',')]
+    selected_glossary_ids_int = [int(x) for x in selected_glossary_ids_str]
 
     related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].isin(selected_glossary_ids_int)]
         # Display the filtered DataFrame
