@@ -60,7 +60,7 @@ def main():
     if selected_business_domain:
         filtered_df = filtered_df[filtered_df["DOMAIN"] == selected_business_domain]
 
-    col3,col4 =st.columns([2,4])
+    col3,col4 =st.columns([2,2])
     with col3:
         st.write('Data Owner')
         selected_data_owner = filtered_df['DATA_OWNER_EMPLOYEE_NAME'].iloc[0]
