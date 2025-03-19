@@ -88,7 +88,7 @@ def main():
                 SELECT VALUE::INT 
                 FROM BUSINESS_GLOSSARY 
                 LATERAL FLATTEN(input => SPLIT(RELATED_TO_CATALOG_ID_S, ',')) 
-                WHERE key_business_term_name = '{selected_business_term}'
+                WHERE key_business_term_name = {selected_business_term}
             )
         """
         related_data_catalog_id_df = session.sql(sql_query).to_pandas()
