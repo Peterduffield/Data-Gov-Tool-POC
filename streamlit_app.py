@@ -18,8 +18,6 @@ session = create_snowflake_session()
 # Run SQL query
 business_glossary_tbl = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas()
 data_catalog_tbl = session.sql("SELECT * FROM DATA_CATALOG").to_pandas()
-data_catalog_tbl['CATALOG_ID'] = data_catalog_tbl['CATALOG_ID'].astype('object')
-
 
 
 def main():
@@ -87,8 +85,10 @@ def main():
 
     # Display DataFrame
     st.dataframe(filtered_df, hide_index=True)
-    selected_glossary_ids = filtered_df['RELATED_TO_CATALOG_ID_S_'].to_list()
-    related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].isin(selected_glossary_ids)]
+    selected_glossary_ids_str = filtered_df['RELATED_TO_CATALOG_ID_S_'].to_list()
+    selected_glossary_ids_int = [int(x) for x in selected_glossary_ids_str.split(',')]
+
+    related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].isin(selected_glossary_ids_int)]
         # Display the filtered DataFrame
     st.dataframe(related_catalog_id_df)
     st.markdown(f"{selected_glossary_ids}")
