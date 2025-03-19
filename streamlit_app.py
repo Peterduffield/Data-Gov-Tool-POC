@@ -22,7 +22,7 @@ business_glossary_tbl = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas
 key_term_list = business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list()
 
 def main():
-    col1, col2 = st.columns([1,4], gap="medium")
+    col1, col2 = st.columns([1,3], gap="large")
     with col1:
         st.image("https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png")
     with col2:
