@@ -3,13 +3,13 @@ import streamlit as st
 
 # Create a function to connect using Snowpark
 SF_CREDENTIALS = {
-    "account" = "jsa18243",
-    "user" = "lkr_python_runner",
+    "account": "jsa18243",
+    "user": "lkr_python_runner",
     "password": "pythonpassword",
-    "role" = "DATA_ENGINEER",
-    "warehouse" = "DEMO_WH",
-    "database" = "DATA_GOV_POC",
-    "schema" = "POC_TABLES"
+    "role": "DATA_ENGINEER",
+    "warehouse": "DEMO_WH",
+    "database": "DATA_GOV_POC",
+    "schema": "POC_TABLES"
 }
 
 def create_snowflake_session():
