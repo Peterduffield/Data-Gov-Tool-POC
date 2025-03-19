@@ -83,14 +83,14 @@ def main():
     
     with col5:
         st.write('Related Critical Data Elements & Authoritative Sources')
-        related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['MAPS_TO_GLOSSARY_ID_S_'].isin(filtered_df['GLOSSARY_ID'])]
+        related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['MAPS_TO_GLOSSARY_ID_S_'].isin(business_glossary_tbl[business_glossary_tbl["KEY_BUSINESS_TERM_NAME"] == selected_business_term])]
         st.dataframe(related_catalog_id_df)
     # Display DataFrame
     st.dataframe(filtered_df, hide_index=True)
 
+
     maps_to_glossary_type = data_catalog_tbl['MAPS_TO_GLOSSARY_ID_S_'].dtype
     glossary_id_type = filtered_df['GLOSSARY_ID'].dtype
-
     st.markdown(f"data_catalog_tbl['MAPS_TO_GLOSSARY_ID_S_'] type: {maps_to_glossary_type}")
     st.markdown(f"filtered_df['GLOSSARY_ID'] type: {glossary_id_type}")
 
