@@ -54,6 +54,7 @@ def main():
     with col2:
         selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].to_list(), index=None)
     # Apply filters only if selections are made
+    filtered_df = business_glossary_tbl  # Default to all rows
     if selected_business_term:
         filtered_df = filtered_df[filtered_df["KEY_BUSINESS_TERM_NAME"] == selected_business_term]
     if selected_business_domain:
@@ -62,9 +63,8 @@ def main():
     col3,col4,col5 =st.columns([2,2,4])
     with col3:
         st.write('Data Owner')
-        selected_data_owner = filtered_df["DATA_OWNER"].iloc[0]
+        selected_data_owner = filtered_df[filtered_df['DATA_OWNER'].iloc(0)]
         st.markdown(f"<h1 style='color: black;'>{selected_data_owner}%</h1>", unsafe_allow_html=True)
-    filtered_df = business_glossary_tbl  # Default to all rows
 
     # Display DataFrame
     st.dataframe(filtered_df, hide_index=True)
