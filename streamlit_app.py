@@ -14,23 +14,27 @@ SF_CREDENTIALS = {
 
 def create_snowflake_session():
     return Session.builder.configs(SF_CREDENTIALS).create()
+session = create_snowflake_session()
+# Run SQL query
+business_glossary_tbl = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas()
 
+# List of KeY Business Terms
+key_term_list = business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list()
 
 def main():
     col1, col2 = st.columns([1,4])
     with col1:
         st.image("https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png")
-    with col2:
-       st.write("") 
     st.title("Data Governance Tool")
-
-    session = create_snowflake_session()
+    col3, col4, col5 = st.columns
+    with col4:
+        st.subheader("Key Business Term Glossary")
     
-    # Run SQL query
-    df = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas()
+    selected_business_term = st.selectbox("Select a Business Term", key_term_list,index=None)
+    st.write(selected_business_term)
     
     # Display results in Streamlit
-    st.dataframe(df)
+    st.dataframe(business_glossary_tbl)
 
 if __name__ == "__main__":
     main()
