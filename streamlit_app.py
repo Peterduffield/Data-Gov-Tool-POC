@@ -44,5 +44,20 @@ def main():
     # Display results in Streamlit
     st.dataframe(business_glossary_tbl)
     st.image("https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png")
+    st.markdown(
+    """
+    <style>
+    .container {
+        display: flex;
+        justify-content: center;
+    }
+    </style>
+    <div class="container">
+        <img src="https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png" alt="Hakkoda Logo">
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
 if __name__ == "__main__":
     main()
