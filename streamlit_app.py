@@ -83,8 +83,12 @@ def main():
     
     with col5:
         st.write('Related Critical Data Elements & Authoritative Sources')
-        related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['MAPS_TO_GLOSSARY_ID_S_'].isin(business_glossary_tbl[business_glossary_tbl["KEY_BUSINESS_TERM_NAME"] == selected_business_term])]
+        selected_glossary_ids = business_glossary_tbl[business_glossary_tbl["KEY_BUSINESS_TERM_NAME"] == selected_business_term]["GLOSSARY_ID"].astype("object")
+        # Filter data_catalog_tbl where MAPS_TO_GLOSSARY_ID_S_ is in the selected GLOSSARY_IDs
+        related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['MAPS_TO_GLOSSARY_ID_S_'].isin(selected_glossary_ids)]
+        # Display the filtered DataFrame
         st.dataframe(related_catalog_id_df)
+
     # Display DataFrame
     st.dataframe(filtered_df, hide_index=True)
 
