@@ -80,7 +80,7 @@ def main():
         st.markdown(f"## {selected_authoratative_source}",unsafe_allow_html=True)
     
     with col5:
-        st.write('Related Critical Data Element(s)')
+        st.write('Related Critical Data Elements and Database')
         data_catalog_tbl["CATALOG_ID"] = data_catalog_tbl["CATALOG_ID"].astype(str)
         selected_glossary_ids = (
         filtered_df['RELATED_TO_CATALOG_ID_S_']
@@ -92,7 +92,8 @@ def main():
         )   
         related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].astype(str).isin(selected_glossary_ids)]
         related_attribute_name = related_catalog_id_df['ATTRIBUTE_NAME'].to_list()
-        st.markdown(f" ## {related_attribute_name}", unsafe_allow_html=True)
+        related_attribute_db = related_catalog_id_df['DATABASE_NAME'].to_list()
+        st.markdown(f" ## {related_attribute_name}, {related_attribute_db}", unsafe_allow_html=True)
     
 
 
