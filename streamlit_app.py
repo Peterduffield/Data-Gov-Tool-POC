@@ -125,7 +125,7 @@ def main():
 
 
     with st.popover("Update Relationships"):
-        st.markdown("")
+        st.markdown(" ")
         key_term_to_update = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(),index=None)
         critical_elemnt_to_update = st.selectbox("Select a Data Element", data_catalog_tbl['ATTRIBUTE_NAME'].to_list(),index=None)
 
