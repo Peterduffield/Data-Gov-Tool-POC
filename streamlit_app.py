@@ -123,6 +123,13 @@ def main():
         related_glossery_df = business_glossary_tbl[business_glossary_tbl["GLOSSARY_ID"].isin(selected_catalog_ids)]
         st.dataframe(related_glossery_df, hide_index=True)
 
+
+    with st.popover("Update Relationships"):
+        st.markdown("")
+        key_term_to_update = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(),index=None)
+        critical_elemnt_to_update = st.selectbox("Select a Data Element", data_catalog_tbl['ATTRIBUTE_NAME'].to_list(),index=None)
+
+
     st.markdown(
     """
     <style>
@@ -140,9 +147,7 @@ def main():
     """,
     unsafe_allow_html=True,
     )
-    with st.popover("Update Relationships"):
-        st.markdown("Hello World 👋")
-        name = st.text_input("What's your name?")
+
 
     st.write("Your name:", name)
 if __name__ == "__main__":
