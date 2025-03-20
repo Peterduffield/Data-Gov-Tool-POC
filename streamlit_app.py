@@ -98,12 +98,10 @@ def main():
             [f"Attribute: {attr}  Database: {db}" for attr, db in zip(related_attribute_name, related_attribute_db)]
         )
         st.markdown(f"#### {related_info}", unsafe_allow_html=True) 
-
-    # Combine attributes and databases into a formatted string
-
+    st.subheader(" ")
     # Display DataFrame
     st.dataframe(filtered_df, hide_index=True)
-  
+    st.divider()
 
 
     st.markdown(
