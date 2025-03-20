@@ -90,17 +90,17 @@ def main():
         .astype(str)       # Ensure values remain as strings
         .tolist()          # Convert to a Python list
         )   
+        st.markdown(f"## {related_info}", unsafe_allow_html=True)        
         related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].astype(str).isin(selected_glossary_ids)]
         related_attribute_name = related_catalog_id_df['ATTRIBUTE_NAME'].to_list()
-        related_attribute_db = related_catalog_id_df['DATABASE_NAME'].to_list()
-        st.markdown(f" ## {related_attribute_name}, {related_attribute_db}", unsafe_allow_html=True)
+        related_attribute_db = related_catalog_id_df['DATABASE_NAME'].to_list()        
+        related_info = ", ".join(
+            [f"Attribute: {attr}  Database: {db}" for attr, db in zip(related_attribute_name, related_attribute_db)]
+        )
     
 
     # Combine attributes and databases into a formatted string
-    related_info = ", ".join(
-        [f"Attribute: {attr}  Database: {db}" for attr, db in zip(related_attribute_name, related_attribute_db)]
-    )
-    st.markdown(f"## {related_info}", unsafe_allow_html=True)
+
 
     st.write(data_catalog_tbl["CATALOG_ID"].iloc[0])
     st.write(filtered_df['RELATED_TO_CATALOG_ID_S_'].iloc[0])
