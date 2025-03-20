@@ -84,6 +84,7 @@ def main():
 
     related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].isin(filtered_df['RELATED_TO_CATALOG_ID_S_'])]
     st.write(data_catalog_tbl["CATALOG_ID"].iloc[0])
+    st.write(filtered_df['RELATED_TO_CATALOG_ID_S_'].iloc[0])
     st.dataframe(related_catalog_id_df)
     st.dataframe(data_catalog_tbl)
 
