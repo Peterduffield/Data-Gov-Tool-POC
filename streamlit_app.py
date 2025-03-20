@@ -91,7 +91,7 @@ def main():
         .tolist()          # Convert to a Python list
         )   
         related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].astype(str).isin(selected_glossary_ids)]
-        related_attribute_name = related_catalog_id_df['ATTRIBUTE_NAME'].iloc[0]
+        related_attribute_name = related_catalog_id_df['ATTRIBUTE_NAME'].to_list()
         st.markdown(f" ## {related_attribute_name}", unsafe_allow_html=True)
     
 
