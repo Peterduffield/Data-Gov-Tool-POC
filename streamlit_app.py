@@ -80,8 +80,10 @@ def main():
         st.markdown(f"## {selected_authoratative_source}",unsafe_allow_html=True)
     
     with col5:
-        st.write('Related Critical Data Elements & Authoritative Sources')
+        st.write('Related Critical Data Element(s)')
 
+    related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].isin(filtered_df['RELATED_TO_CATALOG_ID_S_'])]
+    st.dataframe(related_catalog_id_df)
     st.dataframe(data_catalog_tbl)
 
     # Display DataFrame
