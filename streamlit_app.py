@@ -50,7 +50,7 @@ def main():
 
     col1, col2 = st.columns(2)
     with col1:
-        selected_business_term = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(),index=None)
+        selected_business_term = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(),index=None, key= "Select Term to Filter")
     with col2:
         selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].to_list(), index=None)
     # Apply filters only if selections are made
@@ -126,7 +126,7 @@ def main():
 
     with st.popover("Update Relationships"):
         st.markdown(" ")
-        key_term_to_update = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(),index=None)
+        key_term_to_update = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(),index=None, key= "Update Relations Term")
         critical_elemnt_to_update = st.selectbox("Select a Data Element", data_catalog_tbl['ATTRIBUTE_NAME'].to_list(),index=None)
 
 
