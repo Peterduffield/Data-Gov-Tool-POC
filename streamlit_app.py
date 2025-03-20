@@ -151,24 +151,24 @@ def main():
                     st.warning("Please select both a business term and a data element.")
         with remove:
             if st.button('Remove Related Catalog ID'):
-            if key_term_to_update and critical_element_to_update:
-                # Call the stored procedure via Snowflake
-                try:
-                    result = session.sql(f"""
-                        CALL STREAMLIT_REMOVE_RELATED_DATA_ELEMENTS(
-                            '{critical_element_to_update}', 
-                            '{key_term_to_update}'
-                        )
-                    """).collect()
+                if key_term_to_update and critical_element_to_update:
+                    # Call the stored procedure via Snowflake
+                    try:
+                        result = session.sql(f"""
+                            CALL STREAMLIT_REMOVE_RELATED_DATA_ELEMENTS(
+                                '{critical_element_to_update}', 
+                                '{key_term_to_update}'
+                            )
+                        """).collect()
+                        
+                        # Show the result message
+                        st.success("Procedure executed successfully!")
+                        st.write(result)
                     
-                    # Show the result message
-                    st.success("Procedure executed successfully!")
-                    st.write(result)
-                
-                except Exception as e:
-                    st.error(f"An error occurred: {str(e)}")
-            else:
-                st.warning("Please select both a business term and a data element.")
+                    except Exception as e:
+                        st.error(f"An error occurred: {str(e)}")
+                else:
+                    st.warning("Please select both a business term and a data element.")
 
     st.markdown(
     """
