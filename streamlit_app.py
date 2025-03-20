@@ -103,6 +103,13 @@ def main():
     st.dataframe(filtered_df, hide_index=True)
     st.divider()
 
+    related_data_catalog_tbl, related_business_glossary_tbl = st.columns(2)
+    with related_data_catalog_tbl:
+        st.write("Related Critical Data Element Catalog")
+        st.dataframe(related_catalog_id_df, hide_index=True)
+
+    with related_business_glossary_tbl:
+        st.write("Related Key Business Term Glossary")
 
     st.markdown(
     """
