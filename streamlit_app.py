@@ -83,9 +83,9 @@ def main():
         st.write('Related Critical Data Element(s)')
         data_catalog_tbl["CATALOG_ID"] = data_catalog_tbl["CATALOG_ID"].astype(str)
         related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].isin(filtered_df['RELATED_TO_CATALOG_ID_S_'])]
-        related_attribute_name = related_catalog_id_df['ATTRIBUTE_NAME'].iloc[0]
-        st.markdown(f" ## {related_attribute_name}", unsafe_allow_html=True)
-        
+        #related_attribute_name = related_catalog_id_df['ATTRIBUTE_NAME'].iloc[0]
+        #st.markdown(f" ## {related_attribute_name}", unsafe_allow_html=True)
+
     st.write(data_catalog_tbl["CATALOG_ID"].iloc[0])
     st.write(filtered_df['RELATED_TO_CATALOG_ID_S_'].iloc[0])
     st.dataframe(related_catalog_id_df)
