@@ -97,7 +97,7 @@ def main():
         related_info = ", ".join(
             [f"Attribute: {attr}  Database: {db}" for attr, db in zip(related_attribute_name, related_attribute_db)]
         )
-        st.markdown(f"## {related_info}", unsafe_allow_html=True) 
+        st.markdown(f"# {related_info}", unsafe_allow_html=True) 
 
     # Combine attributes and databases into a formatted string
 
