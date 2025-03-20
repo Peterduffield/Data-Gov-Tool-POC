@@ -101,12 +101,6 @@ def main():
 
     # Combine attributes and databases into a formatted string
 
-
-    st.write(data_catalog_tbl["CATALOG_ID"].iloc[0])
-    st.write(filtered_df['RELATED_TO_CATALOG_ID_S_'].iloc[0])
-    st.dataframe(related_catalog_id_df)
-    st.dataframe(data_catalog_tbl)
-
     # Display DataFrame
     st.dataframe(filtered_df, hide_index=True)
   
