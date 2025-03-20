@@ -111,6 +111,18 @@ def main():
     with related_business_glossary_tbl:
         st.write("Related Key Business Term Glossary")
 
+        business_glossary_tbl["GLOSSARY_ID"] = business_glossary_tbl["GLOSSARY_ID"].astype(str)
+        selected_catalog_ids = (
+        related_catalog_id_df['MAPS_TO_GLOSSARY_ID_S_']
+        .astype(str)       # Ensure it's a string
+        .str.split(',\s*') # Split by commas and optional spaces
+        .explode()         # Flatten the list
+        .astype(str)       # Ensure values remain as strings
+        .tolist()          # Convert to a Python list
+        )
+        related_glossery_df = business_glossary_tbl[business_glossary_tbl["GLOSSARY_ID"].isin(selected_catalog_ids)]
+        st.dataframe(related_glossery_df, hide_index=True)
+
     st.markdown(
     """
     <style>
