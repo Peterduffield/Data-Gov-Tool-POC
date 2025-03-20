@@ -82,10 +82,12 @@ def main():
     with col5:
         st.write('Related Critical Data Elements & Authoritative Sources')
 
+    st.dataframe(data_catalog_tbl)
 
     # Display DataFrame
     st.dataframe(filtered_df, hide_index=True)
   
+
 
     st.markdown(
     """
