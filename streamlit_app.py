@@ -82,9 +82,21 @@ def main():
     with col5:
         st.write('Related Critical Data Element(s)')
         data_catalog_tbl["CATALOG_ID"] = data_catalog_tbl["CATALOG_ID"].astype(str)
-        related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].isin(filtered_df['RELATED_TO_CATALOG_ID_S_'])]
         #related_attribute_name = related_catalog_id_df['ATTRIBUTE_NAME'].iloc[0]
         #st.markdown(f" ## {related_attribute_name}", unsafe_allow_html=True)
+
+    selected_glossary_ids = (
+    filtered_df['RELATED_TO_CATALOG_ID_S_']
+    .astype(str)       # Ensure it's a string
+    .str.split(',\s*') # Split by commas and optional spaces
+    .explode()         # Flatten the list
+    .astype(str)       # Ensure values remain as strings
+    .tolist()          # Convert to a Python list
+)
+    # Debugging Output
+    st.write("Filtered IDs:", selected_glossary_ids)
+    related_catalog_id_df = data_catalog_tbl[data_catalog_tbl['CATALOG_ID'].astype(str).isin(selected_glossary_ids)]
+
 
     st.write(data_catalog_tbl["CATALOG_ID"].iloc[0])
     st.write(filtered_df['RELATED_TO_CATALOG_ID_S_'].iloc[0])
