@@ -212,6 +212,7 @@ def main():
                 selected_attribute_catalog_tbl = data_catalog_tbl[data_catalog_tbl['ATTRIBUTE_NAME'] == selected_data_attribute]
         with application:
             attribute_application = selected_attribute_catalog_tbl['APPLICATION_NAME'].iloc[0]
+            st.write("Application:")
             st.markdown(
                 f"""
                 <style>
@@ -221,20 +222,12 @@ def main():
                     align-items: center;
                     text-align: center;
                 }}
-                .title-container p {{
-                    font-size: 0.9em; /* Slightly smaller text */
-                    color: #555; /* Lighter text color */
-                    margin-bottom: 2px; /* Reduce spacing between label and value */
-                    text-align: center;
-                }}
                 .title-container h1 {{
-                    font-size: 1.2em; /* Adjust size as needed */
-                    margin-top: 0px; /* Ensure no extra margin */
-                    text-align: center;
+                    font-size: 2.5em; /* Adjust size as needed */
+                    margin-bottom: 5px; /* Spacing between title and subtitle */
                 }}
                 </style>
                 <div class="title-container">
-                    <p>Application</p>
                     <h1>{attribute_application}</h1>
                 </div>
                 """,
