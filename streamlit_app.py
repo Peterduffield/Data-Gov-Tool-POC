@@ -225,10 +225,12 @@ def main():
                     font-size: 0.9em; /* Slightly smaller text */
                     color: #555; /* Lighter text color */
                     margin-bottom: 2px; /* Reduce spacing between label and value */
+                    text-align: center;
                 }}
                 .title-container h1 {{
                     font-size: 1.2em; /* Adjust size as needed */
                     margin-top: 0px; /* Ensure no extra margin */
+                    text-align: center;
                 }}
                 </style>
                 <div class="title-container">
