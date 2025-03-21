@@ -206,13 +206,12 @@ def main():
         st.subheader("Attribute Search")
         select_box, application = st.columns([4,1])
         with select_box:
-            st.selectbox("Select an Attribute:", data_catalog_tbl['ATTRIBUTE_NAME'].unique(), index=None)
+            selected_data_attribute = st.selectbox("Select an Attribute:", data_catalog_tbl['ATTRIBUTE_NAME'].unique(), index=None)
         with application:
             #####################
             st.write("#APLICATION#")
-        
-
-
+        selected_attribute_catalog_tbl = data_catalog_tbl[data_catalog_tbl['ATTRIBUTE_NAME'] == selected_data_attribute]
+        st.dataframe(selected_attribute_catalog_tbl, hide_index=True)
 
 if __name__ == "__main__":
     main()
