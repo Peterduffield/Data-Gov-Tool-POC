@@ -215,25 +215,27 @@ def main():
             st.markdown(
                 f"""
                 <style>
-                .title-container {{
+                .center-container {{
                     display: flex;
                     flex-direction: column;
+                    justify-content: center;
                     align-items: center;
                     text-align: center;
+                    width: 100%;
                 }}
-                .title-container p {{
-                    font-size: 0.9em; /* Slightly smaller text */
+                .center-container p {{
+                    font-size: 1em; /* Slightly smaller than the application name */
                     color: #555; /* Lighter text color */
-                    margin-bottom: 2px; /* Reduce spacing between label and value */
-                    text-align: center;
+                    margin-bottom: 5px; /* Space between text */
+                    font-weight: normal;
                 }}
-                .title-container h1 {{
-                    font-size: 1.2em; /* Adjust size as needed */
-                    margin-top: 0px; /* Ensure no extra margin */
-                    text-align: center;
+                .center-container h1 {{
+                    font-size: 1.3em; /* Slightly larger text */
+                    margin-top: 0px;
+                    font-weight: bold;
                 }}
                 </style>
-                <div class="title-container">
+                <div class="center-container">
                     <p>Application</p>
                     <h1>{attribute_application}</h1>
                 </div>
