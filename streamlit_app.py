@@ -246,6 +246,7 @@ def main():
             )
         col6, col7, col8, col9 = st.columns(4)
         with col6:
+            selected_data_custodian = selected_attribute_catalog_tbl['DATA_CUSTODIAN'].iloc[0]
             st.markdown(
                 f"""
                 <style>
@@ -271,7 +272,6 @@ def main():
             )
             
             st.write("Data Custodian:")
-            selected_data_custodian = selected_attribute_catalog_tbl['DATA_CUSTODIAN'].iloc[0]
             st.markdown(f"#### {selected_data_custodian}", unsafe_allow_html=True)
             
         
