@@ -200,9 +200,9 @@ def main():
                 st.dataframe(filtered_data_catalog_tbl, hide_index=True)  
             else: 
                 st.dataframe(filtered_data_catalog_tbl)          
-        st.subheader(" ")
+        st.write(" ")
         st.divider()
-        st.subheader(" ")
+        st.write(" ")
         st.subheader("Attribute Search")
         select_box, application = st.columns([4,1])
         with select_box:
