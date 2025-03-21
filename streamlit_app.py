@@ -225,7 +225,7 @@ def main():
                 .label {{
                     text-align: left;
                     width: 100%;
-                    font-size: 1em;
+                    font-size: .75em;
                     color: #555;
                     margin-bottom: 2px;
                 }}
