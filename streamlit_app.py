@@ -247,6 +247,22 @@ def main():
    
         
         st.dataframe(selected_attribute_catalog_tbl, hide_index=True)
-
+        st.markdown(
+        """
+        <style>
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        .container img {
+            transform: scale(0.5);
+        }
+        </style>
+        <div class="container">
+            <img src="https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png" alt="Hakkoda Logo">
+        </div>
+        """,
+        unsafe_allow_html=True,
+        )
 if __name__ == "__main__":
     main()
