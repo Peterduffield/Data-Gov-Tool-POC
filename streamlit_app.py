@@ -238,26 +238,32 @@ def main():
             st.markdown(
                 f"""
                 <style>
-                .title-container {{
+                .container {{
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     text-align: center;
+                    width: 100%;
                 }}
-                .title-container p {{
-                    font-size: 1em; /* Adjust label text size */
-                    color: #555; /* Slightly lighter text */
-                    margin-bottom: 0px; /* Reduce gap between label and value */
+                .label {{
+                    text-align: left;
+                    width: 100%;
+                    font-size: 1em;
+                    color: #555;
+                    font-weight: bold;
+                    margin-bottom: 2px;
                 }}
-                .title-container h1 {{
-                    font-size: 1.5em; /* Adjust value text size */
-                    margin-top: 2px; /* Slight spacing */
-                    font-weight: bold; /* Ensure it's prominent */
+                .value {{
+                    text-align: center;
+                    font-size: 1.5em;
+                    font-weight: bold;
+                    margin-top: 2px;
                 }}
                 </style>
-                <div class="title-container">
-                    <p><strong>Application:</strong></p>  <!-- Label -->
-                    <h1>{attribute_application}</h1>  <!-- Value -->
+                
+                <div class="container">
+                    <div class="label">Application:</div> <!-- Left-aligned label -->
+                    <div class="value">{attribute_application}</div> <!-- Center-aligned value -->
                 </div>
                 """,
                 unsafe_allow_html=True
