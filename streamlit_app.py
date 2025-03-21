@@ -295,7 +295,108 @@ def main():
                 """,
                 unsafe_allow_html=True
             )            
-    
+        with col7:
+            selected_data_tag = selected_attribute_catalog_tbl['TAGS'].iloc[0]
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Technical Data Steward</p>
+                    <h4 class="value">{selected_data_tag}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )            
+
+            selected_data_db_name = selected_attribute_catalog_tbl['DATABASE_NAME'].iloc[0]
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Technical Data Steward</p>
+                    <h4 class="value">{selected_data_db_name}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        with col8:
+            selected_data_desc = selected_attribute_catalog_tbl['ATTRIBUTE_DESCRIPTION'].iloc[0]
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Technical Data Steward</p>
+                    <h4 class="value">{selected_data_desc}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            ) 
+
+            selected_data_classification = selected_attribute_catalog_tbl['DATA_CLASSIFICATION'].iloc[0]
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Technical Data Steward</p>
+                    <h4 class="value">{selected_data_classification}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            ) 
+
+
         st.dataframe(selected_attribute_catalog_tbl, hide_index=True)
         st.markdown(
         """
