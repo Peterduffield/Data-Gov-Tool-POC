@@ -240,38 +240,7 @@ def main():
                 """,
                 unsafe_allow_html=True
             )
-            attribute_application = selected_attribute_catalog_tbl['APPLICATION_NAME'].iloc[0]
-
-            # Styling for centering both elements
-            st.markdown(
-                """
-                <style>
-                .center-text {
-                    text-align: center;
-                    width: 100%;
-                }
-                .app-label {
-                    font-size: 1em;
-                    color: #555;
-                    font-weight: normal;
-                    margin-bottom: 5px;
-                }
-                .app-name {
-                    font-size: 1.3em;
-                    font-weight: bold;
-                    margin-top: 0px;
-                }
-                </style>
-                """,
-                unsafe_allow_html=True
-            )
-
-            # First markdown for "Application" label
-            st.markdown('<p class="center-text app-label">Application</p>', unsafe_allow_html=True)
-
-            # Second markdown for the actual application name
-            st.markdown(f'<h1 class="center-text app-name">{attribute_application}</h1>', unsafe_allow_html=True)
-
+            
         
         st.dataframe(selected_attribute_catalog_tbl, hide_index=True)
 
