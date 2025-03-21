@@ -192,14 +192,14 @@ def main():
                 filtered_data_catalog_tbl = data_catalog_tbl[data_catalog_tbl['PLATFORM_SERVER'] == selected_platform_server]
                 st.dataframe(filtered_data_catalog_tbl, hide_index=True)  
             else:
-                st.dataframe(filtered_data_catalog_tbl)       
+                st.dataframe(filtered_data_catalog_tbl, hide_index=True)       
         else:    
             selected_application = st.selectbox("Select an Application Name:", data_catalog_tbl['APPLICATION_NAME'].unique(), index=None)
             if selected_application:
                 filtered_data_catalog_tbl = data_catalog_tbl[data_catalog_tbl['APPLICATION_NAME'] == selected_application]
                 st.dataframe(filtered_data_catalog_tbl, hide_index=True)  
             else: 
-                st.dataframe(filtered_data_catalog_tbl)          
+                st.dataframe(filtered_data_catalog_tbl, hide_index=True)          
         st.write(" ")
         st.divider()
         st.write(" ")
