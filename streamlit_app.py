@@ -113,13 +113,55 @@ def main():
             )            
 
         with col4:
-            st.write('Definition')
             selected_definition = filtered_df['DEFINITION'].iloc[0]
-            st.markdown(f"## {selected_definition}", unsafe_allow_html=True)
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Definition:</p>
+                    <h4 class="value">{selected_definition}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )            
 
-            st.write('Authoritative Source(s)')
             selected_authoratative_source = filtered_df['AUTHORITATIVE_SOURCE'].iloc[0]
-            st.markdown(f"## {selected_authoratative_source}",unsafe_allow_html=True)
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Authoritative Source</p>
+                    <h4 class="value">{selected_authoratative_source}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )            
         
         with col5:
             st.write('Related Critical Data Elements and Database')
