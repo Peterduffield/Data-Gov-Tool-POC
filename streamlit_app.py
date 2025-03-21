@@ -200,7 +200,16 @@ def main():
                 st.dataframe(filtered_data_catalog_tbl, hide_index=True)  
             else: 
                 st.dataframe(filtered_data_catalog_tbl)          
-        
+        st.subheader(" ")
+        st.divider()
+        st.subheader(" ")
+        st.subheader("Attribute Search")
+        select_box, application = st.columns([4,1])
+        with select_box:
+            st.selectbox("Select an Attribute:", data_catalog_tbl['ATTRIBUTE_NAME'].unique(), index=None)
+        with application:
+            #####################
+            st.write("#APLICATION#")
         
 
 
