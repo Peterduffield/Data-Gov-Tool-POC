@@ -211,8 +211,26 @@ def main():
             if selected_data_attribute:
                 selected_attribute_catalog_tbl = data_catalog_tbl[data_catalog_tbl['ATTRIBUTE_NAME'] == selected_data_attribute]
         with application:
-            #####################
-            st.write("#APLICATION#")
+            st.markdown(
+                """
+                <style>
+                .title-container {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                }
+                .title-container h1 {
+                    font-size: 1em; /* Adjust size as needed */
+                    margin-bottom: 5px; /* Spacing between title and subtitle */
+                }
+                </style>
+                <div class="title-container">
+                    <h1>Application</h1>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
         
         st.dataframe(selected_attribute_catalog_tbl, hide_index=True)
 
