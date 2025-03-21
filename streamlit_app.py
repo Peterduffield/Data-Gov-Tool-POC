@@ -289,7 +289,7 @@ def main():
                 </style>
                 
                 <div class="custom-container">
-                    <p class="label">Technical Data Steward</p>
+                    <p class="label">Technical Data Steward:</p>
                     <h4 class="value">{selected_tech_data_steward}</h4>
                 </div>
                 """,
@@ -314,7 +314,7 @@ def main():
                 </style>
                 
                 <div class="custom-container">
-                    <p class="label">Technical Data Steward</p>
+                    <p class="label">Tag:</p>
                     <h4 class="value">{selected_data_tag}</h4>
                 </div>
                 """,
@@ -339,7 +339,7 @@ def main():
                 </style>
                 
                 <div class="custom-container">
-                    <p class="label">Technical Data Steward</p>
+                    <p class="label">Database Name:</p>
                     <h4 class="value">{selected_data_db_name}</h4>
                 </div>
                 """,
@@ -364,7 +364,7 @@ def main():
                 </style>
                 
                 <div class="custom-container">
-                    <p class="label">Technical Data Steward</p>
+                    <p class="label">Description:</p>
                     <h4 class="value">{selected_data_desc}</h4>
                 </div>
                 """,
@@ -389,7 +389,7 @@ def main():
                 </style>
                 
                 <div class="custom-container">
-                    <p class="label">Technical Data Steward</p>
+                    <p class="label">Classification:</p>
                     <h4 class="value">{selected_data_classification}</h4>
                 </div>
                 """,
