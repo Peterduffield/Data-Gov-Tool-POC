@@ -246,7 +246,31 @@ def main():
             )
         col6, col7, col8, col9 = st.columns(4)
         with col6:
-            st.write("Data Custodian")
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Data Custodian:</p>
+                    <h4 class="value">{selected_data_custodian}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+            
+            st.write("Data Custodian:")
             selected_data_custodian = selected_attribute_catalog_tbl['DATA_CUSTODIAN'].iloc[0]
             st.markdown(f"#### {selected_data_custodian}", unsafe_allow_html=True)
             
