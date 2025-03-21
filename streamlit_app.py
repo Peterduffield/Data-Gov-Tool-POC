@@ -478,7 +478,7 @@ def main():
         business_data_toggle = st.toggle("Filter by Business Governance Role or Data Governance Role")
         if business_data_toggle:
             selected_data_gov_role = st.selectbox("Select a Data Governace Role:", ['Data Custodian', 'Technical Data Steward'], index=None)
-
+        st.dataframe(employee_glossary_tbl)
 
         st.markdown(
         """
