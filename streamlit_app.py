@@ -33,7 +33,7 @@ def main():
         }
         .title-container h1 {
             font-size: 2.5em; /* Adjust size as needed */
-            margin-bottom: 15px; /* Spacing between title and subtitle */
+            margin-bottom: 45px; /* Spacing between title and subtitle */
         }
         </style>
         <div class="title-container">
