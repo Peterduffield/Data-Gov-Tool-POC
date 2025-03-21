@@ -204,13 +204,16 @@ def main():
         st.divider()
         st.write(" ")
         st.subheader("Attribute Search")
+        selected_attribute_catalog_tbl = data_catalog_tbl
         select_box, application = st.columns([4,1])
         with select_box:
             selected_data_attribute = st.selectbox("Select an Attribute:", data_catalog_tbl['ATTRIBUTE_NAME'].unique(), index=None)
+            if selected_data_attribute:
+                selected_attribute_catalog_tbl = data_catalog_tbl[data_catalog_tbl['ATTRIBUTE_NAME'] == selected_data_attribute]
         with application:
             #####################
             st.write("#APLICATION#")
-        selected_attribute_catalog_tbl = data_catalog_tbl[data_catalog_tbl['ATTRIBUTE_NAME'] == selected_data_attribute]
+        
         st.dataframe(selected_attribute_catalog_tbl, hide_index=True)
 
 if __name__ == "__main__":
