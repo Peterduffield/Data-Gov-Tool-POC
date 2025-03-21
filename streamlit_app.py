@@ -20,7 +20,8 @@ business_glossary_tbl = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas
 data_catalog_tbl = session.sql("SELECT * FROM DATA_CATALOG").to_pandas()
 employee_catalog_tbl = session.sql("SELECT * FROM EMPLOYEE_CATALOG").to_pandas()
 employee_use_case_catalog_tbl = session.sql("SELECT e.*, i.* FROM EMPLOYEE_CATALOG e LEFT JOIN USE_CASE_INVENTORY_CATALOG i ON e.EMPLOYEE_NAME = i.BUSINESS_STAKEHOLDER").to_pandas()
-employee_glossary_tbl = session.sql("SELECT DISTINCT e.*,  bg.* from EMPLOYEE_CATALOG e LEFT JOIN BUSINESS_GLOSSARY bg ON bg.Data_Owner_Employee_Name = e.EMPLOYEE_NAME OR bg.Data_Steward_Employee_Name = e.EMPLOYEE_NAME WHERE e.GOVERNANCE_ROLE = 'Data Owner' or e.GOVERNANCE_ROLE = 'Data Steward'")
+employee_glossary_tbl = session.sql("SELECT DISTINCT e.*,  bg.* from EMPLOYEE_CATALOG e LEFT JOIN BUSINESS_GLOSSARY bg ON bg.Data_Owner_Employee_Name = e.EMPLOYEE_NAME OR bg.Data_Steward_Employee_Name = e.EMPLOYEE_NAME WHERE e.GOVERNANCE_ROLE = 'Data Owner' or e.GOVERNANCE_ROLE = 'Data Steward'").to_pandas()
+employee_catalog_tbl = session.sql("SELECT DISTINCT e.*,  dc.* from EMPLOYEE_CATALOG e LEFT JOIN DATA_CATALOG dc ON dc.Data_Custodian = e.EMPLOYEE_NAME OR dc.Technical_Data_Steward = e.EMPLOYEE_NAME WHERE e.GOVERNANCE_ROLE = 'Data Custodian' or e.GOVERNANCE_ROLE = 'Technical Data Steward'").to_pandas()
 
 def main():
 
@@ -477,8 +478,17 @@ def main():
 
         business_data_toggle = st.toggle("Filter by Business Governance Role or Data Governance Role")
         if business_data_toggle:
+            employee_gov_role_tbl = employee_catalog_tbl
             selected_data_gov_role = st.selectbox("Select a Data Governace Role:", ['Data Custodian', 'Technical Data Steward'], index=None)
-        st.dataframe(employee_glossary_tbl)
+            if selected_data_gov_role:
+                employee_gov_role_tbl = employee_catalog_tbl[employee_catalog_tbl['GOVERNANCE_ROLE'] == selected_data_gov_role]
+        else:
+            employee_gov_role_tbl = employee_glossary_tbl
+            selected_business_gov_role = st.selectbox("Select a Business Governance Role:", ['Data Owner', 'Data Steward'], index=None)
+            if selected_business_gov_role:
+                employee_gov_role_tbl = employee_glossary_tbl[employee_glossary_tbl['GOVERNANCE_ROLE'] == selected_business_gov_role]
+                
+        st.dataframe(employee_gov_role_tbl, hide_index=True)
 
         st.markdown(
         """
