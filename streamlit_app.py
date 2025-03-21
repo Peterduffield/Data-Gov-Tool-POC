@@ -224,6 +224,7 @@ def main():
                 }}
                 .title-container h1 {{
                     font-size: 2.5em; /* Adjust size as needed */
+                    margin-top: 5px; /* Adjust the top margin */
                     margin-bottom: 5px; /* Spacing between title and subtitle */
                 }}
                 </style>
