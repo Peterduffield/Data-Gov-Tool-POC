@@ -19,7 +19,7 @@ session = create_snowflake_session()
 business_glossary_tbl = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas()
 data_catalog_tbl = session.sql("SELECT * FROM DATA_CATALOG").to_pandas()
 employee_catalog_tbl = session.sql("SELECT * FROM EMPLOYEE_CATALOG").to_pandas()
-employee_use_case_catalog_tbl = session.sql("SELECT e.*, i.* FROM EMPLOYEE_CATALOG e LEFT JOIN USE_CASE_INVENTORY_CATALOG i ON e.EMPLOYEE_NAME = i.BUSINESS_STAKEHOLDER")
+employee_use_case_catalog_tbl = session.sql("SELECT e.*, i.* FROM EMPLOYEE_CATALOG e LEFT JOIN USE_CASE_INVENTORY_CATALOG i ON e.EMPLOYEE_NAME = i.BUSINESS_STAKEHOLDER").to_pandas()
 def main():
 
     st.markdown(
@@ -466,7 +466,7 @@ def main():
         )
     with tab3:
         domain_filter_employee_tbl = employee_use_case_catalog_tbl
-        selected_domain = st.selectbox("Select a Domain:", employee_use_case_catalog_tbl['PRIMARY_DOMAIN'].to_list(), index=None)
+        selected_domain = st.selectbox("Select a Domain:", employee_use_case_catalog_tbl['PRIMARY_DOMAIN'].to_list())
         #if selected_domain:
         #   domain_filter_employee_tbl = employee_use_case_catalog_tbl[employee_use_case_catalog_tbl['PRIMARY_DOMAIN'] == selected_domain]
         st.dataframe(domain_filter_employee_tbl)
