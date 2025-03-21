@@ -211,22 +211,25 @@ def main():
             if selected_data_attribute:
                 selected_attribute_catalog_tbl = data_catalog_tbl[data_catalog_tbl['ATTRIBUTE_NAME'] == selected_data_attribute]
         with application:
+            attribute_application = selected_attribute_catalog_tbl['APPLICATION_NAME'].iloc[0]
+            st.write("Application")
+
             st.markdown(
-                """
+                f"""
                 <style>
-                .title-container {
+                .title-container {{
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     text-align: center;
-                }
-                .title-container h1 {
+                }}
+                .title-container h1 {{
                     font-size: 1em; /* Adjust size as needed */
                     margin-bottom: 5px; /* Spacing between title and subtitle */
-                }
+                }}
                 </style>
                 <div class="title-container">
-                    <h1>Application</h1>
+                    <h1>{attribute_application}</h1>
                 </div>
                 """,
                 unsafe_allow_html=True
