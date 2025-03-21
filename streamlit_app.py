@@ -184,7 +184,7 @@ def main():
         unsafe_allow_html=True,
         )
     with tab2:
-        selected_application = st.selectbox("Select you Application Name", data_catalog_tbl['APPLICATION_NAME'].unique().to_list(), index=None)
+        selected_application = st.selectbox("Select you Application Name", data_catalog_tbl['APPLICATION_NAME'].unique(), index=None)
         st.write(selected_application)
 if __name__ == "__main__":
     main()
