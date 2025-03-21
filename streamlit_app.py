@@ -244,7 +244,7 @@ def main():
                 """,
                 unsafe_allow_html=True
             )
-        col6, col7, col8, col9 = st.columns(4, border=True)
+        col6, col7, col8, col9 = st.columns(4)
         with col6:
             selected_data_custodian = selected_attribute_catalog_tbl['DATA_CUSTODIAN'].iloc[0]
             st.markdown(
