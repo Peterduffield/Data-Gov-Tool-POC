@@ -184,20 +184,22 @@ def main():
         unsafe_allow_html=True,
         )
     with tab2:
+        filtered_data_catalog_tbl = data_catalog_tbl
         selected_filter = st.toggle("Filter by Application or Platform/Server")
         if selected_filter:
             selected_platform_server = st.selectbox("Select a Platform/Server:", data_catalog_tbl['PLATFORM_SERVER'].unique(), index=None)
+            if selected_platform_server:
+                filtered_data_catalog_tbl = data_catalog_tbl[data_catalog_tbl['PLATFORM_SERVER'] == selected_platform_server]
+                st.dataframe(filtered_data_catalog_tbl, hide_index=True)         
         else:    
             selected_application = st.selectbox("Select an Application Name:", data_catalog_tbl['APPLICATION_NAME'].unique(), index=None)
+            if selected_application:
+                filtered_data_catalog_tbl = data_catalog_tbl[data_catalog_tbl['APPLICATION_NAME'] == selected_application]
+                st.dataframe(filtered_data_catalog_tbl, hide_index=True)            
         
-        filtered_data_catalog_tbl = data_catalog_tbl
         
-        if selected_platform_server:
-            filtered_data_catalog_tbl = data_catalog_tbl[data_catalog_tbl['PLATFORM_SERVER'] == selected_platform_server]
-            st.dataframe(filtered_data_catalog_tbl, hide_index=True)
-        if selected_application:
-            filtered_data_catalog_tbl = data_catalog_tbl[data_catalog_tbl['APPLICATION_NAME'] == selected_application]
-            st.dataframe(filtered_data_catalog_tbl, hide_index=True)
+
+
 
 if __name__ == "__main__":
     main()
