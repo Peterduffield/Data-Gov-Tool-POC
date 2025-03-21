@@ -35,14 +35,9 @@ def main():
             font-size: 2.5em; /* Adjust size as needed */
             margin-bottom: 5px; /* Spacing between title and subtitle */
         }
-        .title-container h2 {
-            font-size: 1.5em; /* Adjust size as needed */
-            color: #888; /* Example subtitle color */
-        }
         </style>
         <div class="title-container">
             <h1>Data Governance Tool</h1>
-            <h2>Key Business Term Glossary</h2>
         </div>
         """,
         unsafe_allow_html=True
