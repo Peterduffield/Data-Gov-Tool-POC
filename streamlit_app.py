@@ -248,7 +248,7 @@ def main():
         with col6:
             st.write("Data Custodian")
             selected_data_custodian = selected_attribute_catalog_tbl['DATA_CUSTODIAN'].iloc[0]
-            st.markdown(f"## {selected_data_custodian}", unsafe_allow_html=True)
+            st.markdown(f"#### {selected_data_custodian}", unsafe_allow_html=True)
             
         
         st.dataframe(selected_attribute_catalog_tbl, hide_index=True)
