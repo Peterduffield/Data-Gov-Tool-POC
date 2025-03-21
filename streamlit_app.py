@@ -42,7 +42,7 @@ def main():
         """,
         unsafe_allow_html=True
     )
-    tab1, tab2, tab3, tab4 = st.tabs(['Business Glossary', 'Data Catalog', 'Eployee Page', 'Use Case Inventory'])
+    tab1, tab2, tab3, tab4 = st.tabs(['Business Glossary', 'Data Catalog', 'Data Role Assignments', 'Use Case Inventory'])
     with tab1:
         col1, col2 = st.columns(2)
         with col1:
