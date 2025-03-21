@@ -205,7 +205,7 @@ def main():
         st.write(" ")
         st.subheader("Attribute Search")
         selected_attribute_catalog_tbl = data_catalog_tbl
-        select_box, application = st.columns([4,1])
+        select_box, application = st.columns([3,1])
         with select_box:
             selected_data_attribute = st.selectbox("Select an Attribute:", data_catalog_tbl['ATTRIBUTE_NAME'].unique(), index=None)
             if selected_data_attribute:
