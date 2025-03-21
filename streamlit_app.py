@@ -184,7 +184,11 @@ def main():
         unsafe_allow_html=True,
         )
     with tab2:
-        selected_application = st.selectbox("Select you Application Name", data_catalog_tbl['APPLICATION_NAME'].unique(), index=None)
-        st.write(selected_application)
+        selected_filter = st.toggle("Filter by Application or Platform/Server")
+        if selected_filter:
+            selected_platform_server = st.selectbox("Select a Platform/Server:", data_catalog_tbl['PLATFORM_SERVER'].unique(), index=None)
+        else:    
+            selected_application = st.selectbox("Select an Application Name:", data_catalog_tbl['APPLICATION_NAME'].unique(), index=None)
+        
 if __name__ == "__main__":
     main()
