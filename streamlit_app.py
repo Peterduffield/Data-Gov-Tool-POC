@@ -466,7 +466,7 @@ def main():
         )
     with tab3:
         domain_filter_employee_tbl = employee_use_case_catalog_tbl
-        selected_domain = st.selectbox("Select a Domain:", employee_use_case_catalog_tbl['PRIMARY_DOMAIN'].unique(), index=None)
+        selected_domain = st.selectbox("Select a Domain:", employee_use_case_catalog_tbl['PRIMARY_DOMAIN'].to_list(), index=None)
         if selected_domain:
             domain_filter_employee_tbl = employee_use_case_catalog_tbl[employee_use_case_catalog_tbl['PRIMARY_DOMAIN'] == selected_domain]
         st.dataframe(domain_filter_employee_tbl)
