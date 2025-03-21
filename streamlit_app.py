@@ -212,29 +212,6 @@ def main():
                 selected_attribute_catalog_tbl = data_catalog_tbl[data_catalog_tbl['ATTRIBUTE_NAME'] == selected_data_attribute]
         with application:
             attribute_application = selected_attribute_catalog_tbl['APPLICATION_NAME'].iloc[0]
-            st.write("Application:")
-            st.markdown(
-                f"""
-                <style>
-                .title-container {{
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    text-align: center;
-                }}
-                .title-container h1 {{
-                    font-size: 1.5em; /* Adjust size as needed */
-                    margin-top: 1px; /* Adjust the top margin */
-                    margin-bottom: 1px; /* Spacing between title and subtitle */
-                }}
-                </style>
-                <div class="title-container">
-                    <h1>{attribute_application}</h1>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-
             st.markdown(
                 f"""
                 <style>
@@ -250,7 +227,6 @@ def main():
                     width: 100%;
                     font-size: 1em;
                     color: #555;
-                    font-weight: bold;
                     margin-bottom: 2px;
                 }}
                 .value {{
