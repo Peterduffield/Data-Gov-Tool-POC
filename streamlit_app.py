@@ -61,13 +61,56 @@ def main():
 
         col3,col4,col5 =st.columns([1,3,4])
         with col3:
-            st.write('Data Owner')
+
             selected_data_owner = filtered_df['DATA_OWNER_EMPLOYEE_NAME'].iloc[0]
-            st.markdown(f"## {selected_data_owner}", unsafe_allow_html=True)
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Data Owner:</p>
+                    <h4 class="value">{selected_data_owner}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )            
             
-            st.write('Data Steward')
             selected_data_steward = filtered_df['DATA_STEWARD_EMPLOYEE_NAME'].iloc[0]
-            st.markdown(f"## {selected_data_steward}", unsafe_allow_html=True)
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Technical Data Steward</p>
+                    <h4 class="value">{selected_data_steward}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )            
 
         with col4:
             st.write('Definition')
@@ -487,7 +530,7 @@ def main():
             selected_business_gov_role = st.selectbox("Select a Business Governance Role:", ['Data Owner', 'Data Steward'], index=None)
             if selected_business_gov_role:
                 employee_gov_role_tbl = employee_glossary_tbl[employee_glossary_tbl['GOVERNANCE_ROLE'] == selected_business_gov_role]
-                
+
         st.dataframe(employee_gov_role_tbl, hide_index=True)
 
         st.markdown(
