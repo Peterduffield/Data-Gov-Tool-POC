@@ -598,6 +598,162 @@ def main():
         selected_use_case = st.selectbox("Select a Use Case:", use_case_inventory_tbl['DATA_USE_CASE_NAME'], index=None)
         if selected_use_case:
             use_case_tbl = use_case_inventory_tbl[use_case_inventory_tbl['DATA_USE_CASE_NAME'] == selected_use_case]
+        col10, col11, col12 = st.columns([2,2,4])
+        with col10:
+            selected_business_stakeholder = use_case_tbl['BUSINESS_STAKEHOLDER'].iloc[0]
+            st.markdown(
+            f"""
+            <style>
+            .custom-container {{
+                text-align: center;  /* Center the value */
+            }}
+            .label {{
+                text-align: left;  /* Left-align the label */
+                font-size: 1.1em;  /* Adjust font size if needed */
+                margin-bottom: 5px; /* Small space between label and value */
+            }}
+            .value {{
+                font-size: 1.5em;  /* Adjust font size of the value */
+            }}
+            </style>
+                    
+            <div class="custom-container">
+                <p class="label">Business Stakeholder:</p>
+                <h4 class="value">{selected_business_stakeholder}</h4>
+            </div>
+            """,
+            unsafe_allow_html=True
+            )        
+
+            selected_primary_domain = use_case_tbl['PRIMARY_DOMAIN'].iloc[0]
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Primary Domain:</p>
+                    <h4 class="value">{selected_primary_domain}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            ) 
+
+        with col11:    
+            selected_business_line = use_case_tbl['BUSINESS_LINE'].iloc[0]
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Business Line:</p>
+                    <h4 class="value">{selected_business_line}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )             
+        
+            selected_strat_obj = use_case_tbl['STRATEGIC_OBJECTIVE'].iloc[0]
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Strategic Objective</p>
+                    <h4 class="value">{selected_strat_obj}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )             
+        
+        with col12:
+            selected_problem_statement = use_case_tbl['PROBLEM_STATEMENT'].iloc[0]
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Problem Statement:</p>
+                    <h4 class="value">{selected_problem_statement}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )             
+            
+            selected_use_case_desc = use_case_tbl['DATA_USE_CASE_DESCRIPTION'].iloc[0]
+            st.markdown(
+                f"""
+                <style>
+                .custom-container {{
+                    text-align: center;  /* Center the value */
+                }}
+                .label {{
+                    text-align: left;  /* Left-align the label */
+                    font-size: 1.1em;  /* Adjust font size if needed */
+                    margin-bottom: 5px; /* Small space between label and value */
+                }}
+                .value {{
+                    font-size: 1.5em;  /* Adjust font size of the value */
+                }}
+                </style>
+                
+                <div class="custom-container">
+                    <p class="label">Description:</p>
+                    <h4 class="value">{selected_use_case_desc}</h4>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )             
+
         st.dataframe(use_case_tbl, hide_index=True)
+
+
 if __name__ == "__main__":
     main()
