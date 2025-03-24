@@ -41,7 +41,7 @@ def main():
         }
         </style>
         <div class="title-container">
-            <h1>Data Governance Tool</h1>
+            <h1>Data Governance</h1>
         </div>
         """,
         unsafe_allow_html=True
