@@ -988,7 +988,79 @@ def main():
             )             
 
         st.dataframe(use_case_tbl, hide_index=True)
+        st.divider()
+        with st.popover("Edit & Update Use Case Inventory", use_container_width=True):
 
+            # Determine next ASSET_ID
+            if not use_case_inventory_tbl.empty:
+                max_asset_id = use_case_inventory_tbl["ASSET_ID"].max()
+            else:
+                max_asset_id = 0  # Start from 1 if empty
+
+            # Add an empty row for new entries
+            new_row = pd.DataFrame([{
+                "ASSET_ID": max_asset_id + 1,
+                "PRIMARY_DOMAIN": "",
+                "DATA_USE_CASE_NAME": "",
+                "BUSINESS_LINE": "",
+                "BUSINESS_STAKEHOLDER": "",
+                "PROBLEM_STATEMENT": "",
+                "STRATEGIC_OBJECTIVE": "",
+                "DATA_USE_CASE_DESCRIPTION": "",
+                "DEFINITION_OF_DONE": "",
+                "RELATED_DOMAIN_S_": ""
+            }])
+
+            # Append the empty row
+            editable_df = pd.concat([use_case_inventory_tbl, new_row], ignore_index=True)
+
+            # Display editable table
+            edited_df = st.data_editor(editable_df, num_rows="dynamic", disabled=["ASSET_ID"])
+
+            # Ensure single quotes are escaped for SQL safety
+            def safe_str(value):
+                return value.replace("'", "''") if isinstance(value, str) else value
+
+            # Button to save updates with a unique key
+            if st.button("Save Changes", key="save_changes_use_case"):
+                for index, row in edited_df.iterrows():
+                    asset_id = int(row["ASSET_ID"]) if pd.notna(row["ASSET_ID"]) else None
+
+                    # Assign new ASSET_ID if missing
+                    if asset_id is None:
+                        max_asset_id += 1
+                        asset_id = max_asset_id
+
+                    # Construct a parameterized MERGE query
+                    update_query = f"""
+                    MERGE INTO USE_CASE_INVENTORY_TBL AS target
+                    USING (SELECT {asset_id} AS ASSET_ID) AS source
+                    ON target.ASSET_ID = source.ASSET_ID
+                    WHEN MATCHED THEN
+                        UPDATE SET 
+                            PRIMARY_DOMAIN = '{safe_str(row['PRIMARY_DOMAIN'])}',
+                            DATA_USE_CASE_NAME = '{safe_str(row['DATA_USE_CASE_NAME'])}',
+                            BUSINESS_LINE = '{safe_str(row['BUSINESS_LINE'])}',
+                            BUSINESS_STAKEHOLDER = '{safe_str(row['BUSINESS_STAKEHOLDER'])}',
+                            PROBLEM_STATEMENT = '{safe_str(row['PROBLEM_STATEMENT'])}',
+                            STRATEGIC_OBJECTIVE = '{safe_str(row['STRATEGIC_OBJECTIVE'])}',
+                            DATA_USE_CASE_DESCRIPTION = '{safe_str(row['DATA_USE_CASE_DESCRIPTION'])}',
+                            DEFINITION_OF_DONE = '{safe_str(row['DEFINITION_OF_DONE'])}',
+                            RELATED_DOMAIN_S_ = '{safe_str(row['RELATED_DOMAIN_S_'])}'
+                    WHEN NOT MATCHED THEN
+                        INSERT (ASSET_ID, PRIMARY_DOMAIN, DATA_USE_CASE_NAME, BUSINESS_LINE, 
+                                BUSINESS_STAKEHOLDER, PROBLEM_STATEMENT, STRATEGIC_OBJECTIVE, 
+                                DATA_USE_CASE_DESCRIPTION, DEFINITION_OF_DONE, RELATED_DOMAIN_S_)
+                        VALUES ({asset_id}, '{safe_str(row['PRIMARY_DOMAIN'])}', '{safe_str(row['DATA_USE_CASE_NAME'])}', 
+                                '{safe_str(row['BUSINESS_LINE'])}', '{safe_str(row['BUSINESS_STAKEHOLDER'])}', '{safe_str(row['PROBLEM_STATEMENT'])}', 
+                                '{safe_str(row['STRATEGIC_OBJECTIVE'])}', '{safe_str(row['DATA_USE_CASE_DESCRIPTION'])}', 
+                                '{safe_str(row['DEFINITION_OF_DONE'])}', '{safe_str(row['RELATED_DOMAIN_S_'])}');
+                    """
+
+                    # Execute query
+                    session.sql(update_query).collect()
+
+                st.success("Table updated successfully!")
 
         st.markdown(
         """
