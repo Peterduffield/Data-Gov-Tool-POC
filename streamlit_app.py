@@ -1,6 +1,8 @@
 from snowflake.snowpark import Session
 import streamlit as st
 import pandas as pd
+import plotly.express as px
+
 
 # Create a function to connect using Snowpark
 SF_CREDENTIALS = {
@@ -47,7 +49,7 @@ def main():
         """,
         unsafe_allow_html=True
     )
-    tab1, tab2, tab3, tab4 = st.tabs(['Business Glossary', 'Data Catalog', 'Data Role Assignments', 'Use Case Inventory'])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(['Business Glossary', 'Data Catalog', 'Data Role Assignments', 'Use Case Inventory', 'Maturity Dashboard'])
     with tab1:
         col1, col2 = st.columns(2)
         with col1:
@@ -1079,6 +1081,23 @@ def main():
         """,
         unsafe_allow_html=True,
         ) 
-
+    with tab5:
+        st.markdown(
+        """
+        <style>
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        .container img {
+            transform: scale(0.5);
+        }
+        </style>
+        <div class="container">
+            <img src="https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png" alt="Hakkoda Logo">
+        </div>
+        """,
+        unsafe_allow_html=True,
+        )         
 if __name__ == "__main__":
     main()
