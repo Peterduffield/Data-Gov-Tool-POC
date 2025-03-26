@@ -755,7 +755,7 @@ def main():
 
         st.dataframe(use_case_tbl, hide_index=True)
 
-        # Find the highest ASSET_ID and set the next available ID
+        # Determine the next incremental ASSET_ID
         if not use_case_inventory_tbl.empty:
             max_asset_id = use_case_inventory_tbl["ASSET_ID"].max()
         else:
@@ -787,6 +787,10 @@ def main():
                     max_asset_id += 1
                     row["ASSET_ID"] = max_asset_id
 
+                # Escape single quotes to prevent SQL errors
+                def safe_str(value):
+                    return value.replace("'", "''") if isinstance(value, str) else value
+
                 # Construct MERGE query to update Snowflake table
                 update_query = f"""
                 MERGE INTO USE_CASE_INVENTORY_TBL AS target
@@ -794,23 +798,23 @@ def main():
                 ON target.ASSET_ID = source.ASSET_ID
                 WHEN MATCHED THEN
                     UPDATE SET 
-                        PRIMARY_DOMAIN = '{row['PRIMARY_DOMAIN']}',
-                        DATA_USE_CASE_NAME = '{row['DATA_USE_CASE_NAME']}',
-                        BUSINESS_LINE = '{row['BUSINESS_LINE']}',
-                        BUSINESS_STAKEHOLDER = '{row['BUSINESS_STAKEHOLDER']}'
-                        PROBLEM_STATEMENT = '{row['PROBLEM_STATEMENT']}',
-                        STRATEGIC_OBJECTIVE = '{row['STRATEGIC_OBJECTIVE']}',
-                        DATA_USE_CASE_DESCRIPTION = '{row['DATA_USE_CASE_DESCRIPTION']}',
-                        DEFINITION_OF_DONE = '{row['DEFINITION_OF_DONE']}',
-                        RELATED_DOMAIN_S_ = '{row['RELATED_DOMAIN_S_']}'
+                        PRIMARY_DOMAIN = '{safe_str(row['PRIMARY_DOMAIN'])}',
+                        DATA_USE_CASE_NAME = '{safe_str(row['DATA_USE_CASE_NAME'])}',
+                        BUSINESS_LINE = '{safe_str(row['BUSINESS_LINE'])}',
+                        BUSINESS_STAKEHOLDER = '{safe_str(row['BUSINESS_STAKEHOLDER'])}',
+                        PROBLEM_STATEMENT = '{safe_str(row['PROBLEM_STATEMENT'])}',
+                        STRATEGIC_OBJECTIVE = '{safe_str(row['STRATEGIC_OBJECTIVE'])}',
+                        DATA_USE_CASE_DESCRIPTION = '{safe_str(row['DATA_USE_CASE_DESCRIPTION'])}',
+                        DEFINITION_OF_DONE = '{safe_str(row['DEFINITION_OF_DONE'])}',
+                        RELATED_DOMAIN_S_ = '{safe_str(row['RELATED_DOMAIN_S_'])}'
                 WHEN NOT MATCHED THEN
                     INSERT (ASSET_ID, PRIMARY_DOMAIN, DATA_USE_CASE_NAME, BUSINESS_LINE, 
                             BUSINESS_STAKEHOLDER, PROBLEM_STATEMENT, STRATEGIC_OBJECTIVE, 
                             DATA_USE_CASE_DESCRIPTION, DEFINITION_OF_DONE, RELATED_DOMAIN_S_)
-                    VALUES ({row['ASSET_ID']}, '{row['PRIMARY_DOMAIN']}', '{row['DATA_USE_CASE_NAME']}', 
-                            '{row['BUSINESS_LINE']}', '{row['BUSINESS_STAKEHOLDER']}', '{row['PROBLEM_STATEMENT']}', 
-                            '{row['STRATEGIC_OBJECTIVE']}', '{row['DATA_USE_CASE_DESCRIPTION']}', 
-                            '{row['DEFINITION_OF_DONE']}', '{row['RELATED_DOMAIN_S_']}');
+                    VALUES ({row['ASSET_ID']}, '{safe_str(row['PRIMARY_DOMAIN'])}', '{safe_str(row['DATA_USE_CASE_NAME'])}', 
+                            '{safe_str(row['BUSINESS_LINE'])}', '{safe_str(row['BUSINESS_STAKEHOLDER'])}', '{safe_str(row['PROBLEM_STATEMENT'])}', 
+                            '{safe_str(row['STRATEGIC_OBJECTIVE'])}', '{safe_str(row['DATA_USE_CASE_DESCRIPTION'])}', 
+                            '{safe_str(row['DEFINITION_OF_DONE'])}', '{safe_str(row['RELATED_DOMAIN_S_'])}');
                 """
                 session.sql(update_query).collect()
 
