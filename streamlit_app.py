@@ -577,6 +577,53 @@ def main():
 
         st.dataframe(employee_gov_role_tbl, hide_index=True)
 
+        # Determine the next incremental EMPLOYEE_ID
+        if not employee_use_case_catalog_tbl.empty:
+            max_employee_id = employee_use_case_catalog_tbl["EMPLOYEE_ID"].max()
+        else:
+            max_employee_id = 0  # Start from 1 if the table is empty
+
+        # Ensure column names match Snowflake exactly
+        column_names = ["EMPLOYEE_ID", "EMPLOYEE_NAME", "BUSINESS_ROLE", "GOVERNANCE_ROLE"]
+
+        # Add an empty row with the next incremental EMPLOYEE_ID
+        new_row = pd.DataFrame([{col: "" for col in column_names}])
+        new_row["EMPLOYEE_ID"] = max_employee_id + 1
+
+        # Append new row and allow dynamic editing
+        editable_df = pd.concat([employee_use_case_catalog_tbl, new_row], ignore_index=True)
+        edited_df = st.data_editor(editable_df, num_rows="dynamic", disabled=["EMPLOYEE_ID"])
+
+        # Button to save updates
+        if st.button("Save Changes"):
+            for index, row in edited_df.iterrows():
+                # Assign new EMPLOYEE_ID if missing
+                if pd.isna(row["EMPLOYEE_ID"]):
+                    max_employee_id += 1
+                    row["EMPLOYEE_ID"] = max_employee_id
+
+                # Escape single quotes to prevent SQL errors
+                def safe_str(value):
+                    return value.replace("'", "''") if isinstance(value, str) else value
+
+                # Construct MERGE query to update Snowflake table
+                update_query = f"""
+                MERGE INTO employee_use_case_catalog_tbl AS target
+                USING (SELECT {row['EMPLOYEE_ID']} AS EMPLOYEE_ID) AS source
+                ON target.EMPLOYEE_ID = source.EMPLOYEE_ID
+                WHEN MATCHED THEN
+                    UPDATE SET 
+                        EMPLOYEE_NAME = '{safe_str(row['EMPLOYEE_NAME'])}',
+                        BUSINESS_ROLE = '{safe_str(row['BUSINESS_ROLE'])}',
+                        GOVERNANCE_ROLE = '{safe_str(row['GOVERNANCE_ROLE'])}'
+                WHEN NOT MATCHED THEN
+                    INSERT (EMPLOYEE_ID, EMPLOYEE_NAME, BUSINESS_ROLE, GOVERNANCE_ROLE)
+                    VALUES ({row['EMPLOYEE_ID']}, '{safe_str(row['EMPLOYEE_NAME'])}', '{safe_str(row['BUSINESS_ROLE'])}', '{safe_str(row['GOVERNANCE_ROLE'])}');
+                """
+                session.sql(update_query).collect()
+
+            st.success("Table updated successfully!")
+
         st.markdown(
         """
         <style>
@@ -756,6 +803,23 @@ def main():
         st.dataframe(use_case_tbl, hide_index=True)
 
 
+        st.markdown(
+        """
+        <style>
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        .container img {
+            transform: scale(0.5);
+        }
+        </style>
+        <div class="container">
+            <img src="https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png" alt="Hakkoda Logo">
+        </div>
+        """,
+        unsafe_allow_html=True,
+        ) 
 
 if __name__ == "__main__":
     main()
