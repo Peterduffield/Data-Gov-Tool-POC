@@ -559,7 +559,7 @@ def main():
         selected_domain = st.selectbox("Select a Domain:", employee_use_case_catalog_tbl['PRIMARY_DOMAIN'].unique())
         if selected_domain:
            domain_filter_employee_tbl = employee_use_case_catalog_tbl[employee_use_case_catalog_tbl['PRIMARY_DOMAIN'] == selected_domain]
-        st.dataframe(domain_filter_employee_tbl)
+        st.dataframe(domain_filter_employee_tbl, hide_index=True)
 
         st.divider()
 
