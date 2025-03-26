@@ -608,7 +608,7 @@ def main():
 
                 # Construct MERGE query to update Snowflake table
                 update_query = f"""
-                MERGE INTO employee_tbl AS target
+                MERGE INTO EMPLOYEE_CATALOG AS target
                 USING (SELECT {row['EMPLOYEE_ID']} AS EMPLOYEE_ID) AS source
                 ON target.EMPLOYEE_ID = source.EMPLOYEE_ID
                 WHEN MATCHED THEN
