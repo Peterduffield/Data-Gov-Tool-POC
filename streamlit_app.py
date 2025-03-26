@@ -578,8 +578,8 @@ def main():
         st.dataframe(employee_gov_role_tbl, hide_index=True)
 
         # Determine the next incremental EMPLOYEE_ID
-        if not employee_catalog_tbl.empty:
-            max_employee_id = employee_catalog_tbl["EMPLOYEE_ID"].max()
+        if not employee_tbl.empty:
+            max_employee_id = employee_tbl["EMPLOYEE_ID"].max()
         else:
             max_employee_id = 0  # Start from 1 if the table is empty
 
@@ -591,7 +591,7 @@ def main():
         new_row["EMPLOYEE_ID"] = max_employee_id + 1
 
         # Append new row and allow dynamic editing
-        editable_df = pd.concat([employee_catalog_tbl, new_row], ignore_index=True)
+        editable_df = pd.concat([employee_tbl, new_row], ignore_index=True)
         edited_df = st.data_editor(editable_df, num_rows="dynamic", disabled=["EMPLOYEE_ID"])
 
         # Button to save updates
@@ -608,7 +608,7 @@ def main():
 
                 # Construct MERGE query to update Snowflake table
                 update_query = f"""
-                MERGE INTO employee_catalog_tbl AS target
+                MERGE INTO employee_tbl AS target
                 USING (SELECT {row['EMPLOYEE_ID']} AS EMPLOYEE_ID) AS source
                 ON target.EMPLOYEE_ID = source.EMPLOYEE_ID
                 WHEN MATCHED THEN
