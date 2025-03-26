@@ -762,7 +762,7 @@ def main():
             max_asset_id = 0  # Start from 1 if the table is empty
 
         # Add an empty row with the next incremental ASSET_ID
-        new_row = pd.dataframe([{
+        new_row = pd.DataFrame([{
             "ASSET_ID": max_asset_id + 1,
             "PRIMARY_DOMAIN": "",
             "DATA_USE_CASE_NAME": "",
