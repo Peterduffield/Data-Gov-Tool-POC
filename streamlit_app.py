@@ -1,7 +1,7 @@
 from snowflake.snowpark import Session
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+#import plotly.express as px
 
 
 # Create a function to connect using Snowpark
