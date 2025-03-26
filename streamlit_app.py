@@ -788,7 +788,7 @@ def main():
 
                 # Construct MERGE query to update Snowflake table
                 update_query = f"""
-                MERGE INTO USE_CASE_INVENTORY AS target
+                MERGE INTO USE_CASE_INVENTORY_TBL AS target
                 USING (SELECT {row['ASSET_ID']} AS ASSET_ID) AS source
                 ON target.ASSET_ID = source.ASSET_ID
                 WHEN MATCHED THEN
