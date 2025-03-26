@@ -761,53 +761,55 @@ def main():
         st.dataframe(employee_gov_role_tbl, hide_index=True)
 
         st.divider()
-        st.subheader("Edit Employee Catalog")
-        # Determine the next incremental EMPLOYEE_ID
-        if not employee_tbl.empty:
-            max_employee_id = employee_tbl["EMPLOYEE_ID"].max()
-        else:
-            max_employee_id = 0  # Start from 1 if the table is empty
+        with st.popover("Edit & Update Data Role Assingments", use_container_width=True):
+            
+            st.subheader("Edit Employee Catalog")
+            # Determine the next incremental EMPLOYEE_ID
+            if not employee_tbl.empty:
+                max_employee_id = employee_tbl["EMPLOYEE_ID"].max()
+            else:
+                max_employee_id = 0  # Start from 1 if the table is empty
 
-        # Ensure column names match Snowflake exactly
-        column_names = ["EMPLOYEE_ID", "EMPLOYEE_NAME", "BUSINESS_ROLE", "GOVERNANCE_ROLE"]
+            # Ensure column names match Snowflake exactly
+            column_names = ["EMPLOYEE_ID", "EMPLOYEE_NAME", "BUSINESS_ROLE", "GOVERNANCE_ROLE"]
 
-        # Add an empty row with the next incremental EMPLOYEE_ID
-        new_row = pd.DataFrame([{col: "" for col in column_names}])
-        new_row["EMPLOYEE_ID"] = max_employee_id + 1
+            # Add an empty row with the next incremental EMPLOYEE_ID
+            new_row = pd.DataFrame([{col: "" for col in column_names}])
+            new_row["EMPLOYEE_ID"] = max_employee_id + 1
 
-        # Append new row and allow dynamic editing
-        editable_df = pd.concat([employee_tbl, new_row], ignore_index=True)
-        edited_df = st.data_editor(editable_df, num_rows="dynamic", disabled=["EMPLOYEE_ID"])
+            # Append new row and allow dynamic editing
+            editable_df = pd.concat([employee_tbl, new_row], ignore_index=True)
+            edited_df = st.data_editor(editable_df, num_rows="dynamic", disabled=["EMPLOYEE_ID"])
 
-        # Button to save updates
-        if st.button("Save Changes", key="save_changes_employee_catalogx"):
-            for index, row in edited_df.iterrows():
-                # Assign new EMPLOYEE_ID if missing
-                if pd.isna(row["EMPLOYEE_ID"]):
-                    max_employee_id += 1
-                    row["EMPLOYEE_ID"] = max_employee_id
+            # Button to save updates
+            if st.button("Save Changes", key="save_changes_employee_catalogx"):
+                for index, row in edited_df.iterrows():
+                    # Assign new EMPLOYEE_ID if missing
+                    if pd.isna(row["EMPLOYEE_ID"]):
+                        max_employee_id += 1
+                        row["EMPLOYEE_ID"] = max_employee_id
 
-                # Escape single quotes to prevent SQL errors
-                def safe_str(value):
-                    return value.replace("'", "''") if isinstance(value, str) else value
+                    # Escape single quotes to prevent SQL errors
+                    def safe_str(value):
+                        return value.replace("'", "''") if isinstance(value, str) else value
 
-                # Construct MERGE query to update Snowflake table
-                update_query = f"""
-                MERGE INTO EMPLOYEE_CATALOG AS target
-                USING (SELECT {row['EMPLOYEE_ID']} AS EMPLOYEE_ID) AS source
-                ON target.EMPLOYEE_ID = source.EMPLOYEE_ID
-                WHEN MATCHED THEN
-                    UPDATE SET 
-                        EMPLOYEE_NAME = '{safe_str(row['EMPLOYEE_NAME'])}',
-                        BUSINESS_ROLE = '{safe_str(row['BUSINESS_ROLE'])}',
-                        GOVERNANCE_ROLE = '{safe_str(row['GOVERNANCE_ROLE'])}'
-                WHEN NOT MATCHED THEN
-                    INSERT (EMPLOYEE_ID, EMPLOYEE_NAME, BUSINESS_ROLE, GOVERNANCE_ROLE)
-                    VALUES ({row['EMPLOYEE_ID']}, '{safe_str(row['EMPLOYEE_NAME'])}', '{safe_str(row['BUSINESS_ROLE'])}', '{safe_str(row['GOVERNANCE_ROLE'])}');
-                """
-                session.sql(update_query).collect()
+                    # Construct MERGE query to update Snowflake table
+                    update_query = f"""
+                    MERGE INTO EMPLOYEE_CATALOG AS target
+                    USING (SELECT {row['EMPLOYEE_ID']} AS EMPLOYEE_ID) AS source
+                    ON target.EMPLOYEE_ID = source.EMPLOYEE_ID
+                    WHEN MATCHED THEN
+                        UPDATE SET 
+                            EMPLOYEE_NAME = '{safe_str(row['EMPLOYEE_NAME'])}',
+                            BUSINESS_ROLE = '{safe_str(row['BUSINESS_ROLE'])}',
+                            GOVERNANCE_ROLE = '{safe_str(row['GOVERNANCE_ROLE'])}'
+                    WHEN NOT MATCHED THEN
+                        INSERT (EMPLOYEE_ID, EMPLOYEE_NAME, BUSINESS_ROLE, GOVERNANCE_ROLE)
+                        VALUES ({row['EMPLOYEE_ID']}, '{safe_str(row['EMPLOYEE_NAME'])}', '{safe_str(row['BUSINESS_ROLE'])}', '{safe_str(row['GOVERNANCE_ROLE'])}');
+                    """
+                    session.sql(update_query).collect()
 
-            st.success("Table updated successfully!")
+                st.success("Table updated successfully!")
 
         st.markdown(
         """
