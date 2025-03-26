@@ -767,7 +767,8 @@ def main():
             "PRIMARY_DOMAIN": "",
             "DATA_USE_CASE_NAME": "",
             "BUSINESS_LINE": "",
-            "BUSINESS_STAKEHOLDER_PROBLEM_STATEMENT": "",
+            "BUSINESS_STAKEHOLDER": "",
+            "PROBLEM_STATEMENT": "",
             "STRATEGIC_OBJECTIVE": "",
             "DATA_USE_CASE_DESCRIPTION": "",
             "DEFINITION_OF_DONE": "",
@@ -796,17 +797,18 @@ def main():
                         PRIMARY_DOMAIN = '{row['PRIMARY_DOMAIN']}',
                         DATA_USE_CASE_NAME = '{row['DATA_USE_CASE_NAME']}',
                         BUSINESS_LINE = '{row['BUSINESS_LINE']}',
-                        BUSINESS_STAKEHOLDER_PROBLEM_STATEMENT = '{row['BUSINESS_STAKEHOLDER_PROBLEM_STATEMENT']}',
+                        BUSINESS_STAKEHOLDER = '{row['BUSINESS_STAKEHOLDER']}'
+                        PROBLEM_STATEMENT = '{row['PROBLEM_STATEMENT']}',
                         STRATEGIC_OBJECTIVE = '{row['STRATEGIC_OBJECTIVE']}',
                         DATA_USE_CASE_DESCRIPTION = '{row['DATA_USE_CASE_DESCRIPTION']}',
                         DEFINITION_OF_DONE = '{row['DEFINITION_OF_DONE']}',
                         RELATED_DOMAIN_S_ = '{row['RELATED_DOMAIN_S_']}'
                 WHEN NOT MATCHED THEN
                     INSERT (ASSET_ID, PRIMARY_DOMAIN, DATA_USE_CASE_NAME, BUSINESS_LINE, 
-                            BUSINESS_STAKEHOLDER_PROBLEM_STATEMENT, STRATEGIC_OBJECTIVE, 
+                            BUSINESS_STAKEHOLDER, PROBLEM_STATEMENT, STRATEGIC_OBJECTIVE, 
                             DATA_USE_CASE_DESCRIPTION, DEFINITION_OF_DONE, RELATED_DOMAIN_S_)
                     VALUES ({row['ASSET_ID']}, '{row['PRIMARY_DOMAIN']}', '{row['DATA_USE_CASE_NAME']}', 
-                            '{row['BUSINESS_LINE']}', '{row['BUSINESS_STAKEHOLDER_PROBLEM_STATEMENT']}', 
+                            '{row['BUSINESS_LINE']}', '{row['BUSINESS_STAKEHOLDER']}', '{row['PROBLEM_STATEMENT']}', 
                             '{row['STRATEGIC_OBJECTIVE']}', '{row['DATA_USE_CASE_DESCRIPTION']}', 
                             '{row['DEFINITION_OF_DONE']}', '{row['RELATED_DOMAIN_S_']}');
                 """
