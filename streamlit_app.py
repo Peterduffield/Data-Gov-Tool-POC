@@ -19,7 +19,7 @@ session = create_snowflake_session()
 # Run SQL query
 business_glossary_tbl = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas()
 data_catalog_tbl = session.sql("SELECT * FROM DATA_CATALOG").to_pandas()
-employee_catalog_tbl = session.sql("SELECT * FROM EMPLOYEE_CATALOG").to_pandas()
+employee_tbl = session.sql("SELECT * FROM EMPLOYEE_CATALOG").to_pandas()
 employee_use_case_catalog_tbl = session.sql("SELECT e.*, i.* FROM EMPLOYEE_CATALOG e LEFT JOIN USE_CASE_INVENTORY_TBL i ON e.EMPLOYEE_NAME = i.BUSINESS_STAKEHOLDER").to_pandas()
 employee_glossary_tbl = session.sql("SELECT DISTINCT e.*,  bg.* from EMPLOYEE_CATALOG e LEFT JOIN BUSINESS_GLOSSARY bg ON bg.Data_Owner_Employee_Name = e.EMPLOYEE_NAME OR bg.Data_Steward_Employee_Name = e.EMPLOYEE_NAME WHERE e.GOVERNANCE_ROLE = 'Data Owner' or e.GOVERNANCE_ROLE = 'Data Steward'").to_pandas()
 employee_catalog_tbl = session.sql("SELECT DISTINCT e.*,  dc.* from EMPLOYEE_CATALOG e LEFT JOIN DATA_CATALOG dc ON dc.Data_Custodian = e.EMPLOYEE_NAME OR dc.Technical_Data_Steward = e.EMPLOYEE_NAME WHERE e.GOVERNANCE_ROLE = 'Data Custodian' or e.GOVERNANCE_ROLE = 'Technical Data Steward'").to_pandas()
