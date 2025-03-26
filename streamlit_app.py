@@ -577,6 +577,8 @@ def main():
 
         st.dataframe(employee_gov_role_tbl, hide_index=True)
 
+        st.divider()
+        st.subheader("Edit Employee Catalog")
         # Determine the next incremental EMPLOYEE_ID
         if not employee_tbl.empty:
             max_employee_id = employee_tbl["EMPLOYEE_ID"].max()
