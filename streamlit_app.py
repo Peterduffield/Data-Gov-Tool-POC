@@ -257,97 +257,97 @@ def main():
                         st.warning("Please select both a business term and a data element.")
 
         st.divider()
-        st.subheader("Edit Business Glossary")
+        with st.popover("Edit & Update Glossary", use_container_width=True):
+            st.subheader("Edit Business Glossary")
+            business_glossary_tbl["GLOSSARY_ID"] = business_glossary_tbl["GLOSSARY_ID"].astype(int)
 
-        business_glossary_tbl["GLOSSARY_ID"] = business_glossary_tbl["GLOSSARY_ID"].astype(int)
+            # Find the highest Glossary_ID and calculate the next available ID
+            if not business_glossary_tbl.empty:
+                max_glossary_id = business_glossary_tbl["GLOSSARY_ID"].max()
+            else:
+                max_glossary_id = 0  # Start from 1 if the table is empty
 
-        # Find the highest Glossary_ID and calculate the next available ID
-        if not business_glossary_tbl.empty:
-            max_glossary_id = business_glossary_tbl["GLOSSARY_ID"].max()
-        else:
-            max_glossary_id = 0  # Start from 1 if the table is empty
+            # Add an empty row with the next incremental GLOSSARY_ID
+            new_row = pd.DataFrame([{
+                "GLOSSARY_ID": max_glossary_id + 1,
+                "KEY_BUSINESS_TERM_NAME": "",
+                "ACRONYM": "",
+                "ALIAS": "",
+                "DEFINITION": "",
+                "STATUS": "",
+                "DOMAIN": "",
+                "DATA_OWNER_EMPLOYEE_NAME": "",
+                "DATA_STEWARD_EMPLOYEE_NAME": "",
+                "BUSINESS_RULE": "",
+                "RELATED_TO_CATALOG_ID_S_": "",
+                "EXAMPLE": "",
+                "DATA_CLASSIFICATION": "",
+                "USAGE_REQ": "",
+                "DQ_REQ": "",
+                "AUTHORITATIVE_SOURCE": "",
+                "IS_GOVERNED": False,
+                "IS_REGUALTED": False,
+                "REGULATIONS": ""
+            }])
 
-        # Add an empty row with the next incremental GLOSSARY_ID
-        new_row = pd.DataFrame([{
-            "GLOSSARY_ID": max_glossary_id + 1,
-            "KEY_BUSINESS_TERM_NAME": "",
-            "ACRONYM": "",
-            "ALIAS": "",
-            "DEFINITION": "",
-            "STATUS": "",
-            "DOMAIN": "",
-            "DATA_OWNER_EMPLOYEE_NAME": "",
-            "DATA_STEWARD_EMPLOYEE_NAME": "",
-            "BUSINESS_RULE": "",
-            "RELATED_TO_CATALOG_ID_S_": "",
-            "EXAMPLE": "",
-            "DATA_CLASSIFICATION": "",
-            "USAGE_REQ": "",
-            "DQ_REQ": "",
-            "AUTHORITATIVE_SOURCE": "",
-            "IS_GOVERNED": False,
-            "IS_REGUALTED": False,
-            "REGULATIONS": ""
-        }])
+            # Append the new row and allow dynamic editing
+            editable_df = pd.concat([business_glossary_tbl, new_row], ignore_index=True)
+            edited_df = st.data_editor(editable_df, num_rows="dynamic", disabled=["GLOSSARY_ID"])
 
-        # Append the new row and allow dynamic editing
-        editable_df = pd.concat([business_glossary_tbl, new_row], ignore_index=True)
-        edited_df = st.data_editor(editable_df, num_rows="dynamic", disabled=["GLOSSARY_ID"])
+            # Button to save changes
+            if st.button("Save Changes", key="save_changes_business_glossary"):
+                for index, row in edited_df.iterrows():
+                    # Assign new GLOSSARY_ID if missing
+                    if pd.isna(row["GLOSSARY_ID"]):
+                        max_glossary_id += 1
+                        row["GLOSSARY_ID"] = max_glossary_id
 
-        # Button to save changes
-        if st.button("Save Changes", key="save_changes_business_glossary"):
-            for index, row in edited_df.iterrows():
-                # Assign new GLOSSARY_ID if missing
-                if pd.isna(row["GLOSSARY_ID"]):
-                    max_glossary_id += 1
-                    row["GLOSSARY_ID"] = max_glossary_id
+                    # Escape single quotes to prevent SQL errors
+                    def safe_str(value):
+                        return value.replace("'", "''") if isinstance(value, str) else value
 
-                # Escape single quotes to prevent SQL errors
-                def safe_str(value):
-                    return value.replace("'", "''") if isinstance(value, str) else value
+                    # Construct MERGE query to update Snowflake table
+                    update_query = f"""
+                    MERGE INTO BUSINESS_GLOSSARY AS target
+                    USING (SELECT {row['GLOSSARY_ID']} AS GLOSSARY_ID) AS source
+                    ON target.GLOSSARY_ID = source.GLOSSARY_ID
+                    WHEN MATCHED THEN
+                        UPDATE SET 
+                            KEY_BUSINESS_TERM_NAME = '{safe_str(row['KEY_BUSINESS_TERM_NAME'])}',
+                            ACRONYM = '{safe_str(row['ACRONYM'])}',
+                            ALIAS = '{safe_str(row['ALIAS'])}',
+                            DEFINITION = '{safe_str(row['DEFINITION'])}',
+                            STATUS = '{safe_str(row['STATUS'])}',
+                            DOMAIN = '{safe_str(row['DOMAIN'])}',
+                            DATA_OWNER_EMPLOYEE_NAME = '{safe_str(row['DATA_OWNER_EMPLOYEE_NAME'])}',
+                            DATA_STEWARD_EMPLOYEE_NAME = '{safe_str(row['DATA_STEWARD_EMPLOYEE_NAME'])}',
+                            BUSINESS_RULE = '{safe_str(row['BUSINESS_RULE'])}',
+                            RELATED_TO_CATALOG_ID_S_ = '{safe_str(row['RELATED_TO_CATALOG_ID_S_'])}',
+                            EXAMPLE = '{safe_str(row['EXAMPLE'])}',
+                            DATA_CLASSIFICATION = '{safe_str(row['DATA_CLASSIFICATION'])}',
+                            USAGE_REQ = '{safe_str(row['USAGE_REQ'])}',
+                            DQ_REQ = '{safe_str(row['DQ_REQ'])}',
+                            AUTHORITATIVE_SOURCE = '{safe_str(row['AUTHORITATIVE_SOURCE'])}',
+                            IS_GOVERNED = {row['IS_GOVERNED']},
+                            IS_REGUALTED = {row['IS_REGUALTED']},
+                            REGULATIONS = '{safe_str(row['REGULATIONS'])}'
+                    WHEN NOT MATCHED THEN
+                        INSERT (GLOSSARY_ID, KEY_BUSINESS_TERM_NAME, ACRONYM, ALIAS, DEFINITION, STATUS, DOMAIN, 
+                                DATA_OWNER_EMPLOYEE_NAME, DATA_STEWARD_EMPLOYEE_NAME, BUSINESS_RULE, 
+                                RELATED_TO_CATALOG_ID_S_, EXAMPLE, DATA_CLASSIFICATION, USAGE_REQ, DQ_REQ, 
+                                AUTHORITATIVE_SOURCE, IS_GOVERNED, IS_REGUALTED, REGULATIONS)
+                        VALUES ({row['GLOSSARY_ID']}, '{safe_str(row['KEY_BUSINESS_TERM_NAME'])}', '{safe_str(row['ACRONYM'])}', 
+                                '{safe_str(row['ALIAS'])}', '{safe_str(row['DEFINITION'])}', '{safe_str(row['STATUS'])}', 
+                                '{safe_str(row['DOMAIN'])}', '{safe_str(row['DATA_OWNER_EMPLOYEE_NAME'])}', 
+                                '{safe_str(row['DATA_STEWARD_EMPLOYEE_NAME'])}', '{safe_str(row['BUSINESS_RULE'])}', 
+                                '{safe_str(row['RELATED_TO_CATALOG_ID_S_'])}', '{safe_str(row['EXAMPLE'])}', 
+                                '{safe_str(row['DATA_CLASSIFICATION'])}', '{safe_str(row['USAGE_REQ'])}', 
+                                '{safe_str(row['DQ_REQ'])}', '{safe_str(row['AUTHORITATIVE_SOURCE'])}', 
+                                {row['IS_GOVERNED']}, {row['IS_REGUALTED']}, '{safe_str(row['REGULATIONS'])}');
+                    """
+                    session.sql(update_query).collect()
 
-                # Construct MERGE query to update Snowflake table
-                update_query = f"""
-                MERGE INTO BUSINESS_GLOSSARY AS target
-                USING (SELECT {row['GLOSSARY_ID']} AS GLOSSARY_ID) AS source
-                ON target.GLOSSARY_ID = source.GLOSSARY_ID
-                WHEN MATCHED THEN
-                    UPDATE SET 
-                        KEY_BUSINESS_TERM_NAME = '{safe_str(row['KEY_BUSINESS_TERM_NAME'])}',
-                        ACRONYM = '{safe_str(row['ACRONYM'])}',
-                        ALIAS = '{safe_str(row['ALIAS'])}',
-                        DEFINITION = '{safe_str(row['DEFINITION'])}',
-                        STATUS = '{safe_str(row['STATUS'])}',
-                        DOMAIN = '{safe_str(row['DOMAIN'])}',
-                        DATA_OWNER_EMPLOYEE_NAME = '{safe_str(row['DATA_OWNER_EMPLOYEE_NAME'])}',
-                        DATA_STEWARD_EMPLOYEE_NAME = '{safe_str(row['DATA_STEWARD_EMPLOYEE_NAME'])}',
-                        BUSINESS_RULE = '{safe_str(row['BUSINESS_RULE'])}',
-                        RELATED_TO_CATALOG_ID_S_ = '{safe_str(row['RELATED_TO_CATALOG_ID_S_'])}',
-                        EXAMPLE = '{safe_str(row['EXAMPLE'])}',
-                        DATA_CLASSIFICATION = '{safe_str(row['DATA_CLASSIFICATION'])}',
-                        USAGE_REQ = '{safe_str(row['USAGE_REQ'])}',
-                        DQ_REQ = '{safe_str(row['DQ_REQ'])}',
-                        AUTHORITATIVE_SOURCE = '{safe_str(row['AUTHORITATIVE_SOURCE'])}',
-                        IS_GOVERNED = {row['IS_GOVERNED']},
-                        IS_REGUALTED = {row['IS_REGUALTED']},
-                        REGULATIONS = '{safe_str(row['REGULATIONS'])}'
-                WHEN NOT MATCHED THEN
-                    INSERT (GLOSSARY_ID, KEY_BUSINESS_TERM_NAME, ACRONYM, ALIAS, DEFINITION, STATUS, DOMAIN, 
-                            DATA_OWNER_EMPLOYEE_NAME, DATA_STEWARD_EMPLOYEE_NAME, BUSINESS_RULE, 
-                            RELATED_TO_CATALOG_ID_S_, EXAMPLE, DATA_CLASSIFICATION, USAGE_REQ, DQ_REQ, 
-                            AUTHORITATIVE_SOURCE, IS_GOVERNED, IS_REGUALTED, REGULATIONS)
-                    VALUES ({row['GLOSSARY_ID']}, '{safe_str(row['KEY_BUSINESS_TERM_NAME'])}', '{safe_str(row['ACRONYM'])}', 
-                            '{safe_str(row['ALIAS'])}', '{safe_str(row['DEFINITION'])}', '{safe_str(row['STATUS'])}', 
-                            '{safe_str(row['DOMAIN'])}', '{safe_str(row['DATA_OWNER_EMPLOYEE_NAME'])}', 
-                            '{safe_str(row['DATA_STEWARD_EMPLOYEE_NAME'])}', '{safe_str(row['BUSINESS_RULE'])}', 
-                            '{safe_str(row['RELATED_TO_CATALOG_ID_S_'])}', '{safe_str(row['EXAMPLE'])}', 
-                            '{safe_str(row['DATA_CLASSIFICATION'])}', '{safe_str(row['USAGE_REQ'])}', 
-                            '{safe_str(row['DQ_REQ'])}', '{safe_str(row['AUTHORITATIVE_SOURCE'])}', 
-                            {row['IS_GOVERNED']}, {row['IS_REGUALTED']}, '{safe_str(row['REGULATIONS'])}');
-                """
-                session.sql(update_query).collect()
-
-            st.success("Table updated successfully!")
+                st.success("Table updated successfully!")
 
         st.markdown(
         """
