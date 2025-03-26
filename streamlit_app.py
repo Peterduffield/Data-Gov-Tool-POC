@@ -632,7 +632,7 @@ def main():
 
         st.divider()
 
-        with st.popover("Edit & Update Catalog"):
+        with st.popover("Edit & Update Catalog", use_container_width=True):
             st.subheader("Edit Data Catalog")
 
             # Determine the next incremental CATALOG_ID
