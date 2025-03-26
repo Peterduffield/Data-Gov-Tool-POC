@@ -628,95 +628,96 @@ def main():
                 """,
                 unsafe_allow_html=True
             ) 
-
         st.dataframe(selected_attribute_catalog_tbl, hide_index=True)
 
         st.divider()
-        st.subheader("Edit Data Catalog")
 
-        # Determine the next incremental CATALOG_ID
-        data_catalog_tbl["CATALOG_ID"] = data_catalog_tbl["CATALOG_ID"].astype(int)
-        if not data_catalog_tbl.empty:
-            max_catalog_id = data_catalog_tbl["CATALOG_ID"].max()
-        else:
-            max_catalog_id = 0  # Start from 1 if the table is empty
+        with st.popover("Edit & Update Catalog"):
+            st.subheader("Edit Data Catalog")
 
-        # Define column names exactly as they exist in Snowflake
-        column_names = [
-            "CATALOG_ID", "DATA_CUSTODIAN", "TECHNICAL_DATA_STEWARD", "APPLICATION_NAME", 
-            "PLATFORM_SERVER", "DATABASE_NAME", "TABLE_NAME", "ATTRIBUTE_NAME", "ATTRIBUTE_DESCRIPTION",
-            "DATA_TYPE", "VALID_VALUES", "IS_CRITICAL_DATA_ELEMENT", "UPDATE_FREQUENCY",
-            "PERMISSIONS", "MAPS_TO_GLOSSARY_ID_S_", "STANDARIZATION", "TAGS", "DATA_CLASSIFICATION",
-            "IS_VARIFIED", "DATA_QUALITY_ISSUE", "IS_AUTOMATED"
-        ]
+            # Determine the next incremental CATALOG_ID
+            data_catalog_tbl["CATALOG_ID"] = data_catalog_tbl["CATALOG_ID"].astype(int)
+            if not data_catalog_tbl.empty:
+                max_catalog_id = data_catalog_tbl["CATALOG_ID"].max()
+            else:
+                max_catalog_id = 0  # Start from 1 if the table is empty
 
-        # Add an empty row with the next incremental CATALOG_ID
-        new_row = pd.DataFrame([{col: "" for col in column_names}])
-        new_row["CATALOG_ID"] = max_catalog_id + 1
+            # Define column names exactly as they exist in Snowflake
+            column_names = [
+                "CATALOG_ID", "DATA_CUSTODIAN", "TECHNICAL_DATA_STEWARD", "APPLICATION_NAME", 
+                "PLATFORM_SERVER", "DATABASE_NAME", "TABLE_NAME", "ATTRIBUTE_NAME", "ATTRIBUTE_DESCRIPTION",
+                "DATA_TYPE", "VALID_VALUES", "IS_CRITICAL_DATA_ELEMENT", "UPDATE_FREQUENCY",
+                "PERMISSIONS", "MAPS_TO_GLOSSARY_ID_S_", "STANDARIZATION", "TAGS", "DATA_CLASSIFICATION",
+                "IS_VARIFIED", "DATA_QUALITY_ISSUE", "IS_AUTOMATED"
+            ]
 
-        # Ensure boolean columns have default values (True/False)
-        new_row["IS_VARIFIED"] = False
-        new_row["IS_AUTOMATED"] = False
+            # Add an empty row with the next incremental CATALOG_ID
+            new_row = pd.DataFrame([{col: "" for col in column_names}])
+            new_row["CATALOG_ID"] = max_catalog_id + 1
 
-        # Append new row and allow dynamic editing
-        editable_df = pd.concat([data_catalog_tbl, new_row], ignore_index=True)
-        edited_df = st.data_editor(editable_df, num_rows="dynamic", disabled=["CATALOG_ID"])
+            # Ensure boolean columns have default values (True/False)
+            new_row["IS_VARIFIED"] = False
+            new_row["IS_AUTOMATED"] = False
 
-        # Button to save updates
-        if st.button("Save Changes", key="save_changes_data_catalog"):
-            for index, row in edited_df.iterrows():
-                # Assign new CATALOG_ID if missing
-                if pd.isna(row["CATALOG_ID"]):
-                    max_catalog_id += 1
-                    row["CATALOG_ID"] = max_catalog_id
+            # Append new row and allow dynamic editing
+            editable_df = pd.concat([data_catalog_tbl, new_row], ignore_index=True)
+            edited_df = st.data_editor(editable_df, num_rows="dynamic", disabled=["CATALOG_ID"])
 
-                # Escape single quotes to prevent SQL errors
-                def safe_str(value):
-                    return value.replace("'", "''") if isinstance(value, str) else value
+            # Button to save updates
+            if st.button("Save Changes", key="save_changes_data_catalog"):
+                for index, row in edited_df.iterrows():
+                    # Assign new CATALOG_ID if missing
+                    if pd.isna(row["CATALOG_ID"]):
+                        max_catalog_id += 1
+                        row["CATALOG_ID"] = max_catalog_id
 
-                # Construct MERGE query to update Snowflake table
-                update_query = f"""
-                MERGE INTO DATA_CATALOG AS target
-                USING (SELECT {row['CATALOG_ID']} AS CATALOG_ID) AS source
-                ON target.CATALOG_ID = source.CATALOG_ID
-                WHEN MATCHED THEN
-                    UPDATE SET 
-                        DATA_CUSTODIAN = '{safe_str(row['DATA_CUSTODIAN'])}',
-                        TECHNICAL_DATA_STEWARD = '{safe_str(row['TECHNICAL_DATA_STEWARD'])}',
-                        APPLICATION_NAME = '{safe_str(row['APPLICATION_NAME'])}',
-                        PLATFORM_SERVER = '{safe_str(row['PLATFORM_SERVER'])}',
-                        DATABASE_NAME = '{safe_str(row['DATABASE_NAME'])}',
-                        TABLE_NAME = '{safe_str(row['TABLE_NAME'])}',
-                        ATTRIBUTE_NAME = '{safe_str(row['ATTRIBUTE_NAME'])}',
-                        ATTRIBUTE_DESCRIPTION = '{safe_str(row['ATTRIBUTE_DESCRIPTION'])}',
-                        DATA_TYPE = '{safe_str(row['DATA_TYPE'])}',
-                        VALID_VALUES = '{safe_str(row['VALID_VALUES'])}',
-                        IS_CRITICAL_DATA_ELEMENT = '{safe_str(row['IS_CRITICAL_DATA_ELEMENT'])}',
-                        UPDATE_FREQUENCY = '{safe_str(row['UPDATE_FREQUENCY'])}',
-                        PERMISSIONS = '{safe_str(row['PERMISSIONS'])}',
-                        MAPS_TO_GLOSSARY_ID_S_ = '{safe_str(row['MAPS_TO_GLOSSARY_ID_S_'])}',
-                        STANDARIZATION = '{safe_str(row['STANDARIZATION'])}',
-                        TAGS = '{safe_str(row['TAGS'])}',
-                        DATA_CLASSIFICATION = '{safe_str(row['DATA_CLASSIFICATION'])}',
-                        IS_VARIFIED = {row['IS_VARIFIED']},
-                        DATA_QUALITY_ISSUE = '{safe_str(row['DATA_QUALITY_ISSUE'])}',
-                        IS_AUTOMATED = {row['IS_AUTOMATED']}
-                WHEN NOT MATCHED THEN
-                    INSERT (CATALOG_ID, DATA_CUSTODIAN, TECHNICAL_DATA_STEWARD, APPLICATION_NAME, PLATFORM_SERVER, 
-                            DATABASE_NAME, TABLE_NAME, ATTRIBUTE_NAME, ATTRIBUTE_DESCRIPTION, DATA_TYPE, VALID_VALUES, 
-                            IS_CRITICAL_DATA_ELEMENT, UPDATE_FREQUENCY, PERMISSIONS, MAPS_TO_GLOSSARY_ID_S_, 
-                            STANDARIZATION, TAGS, DATA_CLASSIFICATION, IS_VARIFIED, DATA_QUALITY_ISSUE, IS_AUTOMATED)
-                    VALUES ({row['CATALOG_ID']}, '{safe_str(row['DATA_CUSTODIAN'])}', '{safe_str(row['TECHNICAL_DATA_STEWARD'])}', 
-                            '{safe_str(row['APPLICATION_NAME'])}', '{safe_str(row['PLATFORM_SERVER'])}', '{safe_str(row['DATABASE_NAME'])}', 
-                            '{safe_str(row['TABLE_NAME'])}', '{safe_str(row['ATTRIBUTE_NAME'])}', '{safe_str(row['ATTRIBUTE_DESCRIPTION'])}', 
-                            '{safe_str(row['DATA_TYPE'])}', '{safe_str(row['VALID_VALUES'])}', '{safe_str(row['IS_CRITICAL_DATA_ELEMENT'])}', 
-                            '{safe_str(row['UPDATE_FREQUENCY'])}', '{safe_str(row['PERMISSIONS'])}', '{safe_str(row['MAPS_TO_GLOSSARY_ID_S_'])}', 
-                            '{safe_str(row['STANDARIZATION'])}', '{safe_str(row['TAGS'])}', '{safe_str(row['DATA_CLASSIFICATION'])}', 
-                            {row['IS_VARIFIED']}, '{safe_str(row['DATA_QUALITY_ISSUE'])}', {row['IS_AUTOMATED']});
-                """
-                session.sql(update_query).collect()
+                    # Escape single quotes to prevent SQL errors
+                    def safe_str(value):
+                        return value.replace("'", "''") if isinstance(value, str) else value
 
-            st.success("Table updated successfully!")
+                    # Construct MERGE query to update Snowflake table
+                    update_query = f"""
+                    MERGE INTO DATA_CATALOG AS target
+                    USING (SELECT {row['CATALOG_ID']} AS CATALOG_ID) AS source
+                    ON target.CATALOG_ID = source.CATALOG_ID
+                    WHEN MATCHED THEN
+                        UPDATE SET 
+                            DATA_CUSTODIAN = '{safe_str(row['DATA_CUSTODIAN'])}',
+                            TECHNICAL_DATA_STEWARD = '{safe_str(row['TECHNICAL_DATA_STEWARD'])}',
+                            APPLICATION_NAME = '{safe_str(row['APPLICATION_NAME'])}',
+                            PLATFORM_SERVER = '{safe_str(row['PLATFORM_SERVER'])}',
+                            DATABASE_NAME = '{safe_str(row['DATABASE_NAME'])}',
+                            TABLE_NAME = '{safe_str(row['TABLE_NAME'])}',
+                            ATTRIBUTE_NAME = '{safe_str(row['ATTRIBUTE_NAME'])}',
+                            ATTRIBUTE_DESCRIPTION = '{safe_str(row['ATTRIBUTE_DESCRIPTION'])}',
+                            DATA_TYPE = '{safe_str(row['DATA_TYPE'])}',
+                            VALID_VALUES = '{safe_str(row['VALID_VALUES'])}',
+                            IS_CRITICAL_DATA_ELEMENT = '{safe_str(row['IS_CRITICAL_DATA_ELEMENT'])}',
+                            UPDATE_FREQUENCY = '{safe_str(row['UPDATE_FREQUENCY'])}',
+                            PERMISSIONS = '{safe_str(row['PERMISSIONS'])}',
+                            MAPS_TO_GLOSSARY_ID_S_ = '{safe_str(row['MAPS_TO_GLOSSARY_ID_S_'])}',
+                            STANDARIZATION = '{safe_str(row['STANDARIZATION'])}',
+                            TAGS = '{safe_str(row['TAGS'])}',
+                            DATA_CLASSIFICATION = '{safe_str(row['DATA_CLASSIFICATION'])}',
+                            IS_VARIFIED = {row['IS_VARIFIED']},
+                            DATA_QUALITY_ISSUE = '{safe_str(row['DATA_QUALITY_ISSUE'])}',
+                            IS_AUTOMATED = {row['IS_AUTOMATED']}
+                    WHEN NOT MATCHED THEN
+                        INSERT (CATALOG_ID, DATA_CUSTODIAN, TECHNICAL_DATA_STEWARD, APPLICATION_NAME, PLATFORM_SERVER, 
+                                DATABASE_NAME, TABLE_NAME, ATTRIBUTE_NAME, ATTRIBUTE_DESCRIPTION, DATA_TYPE, VALID_VALUES, 
+                                IS_CRITICAL_DATA_ELEMENT, UPDATE_FREQUENCY, PERMISSIONS, MAPS_TO_GLOSSARY_ID_S_, 
+                                STANDARIZATION, TAGS, DATA_CLASSIFICATION, IS_VARIFIED, DATA_QUALITY_ISSUE, IS_AUTOMATED)
+                        VALUES ({row['CATALOG_ID']}, '{safe_str(row['DATA_CUSTODIAN'])}', '{safe_str(row['TECHNICAL_DATA_STEWARD'])}', 
+                                '{safe_str(row['APPLICATION_NAME'])}', '{safe_str(row['PLATFORM_SERVER'])}', '{safe_str(row['DATABASE_NAME'])}', 
+                                '{safe_str(row['TABLE_NAME'])}', '{safe_str(row['ATTRIBUTE_NAME'])}', '{safe_str(row['ATTRIBUTE_DESCRIPTION'])}', 
+                                '{safe_str(row['DATA_TYPE'])}', '{safe_str(row['VALID_VALUES'])}', '{safe_str(row['IS_CRITICAL_DATA_ELEMENT'])}', 
+                                '{safe_str(row['UPDATE_FREQUENCY'])}', '{safe_str(row['PERMISSIONS'])}', '{safe_str(row['MAPS_TO_GLOSSARY_ID_S_'])}', 
+                                '{safe_str(row['STANDARIZATION'])}', '{safe_str(row['TAGS'])}', '{safe_str(row['DATA_CLASSIFICATION'])}', 
+                                {row['IS_VARIFIED']}, '{safe_str(row['DATA_QUALITY_ISSUE'])}', {row['IS_AUTOMATED']});
+                    """
+                    session.sql(update_query).collect()
+
+                st.success("Table updated successfully!")
 
 
         st.markdown(
