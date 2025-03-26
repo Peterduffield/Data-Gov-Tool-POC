@@ -570,7 +570,7 @@ def main():
         edited_df = st.data_editor(editable_df, num_rows="dynamic", disabled=["CATALOG_ID"])
 
         # Button to save updates
-        if st.button("Save Changes"):
+        if st.button("Save Changes", key="save_changes_data_catalog"):
             for index, row in edited_df.iterrows():
                 # Assign new CATALOG_ID if missing
                 if pd.isna(row["CATALOG_ID"]):
@@ -686,7 +686,7 @@ def main():
         edited_df = st.data_editor(editable_df, num_rows="dynamic", disabled=["EMPLOYEE_ID"])
 
         # Button to save updates
-        if st.button("Save Changes"):
+        if st.button("Save Changes", key="save_changes_employee_catalogx"):
             for index, row in edited_df.iterrows():
                 # Assign new EMPLOYEE_ID if missing
                 if pd.isna(row["EMPLOYEE_ID"]):
