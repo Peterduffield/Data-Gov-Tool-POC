@@ -542,6 +542,7 @@ def main():
         st.subheader("Edit Data Catalog")
 
         # Determine the next incremental CATALOG_ID
+        data_catalog_tbl["CATALOG_ID"] = data_catalog_tbl["CATALOG_ID"].astype(int)
         if not data_catalog_tbl.empty:
             max_catalog_id = data_catalog_tbl["CATALOG_ID"].max()
         else:
