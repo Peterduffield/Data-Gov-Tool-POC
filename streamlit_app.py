@@ -754,6 +754,74 @@ def main():
 
         st.dataframe(use_case_tbl, hide_index=True)
 
+        import streamlit as st
+import pandas as pd
+
+# Fetch existing data from Snowflake
+use_case_inventory_tbl = session.sql("SELECT * FROM USE_CASE_INVENTORY").to_pandas()
+
+# Ensure ASSET_ID is treated as an integer
+use_case_inventory_tbl["ASSET_ID"] = use_case_inventory_tbl["ASSET_ID"].astype(pd.Int64Dtype())
+
+# Find the highest ASSET_ID and set the next available ID
+if not use_case_inventory_tbl.empty:
+    max_asset_id = use_case_inventory_tbl["ASSET_ID"].max()
+else:
+    max_asset_id = 0  # Start from 1 if the table is empty
+
+# Add an empty row with the next incremental ASSET_ID
+new_row = pd.DataFrame([{
+    "ASSET_ID": max_asset_id + 1,
+    "PRIMARY_DOMAIN": "",
+    "DATA_USE_CASE_NAME": "",
+    "BUSINESS_LINE": "",
+    "BUSINESS_STAKEHOLDER_PROBLEM_STATEMENT": "",
+    "STRATEGIC_OBJECTIVE": "",
+    "DATA_USE_CASE_DESCRIPTION": "",
+    "DEFINITION_OF_DONE": "",
+    "RELATED_DOMAIN_S_": ""
+}])
+
+# Append new row and allow dynamic editing
+editable_df = pd.concat([use_case_inventory_tbl, new_row], ignore_index=True)
+edited_df = st.data_editor(editable_df, num_rows="dynamic", disabled=["ASSET_ID"])
+
+# Button to save updates
+if st.button("Save Changes"):
+    for index, row in edited_df.iterrows():
+        # Assign new ASSET_ID if missing
+        if pd.isna(row["ASSET_ID"]):
+            max_asset_id += 1
+            row["ASSET_ID"] = max_asset_id
+
+        # Construct MERGE query to update Snowflake table
+        update_query = f"""
+        MERGE INTO USE_CASE_INVENTORY AS target
+        USING (SELECT {row['ASSET_ID']} AS ASSET_ID) AS source
+        ON target.ASSET_ID = source.ASSET_ID
+        WHEN MATCHED THEN
+            UPDATE SET 
+                PRIMARY_DOMAIN = '{row['PRIMARY_DOMAIN']}',
+                DATA_USE_CASE_NAME = '{row['DATA_USE_CASE_NAME']}',
+                BUSINESS_LINE = '{row['BUSINESS_LINE']}',
+                BUSINESS_STAKEHOLDER_PROBLEM_STATEMENT = '{row['BUSINESS_STAKEHOLDER_PROBLEM_STATEMENT']}',
+                STRATEGIC_OBJECTIVE = '{row['STRATEGIC_OBJECTIVE']}',
+                DATA_USE_CASE_DESCRIPTION = '{row['DATA_USE_CASE_DESCRIPTION']}',
+                DEFINITION_OF_DONE = '{row['DEFINITION_OF_DONE']}',
+                RELATED_DOMAIN_S_ = '{row['RELATED_DOMAIN_S_']}'
+        WHEN NOT MATCHED THEN
+            INSERT (ASSET_ID, PRIMARY_DOMAIN, DATA_USE_CASE_NAME, BUSINESS_LINE, 
+                    BUSINESS_STAKEHOLDER_PROBLEM_STATEMENT, STRATEGIC_OBJECTIVE, 
+                    DATA_USE_CASE_DESCRIPTION, DEFINITION_OF_DONE, RELATED_DOMAIN_S_)
+            VALUES ({row['ASSET_ID']}, '{row['PRIMARY_DOMAIN']}', '{row['DATA_USE_CASE_NAME']}', 
+                    '{row['BUSINESS_LINE']}', '{row['BUSINESS_STAKEHOLDER_PROBLEM_STATEMENT']}', 
+                    '{row['STRATEGIC_OBJECTIVE']}', '{row['DATA_USE_CASE_DESCRIPTION']}', 
+                    '{row['DEFINITION_OF_DONE']}', '{row['RELATED_DOMAIN_S_']}');
+        """
+        session.sql(update_query).collect()
+
+    st.success("Table updated successfully!")
+
 
 if __name__ == "__main__":
     main()
