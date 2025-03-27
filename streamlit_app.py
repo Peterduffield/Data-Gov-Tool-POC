@@ -1083,17 +1083,17 @@ def main():
         unsafe_allow_html=True,
         ) 
     with tab5:
-        
-        glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_REGUALTED"]).size().unstack(fill_value=0)
+        st.subheader("Business Glossary Maturity")
+        col13, col14 = st.columns(2)
+        with col13:
+            glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_REGUALTED"]).size().unstack(fill_value=0)
 
-        # Rename columns for readability
-        glossary_counts.columns = ["Not Regulated", "Regulated"]
-
-        # Streamlit Markdown for Title
-        st.markdown("## 📊 Business Glossary: Regulation Status by Domain")
-
-        # Display bar chart
-        st.bar_chart(glossary_counts)
+            # Rename columns for readability
+            glossary_counts.columns = ["Not Regulated", "Regulated"]
+            # Streamlit Markdown for Title
+            st.markdown("📊 Business Glossary: Regulation Status by Domain")
+            # Display bar chart
+            st.bar_chart(glossary_counts)
         
         st.markdown(
         """
