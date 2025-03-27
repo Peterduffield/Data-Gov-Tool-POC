@@ -1093,8 +1093,8 @@ def main():
             # Streamlit Markdown for Title
             st.markdown("Key Term Regulation Status by Domain")
             # Display bar chart
-            st.bar_chart(is_regualted_glossary_counts, use_container_width=True)
-            #, width= 600, height=400
+            st.bar_chart(is_regualted_glossary_counts, use_container_width=True, height=400)
+          
             st.divider()
 
             is_gov_glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_GOVERNED"]).size().unstack(fill_value=0)
