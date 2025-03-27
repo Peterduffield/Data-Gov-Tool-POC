@@ -1084,19 +1084,30 @@ def main():
         ) 
     with tab5:
         
-        #st.write("Available columns:", business_glossary_tbl.columns.tolist())
-        glossary_counts = business_glossary_tbl["IS_REGUALTED"].value_counts()
+        glossary_counts = business_glossary_tbl.groupby("IS_REGUALTED").size()
 
         # Labels
-        labels = glossary_counts.index.map(lambda x: "Regulated" if x else "Not Regulated")
+        labels = ["Regulated", "Not Regulated"]
+
+        # Customize the figure size (width, height in inches)
+        fig, ax = plt.subplots(figsize=(4, 4))  # Adjust size as needed
 
         # Pie chart
-        fig, ax = plt.subplots()
-        ax.pie(glossary_counts, labels=labels, autopct="%1.1f%%", startangle=90, colors=["#ff9999", "#66b3ff"])
+        ax.pie(
+            glossary_counts, 
+            labels=labels, 
+            autopct="%1.1f%%", 
+            startangle=90, 
+            colors=["#ff9999", "#66b3ff"], 
+            textprops={"fontsize": 12}  # Adjust label font size
+        )
         ax.axis("equal")  # Equal aspect ratio ensures the pie chart is circular.
 
-        # Display in Streamlit
-        st.pyplot(fig)     
+        # Markdown for title
+        st.markdown("Key Business Term Regulation Status 📊")
+
+        # Display chart in Streamlit
+        st.pyplot(fig)   
         
         st.markdown(
         """
