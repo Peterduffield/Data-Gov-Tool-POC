@@ -1090,7 +1090,7 @@ def main():
         labels = ["Regulated", "Not Regulated"]
 
         # Customize the figure size (width, height in inches)
-        fig, ax = plt.subplots(figsize=(4, 4))  # Adjust size as needed
+        fig, ax = plt.subplots(figsize=(1, 1))  # Adjust size as needed
 
         # Pie chart
         ax.pie(
