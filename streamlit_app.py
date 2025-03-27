@@ -2,7 +2,7 @@ from snowflake.snowpark import Session
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-#import plotly.express as px
+import plotly.express as px
 
 
 # Create a function to connect using Snowpark
@@ -1084,30 +1084,16 @@ def main():
         ) 
     with tab5:
         
-        glossary_counts = business_glossary_tbl.groupby("IS_REGUALTED").size()
+        glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_REGULATED"]).size().unstack(fill_value=0)
 
-        # Labels
-        labels = ["Regulated", "Not Regulated"]
+        # Rename columns for readability
+        glossary_counts.columns = ["Not Regulated", "Regulated"]
 
-        # Customize the figure size (width, height in inches)
-        fig, ax = plt.subplots(figsize=(.5, .5))  # Adjust size as needed
+        # Streamlit Markdown for Title
+        st.markdown("## 📊 Business Glossary: Regulation Status by Domain")
 
-        # Pie chart
-        ax.pie(
-            glossary_counts, 
-            labels=labels, 
-            autopct="%1.1f%%", 
-            startangle=90, 
-            colors=["#ff9999", "#66b3ff"], 
-            textprops={"fontsize": 2}  # Adjust label font size
-        )
-        ax.axis("equal")  # Equal aspect ratio ensures the pie chart is circular.
-
-        # Markdown for title
-        st.markdown("Key Business Term Regulation Status 📊")
-
-        # Display chart in Streamlit
-        st.pyplot(fig)   
+        # Display bar chart
+        st.bar_chart(glossary_counts) 
         
         st.markdown(
         """
