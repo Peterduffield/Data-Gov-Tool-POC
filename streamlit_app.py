@@ -1100,12 +1100,16 @@ def main():
             is_gov_glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_GOVERNED"]).size().unstack(fill_value=0)
             # Rename columns for readability
             is_gov_glossary_counts.columns = ["Not Governed", "Governed"]
-
             # Streamlit Markdown for Title
             st.markdown("Key Term is Governed Status by Domain")
-
             # Display bar chart
-            st.bar_chart(is_gov_glossary_counts)
+            st.bar_chart(is_gov_glossary_counts, use_container_width=True, height=400)
+        with col14:
+            status_glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "STATUS"]).size().unstack(fill_value=0)
+            # Streamlit Markdown for Title
+            st.markdown("Key Term Status by Domain")
+            # Display bar chart
+            st.bar_chart(status_glossary_counts, use_container_width=True, height=400)            
 
         st.markdown(
         """
