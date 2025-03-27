@@ -1114,9 +1114,18 @@ def main():
         st.subheader("Data Catalog Maturity")
         col16, col17, col18 = st.columns(3)
         with col16:
+            data_catalog_tbl["IS_VARIFIED"] = data_catalog_tbl["IS_VARIFIED"].fillna("Unknown")
+
+            # Group and count occurrences
             is_verified_catalog_counts = data_catalog_tbl.groupby(["APPLICATION_NAME", "IS_VARIFIED"]).size().unstack(fill_value=0)
-            is_verified_catalog_counts.columns = ['Not Verified', "Verified"]
-            st.markdown("Data Element is Verififed Status by Application")
+
+            # Rename columns for readability
+            is_verified_catalog_counts.columns = ['Not Verified', 'Verified', 'Unknown'] if 'Unknown' in is_verified_catalog_counts.columns else ['Not Verified', 'Verified']
+
+            # Streamlit Markdown for Title
+            st.markdown("Data Element Verification Status by Application")
+
+            # Display bar chart
             st.bar_chart(is_verified_catalog_counts, use_container_width=True, height=400)
 
         with col17:
