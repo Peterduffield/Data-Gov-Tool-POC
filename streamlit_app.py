@@ -1115,10 +1115,21 @@ def main():
         col16, col17, col18 = st.columns(3)
         with col16:
             is_verified_catalog_counts = data_catalog_tbl.groupby(["APPLICATION_NAME", "IS_VARIFIED"]).size().unstack(fill_value=0)
-            st.markdown("Data Element is Verififed Status")
+            is_verified_catalog_counts.columns = ['Not Verified', "Verified"]
+            st.markdown("Data Element is Verififed Status by Application")
             st.bar_chart(is_verified_catalog_counts, use_container_width=True, height=400)
 
-            
+        with col17:
+            is_automated_catalog_counts = data_catalog_tbl.groupby(["APPLICATION_NAME", "IS_AUTOMATED"]).size().unstack(fill_value=0)
+            is_automated_catalog_counts.columns = ["Not Automated", "Automated"]
+            st.markdown("Data Element Automated Status by Application")
+            st.bar_chart(is_automated_catalog_counts, use_container_width=True, height=400)
+        
+        with col18:
+            is_critical_catalog_counts = data_catalog_tbl.groupby(["APPLICATION_NAME", "IS_CRITICAL_DATA_ELEMENT"]).size().unstack(fill_value=0)
+            st.markdown("Data Element Critical Value by Application")
+            st.bar_chart(is_critical_catalog_counts, use_container_width=True, height=400)
+
         st.markdown(
         """
         <style>
