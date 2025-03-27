@@ -1090,7 +1090,7 @@ def main():
         labels = ["Regulated", "Not Regulated"]
 
         # Customize the figure size (width, height in inches)
-        fig, ax = plt.subplots(figsize=(1, 1))  # Adjust size as needed
+        fig, ax = plt.subplots(figsize=(.5, .5))  # Adjust size as needed
 
         # Pie chart
         ax.pie(
@@ -1099,7 +1099,7 @@ def main():
             autopct="%1.1f%%", 
             startangle=90, 
             colors=["#ff9999", "#66b3ff"], 
-            textprops={"fontsize": 8}  # Adjust label font size
+            textprops={"fontsize": 2}  # Adjust label font size
         )
         ax.axis("equal")  # Equal aspect ratio ensures the pie chart is circular.
 
