@@ -1120,7 +1120,7 @@ def main():
             is_verified_catalog_counts = data_catalog_tbl.groupby(["APPLICATION_NAME", "IS_VARIFIED"]).size().unstack(fill_value=0)
 
             # Rename columns for readability
-            is_verified_catalog_counts.columns = ['Not Verified', 'Verified', 'Unknown'] if 'Unknown' in is_verified_catalog_counts.columns else ['Not Verified', 'Verified']
+            is_verified_catalog_counts.columns = ['Not Verified', 'Verified', 'Null'] if 'Unknown' in is_verified_catalog_counts.columns else ['Not Verified', 'Verified']
 
             # Streamlit Markdown for Title
             st.markdown("Data Element Verification Status by Application")
