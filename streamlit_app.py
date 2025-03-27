@@ -1099,7 +1099,7 @@ def main():
             autopct="%1.1f%%", 
             startangle=90, 
             colors=["#ff9999", "#66b3ff"], 
-            textprops={"fontsize": 12}  # Adjust label font size
+            textprops={"fontsize": 1}  # Adjust label font size
         )
         ax.axis("equal")  # Equal aspect ratio ensures the pie chart is circular.
 
