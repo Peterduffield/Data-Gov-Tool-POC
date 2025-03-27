@@ -1,7 +1,7 @@
 from snowflake.snowpark import Session
 import streamlit as st
 import pandas as pd
-
+import matplotlib.pyplot as plt
 #import plotly.express as px
 
 
@@ -1084,8 +1084,19 @@ def main():
         ) 
     with tab5:
         
-        st.write("Available columns:", business_glossary_tbl.columns.tolist())
-     
+        #st.write("Available columns:", business_glossary_tbl.columns.tolist())
+        glossary_counts = business_glossary_tbl["IS_REGUALTED"].value_counts()
+
+        # Labels
+        labels = glossary_counts.index.map(lambda x: "Regulated" if x else "Not Regulated")
+
+        # Pie chart
+        fig, ax = plt.subplots()
+        ax.pie(glossary_counts, labels=labels, autopct="%1.1f%%", startangle=90, colors=["#ff9999", "#66b3ff"])
+        ax.axis("equal")  # Equal aspect ratio ensures the pie chart is circular.
+
+        # Display in Streamlit
+        st.pyplot(fig)     
         
         st.markdown(
         """
