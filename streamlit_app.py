@@ -1101,7 +1101,7 @@ def main():
             st.markdown("Key Term Status by Domain")
             # Display bar chart
             st.bar_chart(status_glossary_counts, use_container_width=True, height=400)    
-                    
+
         with col15:
             is_gov_glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_GOVERNED"]).size().unstack(fill_value=0)
             # Rename columns for readability
@@ -1110,6 +1110,15 @@ def main():
             st.markdown("Key Term is Governed Status by Domain")
             # Display bar chart
             st.bar_chart(is_gov_glossary_counts, use_container_width=True, height=400)
+        st.divider()
+        st.subheader("Data Catalog Maturity")
+        col16, col17, col18 = st.columns(3)
+        with col16:
+            is_verified_catalog_counts = data_catalog_tbl.groupby(["APPLICATION_NAME", "IS_VARIFIED"]).size().unstack(fill_value=0)
+            st.markdown("Data Element is Verififed Status")
+            st.bar_chart(is_verified_catalog_counts, use_container_width=True, height=400)
+
+            
         st.markdown(
         """
         <style>
