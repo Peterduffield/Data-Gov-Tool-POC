@@ -1105,7 +1105,7 @@ def main():
             st.markdown("Key Term is Governed Status by Domain")
 
             # Display bar chart
-            st.bar_chart(is_gov_glossary_counts)
+            st.bar_chart(is_gov_glossary_counts, hight = 400)
 
         st.markdown(
         """
