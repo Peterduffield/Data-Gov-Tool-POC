@@ -1084,7 +1084,7 @@ def main():
         ) 
     with tab5:
         st.subheader("Business Glossary Maturity")
-        col13, col14 = st.columns(2)
+        col13, col14, col15 = st.columns(3)
         with col13:
             is_regualted_glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_REGUALTED"]).size().unstack(fill_value=0)
 
@@ -1105,7 +1105,7 @@ def main():
             st.markdown("Key Term is Governed Status by Domain")
 
             # Display bar chart
-            st.bar_chart(is_gov_glossary_counts, hight= 400)
+            st.bar_chart(is_gov_glossary_counts)
 
         st.markdown(
         """
