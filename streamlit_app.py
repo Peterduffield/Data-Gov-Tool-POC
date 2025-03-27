@@ -1084,7 +1084,7 @@ def main():
         ) 
     with tab5:
         
-        glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_REGULATED"]).size().unstack(fill_value=0)
+        glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_REGUALTED"]).size().unstack(fill_value=0)
 
         # Rename columns for readability
         glossary_counts.columns = ["Not Regulated", "Regulated"]
@@ -1093,7 +1093,7 @@ def main():
         st.markdown("## 📊 Business Glossary: Regulation Status by Domain")
 
         # Display bar chart
-        st.bar_chart(glossary_counts) 
+        st.bar_chart(glossary_counts)
         
         st.markdown(
         """
