@@ -1093,7 +1093,7 @@ def main():
             # Streamlit Markdown for Title
             st.markdown("Key Term Regulation Status by Domain")
             # Display bar chart
-            st.bar_chart(is_regualted_glossary_counts)
+            st.bar_chart(is_regualted_glossary_counts, use_container_width=False, width= 20, height=10)
             
             st.divider()
 
