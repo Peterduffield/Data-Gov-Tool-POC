@@ -56,7 +56,7 @@ def main():
         with col1:
             selected_business_term = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(),index=None, key= "Select Term to Filter")
         with col2:
-            selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].to_list(), index=None)
+            selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].unique(), index=None)
         # Apply filters only if selections are made
         filtered_df = business_glossary_tbl  # Default to all rows
         if selected_business_term:
