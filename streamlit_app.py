@@ -213,7 +213,7 @@ def main():
             st.dataframe(related_glossery_df, hide_index=True)
 
 
-        with st.popover("Update Relationships"):
+        with st.popover("Update Relationships", use_container_width=True):
             st.markdown(" ")
             critical_element_to_update = st.selectbox("Select a Data Element", data_catalog_tbl['ATTRIBUTE_NAME'].to_list(),index=None)
             key_term_to_update = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(),index=None, key= "Update Relations Term")
