@@ -7,18 +7,19 @@ import os
 
 # Create a function to connect using Snowpark
 SF_CREDENTIALS = {
-    "account": st.secrets["account"],
-    "user": st.secrets["user"],
-    "password": st.secrets["password"],
-    "role": st.secrets["role"],
-    "warehouse": st.secrets["warehouse"],
-    "database": st.secrets["database"],
-    "schema": st.secrets["schema"]
+    "account": "jsa18243",
+    "user": "lkr_python_runner",
+    "password": "pythonpassword",
+    "role": "DATA_ENGINEER",
+    "warehouse": "DEMO_WH",
+    "database": "DATA_GOV_POC",
+    "schema": "POC_TABLES"
 }
 
 def create_snowflake_session():
     return Session.builder.configs(SF_CREDENTIALS).create()
 session = create_snowflake_session()
+
 # Run SQL query
 business_glossary_tbl = session.sql("SELECT * FROM BUSINESS_GLOSSARY").to_pandas()
 data_catalog_tbl = session.sql("SELECT * FROM DATA_CATALOG").to_pandas()
