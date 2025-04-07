@@ -30,7 +30,7 @@ employee_catalog_tbl = session.sql("SELECT DISTINCT e.*,  dc.* from EMPLOYEE_CAT
 use_case_inventory_tbl = session.sql("SELECT * from USE_CASE_INVENTORY_TBL").to_pandas()
 
 def main():
-
+    st.set_page_config(layout="wide")
     st.markdown(
         """
         <style>
