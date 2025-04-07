@@ -7,13 +7,13 @@ import os
 
 # Create a function to connect using Snowpark
 SF_CREDENTIALS = {
-    "account": st.secrets["connections"]["snowflake"]["account"],
-    "user": st.secrets["connections"]["snowflake"]["user"],
-    "password": st.secrets["connections"]["snowflake"]["password"],
-    "role": st.secrets["connections"]["snowflake"]["role"],
-    "warehouse": st.secrets["connections"]["snowflake"]["warehouse"],
-    "database": st.secrets["connections"]["snowflake"]["database"],
-    "schema": st.secrets["connections"]["snowflake"]["schema"]
+    "account": st.secrets["account"],
+    "user": st.secrets["user"],
+    "password": st.secrets["password"],
+    "role": st.secrets["role"],
+    "warehouse": st.secrets["warehouse"],
+    "database": st.secrets["database"],
+    "schema": st.secrets["schema"]
 }
 
 def create_snowflake_session():
