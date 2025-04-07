@@ -3,17 +3,17 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
-
+import os
 
 # Create a function to connect using Snowpark
 SF_CREDENTIALS = {
-    "account": "jsa18243",
-    "user": "lkr_python_runner",
-    "password": "pythonpassword",
-    "role": "DATA_ENGINEER",
-    "warehouse": "DEMO_WH",
-    "database": "DATA_GOV_POC",
-    "schema": "POC_TABLES"
+    "account": os.getenv("ACCOUNT"),
+    "user": os.getenv("USER"),
+    "password": os.getenv("PASSWORD"),
+    "role": os.getenv("ROLE"),
+    "warehouse": os.getenv("WAREHOUSE"),
+    "database": os.getenv("DATABASE"),
+    "schema": os.getenv("SCHEMA")
 }
 
 def create_snowflake_session():
