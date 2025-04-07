@@ -6,3 +6,4 @@ snowflake-snowpark-python
 sqlparse
 matplotlib
 plotly
+os
