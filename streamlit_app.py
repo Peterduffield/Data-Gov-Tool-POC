@@ -54,7 +54,7 @@ def main():
     with tab1:
         col1, col2 = st.columns(2)
         with col1:
-            selected_business_term = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(),index=None, key= "Select Term to Filter")
+            selected_business_term = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(), key= "Select Term to Filter")
         with col2:
             selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].unique(), index=None)
         # Apply filters only if selections are made
@@ -1151,7 +1151,8 @@ def main():
         }
         </style>
         <div class="container">
-            <img src="https://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png" alt="Hakkoda Logo">
+            <img src="gttps://tercera.io/wp-content/uploads/2021/11/hakkoda_logo.png" alt="Hakkoda Logo">
+
         </div>
         """,
         unsafe_allow_html=True,
