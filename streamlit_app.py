@@ -318,7 +318,7 @@ def main():
                 "DQ_REQ": "",
                 "AUTHORITATIVE_SOURCE": "",
                 "IS_GOVERNED": False,
-                "IS_REGUALTED": False,
+                "IS_REGULATED": False,
                 "REGULATIONS": ""
             }])
 
@@ -361,13 +361,13 @@ def main():
                             DQ_REQ = '{safe_str(row['DQ_REQ'])}',
                             AUTHORITATIVE_SOURCE = '{safe_str(row['AUTHORITATIVE_SOURCE'])}',
                             IS_GOVERNED = {row['IS_GOVERNED']},
-                            IS_REGUALTED = {row['IS_REGUALTED']},
+                            IS_REGULATED = {row['IS_REGULATED']},
                             REGULATIONS = '{safe_str(row['REGULATIONS'])}'
                     WHEN NOT MATCHED THEN
                         INSERT (GLOSSARY_ID, KEY_BUSINESS_TERM_NAME, ACRONYM, ALIAS, DEFINITION, STATUS, DOMAIN, 
                                 DATA_OWNER_EMPLOYEE_NAME, DATA_STEWARD_EMPLOYEE_NAME, BUSINESS_RULE, 
                                 RELATED_TO_CATALOG_ID_S_, EXAMPLE, DATA_CLASSIFICATION, USAGE_REQ, DQ_REQ, 
-                                AUTHORITATIVE_SOURCE, IS_GOVERNED, IS_REGUALTED, REGULATIONS)
+                                AUTHORITATIVE_SOURCE, IS_GOVERNED, IS_REGULATED, REGULATIONS)
                         VALUES ({row['GLOSSARY_ID']}, '{safe_str(row['KEY_BUSINESS_TERM_NAME'])}', '{safe_str(row['ACRONYM'])}', 
                                 '{safe_str(row['ALIAS'])}', '{safe_str(row['DEFINITION'])}', '{safe_str(row['STATUS'])}', 
                                 '{safe_str(row['DOMAIN'])}', '{safe_str(row['DATA_OWNER_EMPLOYEE_NAME'])}', 
@@ -375,7 +375,7 @@ def main():
                                 '{safe_str(row['RELATED_TO_CATALOG_ID_S_'])}', '{safe_str(row['EXAMPLE'])}', 
                                 '{safe_str(row['DATA_CLASSIFICATION'])}', '{safe_str(row['USAGE_REQ'])}', 
                                 '{safe_str(row['DQ_REQ'])}', '{safe_str(row['AUTHORITATIVE_SOURCE'])}', 
-                                {row['IS_GOVERNED']}, {row['IS_REGUALTED']}, '{safe_str(row['REGULATIONS'])}');
+                                {row['IS_GOVERNED']}, {row['IS_REGULATED']}, '{safe_str(row['REGULATIONS'])}');
                     """
                     session.sql(update_query).collect()
 
@@ -636,7 +636,7 @@ def main():
                 unsafe_allow_html=True
             ) 
 
-            selected_data_verified = selected_attribute_catalog_tbl['IS_VARIFIED'].iloc[0]
+            selected_data_verified = selected_attribute_catalog_tbl['IS_VERIFIED'].iloc[0]
             st.markdown(
                 f"""
                 <style>
@@ -679,8 +679,8 @@ def main():
                 "CATALOG_ID", "DATA_CUSTODIAN", "TECHNICAL_DATA_STEWARD", "APPLICATION_NAME", 
                 "PLATFORM_SERVER", "DATABASE_NAME", "TABLE_NAME", "ATTRIBUTE_NAME", "ATTRIBUTE_DESCRIPTION",
                 "DATA_TYPE", "VALID_VALUES", "IS_CRITICAL_DATA_ELEMENT", "UPDATE_FREQUENCY",
-                "PERMISSIONS", "MAPS_TO_GLOSSARY_ID_S_", "STANDARIZATION", "TAGS", "DATA_CLASSIFICATION",
-                "IS_VARIFIED", "DATA_QUALITY_ISSUE", "IS_AUTOMATED"
+                "PERMISSIONS", "MAPS_TO_GLOSSARY_ID_S_", "STANDARDIZATION", "TAGS", "DATA_CLASSIFICATION",
+                "IS_VERIFIED", "DATA_QUALITY_ISSUE", "IS_AUTOMATED"
             ]
 
             # Add an empty row with the next incremental CATALOG_ID
@@ -688,7 +688,7 @@ def main():
             new_row["CATALOG_ID"] = max_catalog_id + 1
 
             # Ensure boolean columns have default values (True/False)
-            new_row["IS_VARIFIED"] = False
+            new_row["IS_VERIFIED"] = False
             new_row["IS_AUTOMATED"] = False
 
             # Append new row and allow dynamic editing
@@ -731,21 +731,21 @@ def main():
                             STANDARIZATION = '{safe_str(row['STANDARIZATION'])}',
                             TAGS = '{safe_str(row['TAGS'])}',
                             DATA_CLASSIFICATION = '{safe_str(row['DATA_CLASSIFICATION'])}',
-                            IS_VARIFIED = {row['IS_VARIFIED']},
+                            IS_VERIFIED = {row['IS_VERIFIED']},
                             DATA_QUALITY_ISSUE = '{safe_str(row['DATA_QUALITY_ISSUE'])}',
                             IS_AUTOMATED = {row['IS_AUTOMATED']}
                     WHEN NOT MATCHED THEN
                         INSERT (CATALOG_ID, DATA_CUSTODIAN, TECHNICAL_DATA_STEWARD, APPLICATION_NAME, PLATFORM_SERVER, 
                                 DATABASE_NAME, TABLE_NAME, ATTRIBUTE_NAME, ATTRIBUTE_DESCRIPTION, DATA_TYPE, VALID_VALUES, 
                                 IS_CRITICAL_DATA_ELEMENT, UPDATE_FREQUENCY, PERMISSIONS, MAPS_TO_GLOSSARY_ID_S_, 
-                                STANDARIZATION, TAGS, DATA_CLASSIFICATION, IS_VARIFIED, DATA_QUALITY_ISSUE, IS_AUTOMATED)
+                                STANDARIZATION, TAGS, DATA_CLASSIFICATION, IS_VERIFIED, DATA_QUALITY_ISSUE, IS_AUTOMATED)
                         VALUES ({row['CATALOG_ID']}, '{safe_str(row['DATA_CUSTODIAN'])}', '{safe_str(row['TECHNICAL_DATA_STEWARD'])}', 
                                 '{safe_str(row['APPLICATION_NAME'])}', '{safe_str(row['PLATFORM_SERVER'])}', '{safe_str(row['DATABASE_NAME'])}', 
                                 '{safe_str(row['TABLE_NAME'])}', '{safe_str(row['ATTRIBUTE_NAME'])}', '{safe_str(row['ATTRIBUTE_DESCRIPTION'])}', 
                                 '{safe_str(row['DATA_TYPE'])}', '{safe_str(row['VALID_VALUES'])}', '{safe_str(row['IS_CRITICAL_DATA_ELEMENT'])}', 
                                 '{safe_str(row['UPDATE_FREQUENCY'])}', '{safe_str(row['PERMISSIONS'])}', '{safe_str(row['MAPS_TO_GLOSSARY_ID_S_'])}', 
                                 '{safe_str(row['STANDARIZATION'])}', '{safe_str(row['TAGS'])}', '{safe_str(row['DATA_CLASSIFICATION'])}', 
-                                {row['IS_VARIFIED']}, '{safe_str(row['DATA_QUALITY_ISSUE'])}', {row['IS_AUTOMATED']});
+                                {row['IS_VERIFIED']}, '{safe_str(row['DATA_QUALITY_ISSUE'])}', {row['IS_AUTOMATED']});
                     """
                     session.sql(update_query).collect()
 
@@ -1115,14 +1115,14 @@ def main():
         st.subheader("Business Glossary Maturity")
         col13, col14, col15 = st.columns(3)
         with col13:
-            is_regualted_glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_REGUALTED"]).size().unstack(fill_value=0)
+            is_regulated_glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_REGULATED"]).size().unstack(fill_value=0)
 
             # Rename columns for readability
-            is_regualted_glossary_counts.columns = ["Not Regulated", "Regulated"]
+            is_regulated_glossary_counts.columns = ["Not Regulated", "Regulated"]
             # Streamlit Markdown for Title
             st.markdown("Key Term Regulation Status by Domain")
             # Display bar chart
-            st.bar_chart(is_regualted_glossary_counts, use_container_width=True, height=400)
+            st.bar_chart(is_regulated_glossary_counts, use_container_width=True, height=400)
           
         with col14:
             status_glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "STATUS"]).size().unstack(fill_value=0)
@@ -1143,10 +1143,10 @@ def main():
         st.subheader("Data Catalog Maturity")
         col16, col17, col18 = st.columns(3)
         with col16:
-            data_catalog_tbl["IS_VARIFIED"] = data_catalog_tbl["IS_VARIFIED"].fillna("Unknown")
+            data_catalog_tbl["IS_VERIFIED"] = data_catalog_tbl["IS_VERIFIED"].fillna("Unknown")
 
             # Group and count occurrences
-            is_verified_catalog_counts = data_catalog_tbl.groupby(["APPLICATION_NAME", "IS_VARIFIED"]).size().unstack(fill_value=0)
+            is_verified_catalog_counts = data_catalog_tbl.groupby(["APPLICATION_NAME", "IS_VERIFIED"]).size().unstack(fill_value=0)
 
             # Rename columns for readability
             is_verified_catalog_counts.columns = ['Not Verified', 'Verified', 'Null'] if 'Unknown' in is_verified_catalog_counts.columns else ['Not Verified', 'Verified']
