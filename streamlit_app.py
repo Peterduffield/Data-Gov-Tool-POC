@@ -62,7 +62,7 @@ def main():
         filtered_df = business_glossary_tbl  # Default to all rows
         if selected_business_term:
             filtered_df = filtered_df[filtered_df["KEY_BUSINESS_TERM_NAME"] == selected_business_term]
-        if selected_business_domain:
+        else:
             filtered_df = filtered_df[filtered_df["DOMAIN"] == selected_business_domain]
 
         col3,col4,col5 =st.columns([1,3,4])
