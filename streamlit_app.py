@@ -54,8 +54,11 @@ def main():
     tab1, tab2, tab3, tab4, tab5 = st.tabs(['Business Glossary', 'Data Catalog', 'Data Role Assignments', 'Use Case Inventory', 'Maturity Dashboard'])
     with tab1:
         filtered_df = business_glossary_tbl  # Default to all rows
-        sort_glossary_by = st.toggle("Sort by Key Business Term")
+        sort_glossary_by = st.toggle("Sort by Domain")
         if sort_glossary_by:
+            selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].unique())    
+            filtered_df = filtered_df[filtered_df["DOMAIN"] == selected_business_domain]    
+        else:  
             col1, col2 = st.columns(2)
             with col1:
                 selected_business_term = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(), key= "Select Term to Filter")
@@ -87,10 +90,6 @@ def main():
                     unsafe_allow_html=True
                 )   
             # Apply filters only if selections are made
-        else:
-            selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].unique())    
-            filtered_df = filtered_df[filtered_df["DOMAIN"] == selected_business_domain]           
-
         
 
 
