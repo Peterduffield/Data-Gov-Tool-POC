@@ -53,17 +53,46 @@ def main():
     )
     tab1, tab2, tab3, tab4, tab5 = st.tabs(['Business Glossary', 'Data Catalog', 'Data Role Assignments', 'Use Case Inventory', 'Maturity Dashboard'])
     with tab1:
-        col1, col2 = st.columns(2)
-        with col1:
-            selected_business_term = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(), key= "Select Term to Filter")
-        with col2:
-            selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].unique(), index=None)
-        # Apply filters only if selections are made
         filtered_df = business_glossary_tbl  # Default to all rows
-        if selected_business_term:
-            filtered_df = filtered_df[filtered_df["KEY_BUSINESS_TERM_NAME"] == selected_business_term]
+        sort_glossary_by = st.toggle("Sort by Key Term or Domain")
+        if sort_glossary_by:
+            col1, col2 = st.columns(2)
+            with col1:
+                selected_business_term = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(), key= "Select Term to Filter")
+                if selected_business_term:
+                    filtered_df = filtered_df[filtered_df["KEY_BUSINESS_TERM_NAME"] == selected_business_term]            
+            with col2:
+                selected_glossary_domain = filtered_df['DOMAIN'].iloc[0]            
+                st.markdown(
+                    f"""
+                    <style>
+                    .custom-container {{
+                        text-align: center;  /* Center the value */
+                    }}
+                    .label {{
+                        text-align: left;  /* Left-align the label */
+                        font-size: 1.1em;  /* Adjust font size if needed */
+                        margin-bottom: 5px; /* Small space between label and value */
+                    }}
+                    .value {{
+                        font-size: 1.5em;  /* Adjust font size of the value */
+                    }}
+                    </style>
+                    
+                    <div class="custom-container">
+                        <p class="label">Domain</p>
+                        <h4 class="value">{selected_glossary_domain}</h4>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )   
+            # Apply filters only if selections are made
         else:
-            filtered_df = filtered_df[filtered_df["DOMAIN"] == selected_business_domain]
+            selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].unique(), index=None)    
+            filtered_df = filtered_df[filtered_df["DOMAIN"] == selected_business_domain]           
+
+        
+
 
         col3,col4,col5 =st.columns([1,3,4])
         with col3:
