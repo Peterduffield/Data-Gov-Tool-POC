@@ -54,7 +54,7 @@ def main():
     tab1, tab2, tab3, tab4, tab5 = st.tabs(['Business Glossary', 'Data Catalog', 'Data Role Assignments', 'Use Case Inventory', 'Maturity Dashboard'])
     with tab1:
         filtered_df = business_glossary_tbl  # Default to all rows
-        sort_glossary_by = st.toggle("Sort by Key Term or Domain")
+        sort_glossary_by = st.toggle("Sort by Key Business Term")
         if sort_glossary_by:
             col1, col2 = st.columns(2)
             with col1:
