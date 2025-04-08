@@ -80,7 +80,7 @@ def main():
                     </style>
                     
                     <div class="custom-container">
-                        <p class="label">Domain</p>
+                        <p class="label">Domain:</p>
                         <h4 class="value">{selected_glossary_domain}</h4>
                     </div>
                     """,
@@ -88,7 +88,7 @@ def main():
                 )   
             # Apply filters only if selections are made
         else:
-            selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].unique(), index=None)    
+            selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].unique())    
             filtered_df = filtered_df[filtered_df["DOMAIN"] == selected_business_domain]           
 
         
