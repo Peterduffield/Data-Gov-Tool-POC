@@ -66,6 +66,9 @@ def main():
                     filtered_df = filtered_df[filtered_df["KEY_BUSINESS_TERM_NAME"] == selected_business_term]            
             with col2:
                 selected_glossary_domain = filtered_df['DOMAIN'].iloc[0]            
+                st.write("Domain:")
+                st.markdown(f"#### {selected_glossary_domain}", unsafe_allow_html=True) 
+           
                 st.markdown(
                     f"""
                     <style>
@@ -199,7 +202,7 @@ def main():
             )            
         
         with col5:
-            st.write('Related Critical Data Elements and Database')
+            st.write('Related Critical Data Elements and Database:')
             data_catalog_tbl["CATALOG_ID"] = data_catalog_tbl["CATALOG_ID"].astype(str)
             selected_glossary_ids = (
             filtered_df['RELATED_TO_CATALOG_ID_S_']
