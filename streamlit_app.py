@@ -126,15 +126,16 @@ def main():
                 f"""
                 <style>
                 .custom-container {{
-                    text-align: center;  /* Center the value */
+                    text-align: left;  /* Left-align the entire container */
                 }}
                 .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
+                    text-align: left;  /* Left-align the label (optional if container is already left-aligned) */
+                    font-size: 1.1em;
+                    margin-bottom: 5px;
                 }}
                 .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
+                    text-align: left;  /* Left-align the value (optional) */
+                    font-size: 1.5em;
                 }}
                 </style>
                 
@@ -144,7 +145,7 @@ def main():
                 </div>
                 """,
                 unsafe_allow_html=True
-            )            
+            )      
 
         with col4:
             selected_definition = filtered_df['DEFINITION'].iloc[0]
