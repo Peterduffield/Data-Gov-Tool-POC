@@ -178,7 +178,7 @@ def main():
                 f"""
                 <style>
                 .custom-container {{
-                    text-align: center;  /* Center the value */
+                    text-align: left;  /* Center the value */
                 }}
                 .label {{
                     text-align: left;  /* Left-align the label */
