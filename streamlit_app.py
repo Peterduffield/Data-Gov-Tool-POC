@@ -719,7 +719,7 @@ def main():
             # Streamlit Markdown for Title
             st.markdown("Key Term Status by Domain")
             # Display bar chart
-            st.bar_chart(status_glossary_counts, use_container_width=True, height=400)    
+            st.bar_chart(status_glossary_counts, use_container_width=True, height=400, color= ["#5dade2", "#a9cce3", "#2471a3 ", "#1b4f72"])    
 
         with col15:
             is_gov_glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_GOVERNED"]).size().unstack(fill_value=0)
@@ -728,7 +728,7 @@ def main():
             # Streamlit Markdown for Title
             st.markdown("Key Term is Governed Status by Domain")
             # Display bar chart
-            st.bar_chart(is_gov_glossary_counts, use_container_width=True, height=400)
+            st.bar_chart(is_gov_glossary_counts, use_container_width=True, height=400, color= ["#a9cce3", "#5dade2"])
         st.divider()
         st.subheader("Data Catalog Maturity")
         col16, col17, col18 = st.columns(3)
@@ -737,18 +737,18 @@ def main():
             is_verified_catalog_counts = data_catalog_tbl.groupby(["APPLICATION_NAME", "IS_VERIFIED"]).size().unstack(fill_value=0)
             is_verified_catalog_counts.columns = ['Not Verified', 'Verified']
             st.markdown("Data Element Verification Status by Application")
-            st.bar_chart(is_verified_catalog_counts, use_container_width=True, height=400)
+            st.bar_chart(is_verified_catalog_counts, use_container_width=True, height=400, color= ["#a9cce3", "#5dade2"])
 
         with col17:
             is_automated_catalog_counts = data_catalog_tbl.groupby(["APPLICATION_NAME", "IS_AUTOMATED"]).size().unstack(fill_value=0)
             is_automated_catalog_counts.columns = ["Not Automated", "Automated"]
             st.markdown("Data Element Automated Status by Application")
-            st.bar_chart(is_automated_catalog_counts, use_container_width=True, height=400)
+            st.bar_chart(is_automated_catalog_counts, use_container_width=True, height=400, color= ["#a9cce3", "#5dade2"])
         
         with col18:
             is_critical_catalog_counts = data_catalog_tbl.groupby(["APPLICATION_NAME", "IS_CRITICAL_DATA_ELEMENT"]).size().unstack(fill_value=0)
             st.markdown("Data Element Critical Value by Application")
-            st.bar_chart(is_critical_catalog_counts, use_container_width=True, height=400)
+            st.bar_chart(is_critical_catalog_counts, use_container_width=True, height=400, color= ["#5dade2", "#a9cce3", "#2471a3 "])
 
         st.markdown(
         """
