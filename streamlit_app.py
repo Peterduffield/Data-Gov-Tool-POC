@@ -69,7 +69,7 @@ def main():
                 st.write("Domain:")
                 st.markdown(f"#### {selected_glossary_domain}", unsafe_allow_html=True) 
 
-        col3,col4,col5 =st.columns([1,2,4])
+        col3,col4,col5 =st.columns([1,2,3])
         with col3:
 
             selected_data_owner = filtered_df['DATA_OWNER_EMPLOYEE_NAME'].iloc[0]          
