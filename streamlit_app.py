@@ -68,35 +68,8 @@ def main():
                 selected_glossary_domain = filtered_df['DOMAIN'].iloc[0]            
                 st.write("Domain:")
                 st.markdown(f"#### {selected_glossary_domain}", unsafe_allow_html=True) 
-           
-                st.markdown(
-                    f"""
-                    <style>
-                    .custom-container {{
-                        text-align: left;  /* Center the value */
-                    }}
-                    .label {{
-                        text-align: left;  /* Left-align the label */
-                        font-size: 1.1em;  /* Adjust font size if needed */
-                        margin-bottom: 5px; /* Small space between label and value */
-                    }}
-                    .value {{
-                        font-size: 1.5em;  /* Adjust font size of the value */
-                    }}
-                    </style>
-                    
-                    <div class="custom-container">
-                        <p class="label">Domain:</p>
-                        <h4 class="value">{selected_glossary_domain}</h4>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )   
-            # Apply filters only if selections are made
-        
 
-
-        col3,col4,col5 =st.columns([1,3,4])
+        col3,col4,col5 =st.columns([1,3,4], border=True)
         with col3:
 
             selected_data_owner = filtered_df['DATA_OWNER_EMPLOYEE_NAME'].iloc[0]
