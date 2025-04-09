@@ -73,85 +73,21 @@ def main():
         with col3:
 
             selected_data_owner = filtered_df['DATA_OWNER_EMPLOYEE_NAME'].iloc[0]          
-            st.write("Dat Owner:")
+            st.write("Data Owner:")
             st.markdown(f"#### {selected_data_owner}", unsafe_allow_html=True) 
            
             selected_data_steward = filtered_df['DATA_STEWARD_EMPLOYEE_NAME'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: rigth;  /* Left-align the entire container */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label (optional if container is already left-aligned) */
-                    font-size: 1.1em;
-                    margin-bottom: 5px;
-                }}
-                .value {{
-                    text-align: left;  /* Left-align the value (optional) */
-                    font-size: 1.5em;
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Technical Data Steward:</p>
-                    <h4 class="value">{selected_data_steward}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )      
-
+            st.write("Technical Data Steward:")
+            st.markdown(f"#### {selected_data_steward}", unsafe_allow_html=True) 
+            
         with col4:
             selected_definition = filtered_df['DEFINITION'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Definition:</p>
-                    <h4 class="value">{selected_definition}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )            
+            st.write("Definition:")
+            st.markdown(f"#### {selected_definition}", unsafe_allow_html=True)            
 
             selected_authoratative_source = filtered_df['AUTHORITATIVE_SOURCE'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: left;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Authoritative Source</p>
-                    <h4 class="value">{selected_authoratative_source}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )            
+            st.write("Authoratative Source:")
+            st.markdown(f"#### {selected_authoratative_source}", unsafe_allow_html=True)             
         
         with col5:
             st.write('Related Critical Data Elements and Database:')
