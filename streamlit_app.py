@@ -719,7 +719,7 @@ def main():
             # Streamlit Markdown for Title
             st.markdown("Key Term Status by Domain")
             # Display bar chart
-            st.bar_chart(status_glossary_counts, use_container_width=True, height=400, color= ["#5dade2", "#a9cce3", "#2471a3 ", "#1b4f72"])    
+            st.bar_chart(status_glossary_counts, use_container_width=True, height=400, color= ["#5dade2", "#a9cce3", "#2471a3", "#1b4f72"])    
 
         with col15:
             is_gov_glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "IS_GOVERNED"]).size().unstack(fill_value=0)
@@ -748,7 +748,7 @@ def main():
         with col18:
             is_critical_catalog_counts = data_catalog_tbl.groupby(["APPLICATION_NAME", "IS_CRITICAL_DATA_ELEMENT"]).size().unstack(fill_value=0)
             st.markdown("Data Element Critical Value by Application")
-            st.bar_chart(is_critical_catalog_counts, use_container_width=True, height=400, color= ["#5dade2", "#a9cce3", "#2471a3 "])
+            st.bar_chart(is_critical_catalog_counts, use_container_width=True, height=400, color= ["#5dade2", "#a9cce3", "#2471a3"])
 
         st.markdown(
         """
