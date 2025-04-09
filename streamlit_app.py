@@ -712,7 +712,7 @@ def main():
             # Streamlit Markdown for Title
             st.markdown("Key Term Regulation Status by Domain")
             # Display bar chart
-            st.bar_chart(is_regulated_glossary_counts, use_container_width=True, height=400)
+            st.bar_chart(is_regulated_glossary_counts, use_container_width=True, height=400, color= ["#a9cce3", "#5dade2"])
           
         with col14:
             status_glossary_counts = business_glossary_tbl.groupby(["DOMAIN", "STATUS"]).size().unstack(fill_value=0)
