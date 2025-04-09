@@ -588,131 +588,26 @@ def main():
             )        
 
             selected_primary_domain = use_case_tbl['PRIMARY_DOMAIN'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Primary Domain:</p>
-                    <h4 class="value">{selected_primary_domain}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            ) 
+            st.write("Primary Domain:")
+            st.markdown(f"#### {selected_primary_domain}", unsafe_allow_html=True) 
 
         with col11:    
             selected_business_line = use_case_tbl['BUSINESS_LINE'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Business Line:</p>
-                    <h4 class="value">{selected_business_line}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )             
+            st.write("Business Line:")
+            st.markdown(f"#### {selected_business_line}", unsafe_allow_html=True)             
         
             selected_strat_obj = use_case_tbl['STRATEGIC_OBJECTIVE'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Strategic Objective</p>
-                    <h4 class="value">{selected_strat_obj}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )             
+            st.write("Strategic Objective:")
+            st.markdown(f"#### {selected_strat_obj}", unsafe_allow_html=True)             
         
         with col12:
             selected_problem_statement = use_case_tbl['PROBLEM_STATEMENT'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Problem Statement:</p>
-                    <h4 class="value">{selected_problem_statement}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )             
+            st.write("Problem Statement:")
+            st.markdown(f"#### {selected_problem_statement}", unsafe_allow_html=True)              
             
             selected_use_case_desc = use_case_tbl['DATA_USE_CASE_DESCRIPTION'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Description:</p>
-                    <h4 class="value">{selected_use_case_desc}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )             
+            st.write("Description:")
+            st.markdown(f"#### {selected_use_case_desc}", unsafe_allow_html=True)              
 
         st.dataframe(use_case_tbl, hide_index=True)
         st.divider()
