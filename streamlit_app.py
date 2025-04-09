@@ -59,7 +59,7 @@ def main():
             selected_business_domain = st.selectbox("Select a Business Domain", business_glossary_tbl['DOMAIN'].unique())    
             filtered_df = filtered_df[filtered_df["DOMAIN"] == selected_business_domain]    
         else:  
-            col1, col2 = st.columns(2)
+            col1, col2 = st.columns(2, border=True)
             with col1:
                 selected_business_term = st.selectbox("Select a Business Term", business_glossary_tbl['KEY_BUSINESS_TERM_NAME'].to_list(), key= "Select Term to Filter")
                 if selected_business_term:
@@ -69,7 +69,7 @@ def main():
                 st.write("Domain:")
                 st.markdown(f"#### {selected_glossary_domain}", unsafe_allow_html=True) 
 
-        col3,col4,col5 =st.columns([1,3,4], border=True)
+        col3,col4,col5 =st.columns([1,3,4])
         with col3:
 
             selected_data_owner = filtered_df['DATA_OWNER_EMPLOYEE_NAME'].iloc[0]
