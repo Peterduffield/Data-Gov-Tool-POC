@@ -126,7 +126,7 @@ def main():
                 f"""
                 <style>
                 .custom-container {{
-                    text-align: left;  /* Left-align the entire container */
+                    text-align: rigth;  /* Left-align the entire container */
                 }}
                 .label {{
                     text-align: left;  /* Left-align the label (optional if container is already left-aligned) */
@@ -140,7 +140,7 @@ def main():
                 </style>
                 
                 <div class="custom-container">
-                    <p class="label">Technical Data Steward</p>
+                    <p class="label">Technical Data Steward:</p>
                     <h4 class="value">{selected_data_steward}</h4>
                 </div>
                 """,
