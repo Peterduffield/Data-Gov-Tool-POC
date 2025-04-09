@@ -77,7 +77,7 @@ def main():
             st.markdown(f"#### {selected_data_owner}", unsafe_allow_html=True) 
            
             selected_data_steward = filtered_df['DATA_STEWARD_EMPLOYEE_NAME'].iloc[0]
-            st.write("Technical Data Steward:")
+            st.write("Data Steward:")
             st.markdown(f"#### {selected_data_steward}", unsafe_allow_html=True) 
             
         with col4:
@@ -319,239 +319,42 @@ def main():
                 selected_attribute_catalog_tbl = data_catalog_tbl[data_catalog_tbl['ATTRIBUTE_NAME'] == selected_data_attribute]
         with application:
             attribute_application = selected_attribute_catalog_tbl['APPLICATION_NAME'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .container {{
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    text-align: center;
-                    width: 100%;
-                }}
-                .label {{
-                    text-align: left;
-                    width: 100%;
-                    font-size: .9em;
-                    color: #555;
-                    margin-bottom: 2px;
-                }}
-                .value {{
-                    text-align: center;
-                    font-size: 1.5em;
-                    font-weight: bold;
-                    margin-top: 2px;
-                }}
-                </style>
-                
-                <div class="container">
-                    <div class="label">Application:</div> <!-- Left-aligned label -->
-                    <div class="value">{attribute_application}</div> <!-- Center-aligned value -->
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+            st.write("Application:")
+            st.markdown(f"#### {attribute_application}", unsafe_allow_html=True) 
         col6, col7, col8, col9 = st.columns(4)
         with col6:
             selected_data_custodian = selected_attribute_catalog_tbl['DATA_CUSTODIAN'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Data Custodian:</p>
-                    <h4 class="value">{selected_data_custodian}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+            st.write("Data Custodian:")
+            st.markdown(f"#### {selected_data_custodian}", unsafe_allow_html=True) 
 
             selected_tech_data_steward = selected_attribute_catalog_tbl['TECHNICAL_DATA_STEWARD'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Technical Data Steward:</p>
-                    <h4 class="value">{selected_tech_data_steward}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )            
+            st.write("Technical Data Steward:")
+            st.markdown(f"#### {selected_tech_data_steward}", unsafe_allow_html=True)            
         with col7:
             selected_data_tag = selected_attribute_catalog_tbl['TAGS'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Tag:</p>
-                    <h4 class="value">{selected_data_tag}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )            
+            st.write("Tag:")
+            st.markdown(f"#### {selected_data_tag}", unsafe_allow_html=True)             
 
             selected_data_db_name = selected_attribute_catalog_tbl['DATABASE_NAME'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Database Name:</p>
-                    <h4 class="value">{selected_data_db_name}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+            st.write("Database Name:")
+            st.markdown(f"#### {selected_data_db_name}", unsafe_allow_html=True) 
         with col8:
             selected_data_desc = selected_attribute_catalog_tbl['ATTRIBUTE_DESCRIPTION'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Description:</p>
-                    <h4 class="value">{selected_data_desc}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            ) 
+            st.write("Description:")
+            st.markdown(f"#### {selected_data_desc}", unsafe_allow_html=True) 
 
             selected_data_classification = selected_attribute_catalog_tbl['DATA_CLASSIFICATION'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Classification:</p>
-                    <h4 class="value">{selected_data_classification}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            ) 
+            st.write("Classification:")
+            st.markdown(f"#### {selected_data_classification}", unsafe_allow_html=True)  
         with col9:
             selected_data_update_freq = selected_attribute_catalog_tbl['UPDATE_FREQUENCY'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Update Frequency:</p>
-                    <h4 class="value">{selected_data_update_freq}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            ) 
+            st.write("Update Frequency:")
+            st.markdown(f"#### {selected_data_update_freq}", unsafe_allow_html=True) 
 
             selected_data_verified = selected_attribute_catalog_tbl['IS_VERIFIED'].iloc[0]
-            st.markdown(
-                f"""
-                <style>
-                .custom-container {{
-                    text-align: center;  /* Center the value */
-                }}
-                .label {{
-                    text-align: left;  /* Left-align the label */
-                    font-size: 1.1em;  /* Adjust font size if needed */
-                    margin-bottom: 5px; /* Small space between label and value */
-                }}
-                .value {{
-                    font-size: 1.5em;  /* Adjust font size of the value */
-                }}
-                </style>
-                
-                <div class="custom-container">
-                    <p class="label">Is Verified:</p>
-                    <h4 class="value">{selected_data_verified}</h4>
-                </div>
-                """,
-                unsafe_allow_html=True
-            ) 
+            st.write("Is Verified:")
+            st.markdown(f"#### {selected_data_verified}", unsafe_allow_html=True) 
+
         st.dataframe(selected_attribute_catalog_tbl, hide_index=True)
 
         st.divider()
